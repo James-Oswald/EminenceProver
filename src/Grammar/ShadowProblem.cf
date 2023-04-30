@@ -1,0 +1,4 @@
+
+[]. [ShadowProblem] ::= ShadowProblem
+(:). [ShadowProblem] ::= ShadowProblem " " [ShadowProblem]
+ShadowProblemFileCons. ShadowProblemFile ::= [ShadowProblem]

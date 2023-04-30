@@ -1,0 +1,6 @@
+SNum. SExpr ::= Integer;
+SString. SExpr ::= String;
+SAtom. SExpr ::= Ident;
+[]. [SExpr] ::= ;
+(:). [SExpr] ::= SExpr " " [SExpr] ;
+SExprMain. SExpr ::= "(" [SExpr] ")";
