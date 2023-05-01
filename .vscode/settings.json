@@ -62,7 +62,14 @@
         "variant": "cpp",
         "*.def": "cpp",
         "Printer.C": "cpp",
-        "Absyn.C": "cpp"
+        "Absyn.C": "cpp",
+        "compare": "cpp",
+        "concepts": "cpp",
+        "set": "cpp",
+        "future": "cpp",
+        "numbers": "cpp",
+        "semaphore": "cpp",
+        "stop_token": "cpp"
     },
     "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools"
 }
