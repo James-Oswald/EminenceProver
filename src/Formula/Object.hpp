@@ -16,8 +16,10 @@ struct Object{
 
     Object() = default;
     ~Object();
-    std::string toString() const;
+    
     bool operator==(const Object& obj);
+
+
 };
 
 Object* Var(std::string name);

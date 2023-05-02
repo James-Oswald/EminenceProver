@@ -1,4 +1,6 @@
 
+#include<queue>
+
 #include "Formula.hpp"
 
 Formula::~Formula(){
@@ -29,46 +31,8 @@ Formula::~Formula(){
     }
 }
 
-std::string Formula::toString() const{
-    switch(this->type){
-        case Type::PRED:{
-            std::string rv = *(this->pred->name);
-            if(this->pred->args->size() > 0){
-                rv += '(';
-                for(Object* arg : *(this->pred->args)){
-                    rv += arg->toString() + ",";
-                }
-                rv += "\b)";
-            }
-            return rv;
-        }
-        case Type::NOT:
-            switch(this->unary->arg->type){
-                case Type::AND:
-                case Type::OR:
-                case Type::IF:
-                case Type::IFF:
-                    return "~(" + this->unary->arg->toString() + ")";
-                default:
-                    return "~" + this->unary->arg->toString();
-            }
-        case Type::AND:
-            return "(" + this->binary->left->toString() + "/\\" + this->binary->right->toString() + ")";
-        case Type::OR:
-            return "(" + this->binary->left->toString() + "\\/" + this->binary->right->toString() + ")";
-        case Type::IF:
-            return "(" + this->binary->left->toString() + "-->" + this->binary->right->toString() + ")";
-        case Type::IFF:
-            return "(" + this->binary->left->toString() + "<->" + this->binary->right->toString() + ")";
-        case Type::FORALL:
-            return "(A " + *this->quantifier->var + ":" + this->quantifier->arg->toString() + ")";
-        case Type::EXISTS:
-            return "(E " + *this->quantifier->var + ":" + this->quantifier->arg->toString() + ")";
-    }
-    return "ERROR";
-}
 
-std::vector<Formula*> Formula::subformula() const{
+std::vector<Formula*> Formula::subformulae() const{
     switch(this->type){
         case Type::PRED:
             return {};
@@ -85,6 +49,81 @@ std::vector<Formula*> Formula::subformula() const{
     }
     return {};
 }
+
+std::vector<Formula*> Formula::allSubformulae() const{
+    std::vector<Formula*> allFormula = {(Formula*)this};
+    //Queue based BFS over all nodes
+    std::queue<const Formula*> next(std::deque<const Formula*>({this}));
+    while(!next.empty()){ 
+        for(Formula* subformula: next.front()->subformulae()){
+            allFormula.push_back(subformula);
+            next.push(subformula);
+        }
+        next.pop();
+    }
+    return allFormula;
+}
+
+size_t Formula::formulaDepth() const{
+    switch(this->type){
+        case Type::PRED:
+            return 1;
+        case Type::NOT:
+            return 1 + this->unary->arg->formulaDepth();
+        case Type::AND:
+        case Type::OR:
+        case Type::IF:
+        case Type::IFF:
+            return 1 + std::max(this->binary->left->formulaDepth(), this->binary->right->formulaDepth());
+        case Type::FORALL:
+        case Type::EXISTS:
+            return 1 + this->quantifier->arg->formulaDepth();
+    }
+    return -1; 
+}
+
+/**
+ * Recursivly performs an inorder traversal of the formula tree to get a vector of all predicates
+ * in the order in which they appear in the formula.
+ * @param base the formula to start the in order traversal at
+ * @param predicates the list of predicates being built up in the order they appear within base.
+*/
+void inOrderTraversal(Formula* base, std::vector<Formula*>& predicates){
+    switch(base->type){
+        case Formula::Type::PRED:
+            predicates.push_back(base);
+            break;
+        case Formula::Type::NOT:
+            inOrderTraversal(base->unary->arg, predicates);
+            break;
+        case Formula::Type::AND:
+        case Formula::Type::OR:
+        case Formula::Type::IF:
+        case Formula::Type::IFF:
+            inOrderTraversal(base->binary->left, predicates);
+            inOrderTraversal(base->binary->left, predicates);
+            break;
+        case Formula::Type::FORALL:
+        case Formula::Type::EXISTS:
+            inOrderTraversal(base->quantifier->arg, predicates);
+            break;
+    }
+}
+
+std::vector<Formula*> Formula::allPredicates() const{
+    std::vector<Formula*> predicates;
+    inOrderTraversal((Formula*)this, predicates);
+    return predicates;
+}
+
+
+bool Formula::isProposition() const{
+    return this->type == Type::PRED && this->pred->args->size() == 0;
+}
+
+
+//Construction Helpers =================================================================================================
+
 
 Formula* Prop(std::string name){
     Formula* rv = new Formula;

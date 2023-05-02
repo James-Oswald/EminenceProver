@@ -7,18 +7,6 @@ Object::~Object(){
     }
 }
 
-std::string Object::toString() const{
-    std::string rv = this->name;
-    if(this->args.size() > 0){
-        rv += '(';
-        for(Object* arg : this->args){
-            rv += arg->toString() + ",";
-        }
-        rv += "\b)";
-    }
-    return rv;
-}
-
 bool Object::operator==(const Object& obj){
     if(this->type != obj.type ||
       this->name != obj.name ||
