@@ -1,7 +1,18 @@
 
 #include<queue>
+#include<stack>
+#include<vector>
+#include<algorithm>
 
 #include "Formula.hpp"
+
+/**
+ * @note This only works because Objects and Predicates have the exact same internal 
+ * representation, if this ever changes, this won't work.
+*/
+std::vector<Object*> Formula::Pred::allSubconstants() const{
+    return (reinterpret_cast<const Object*>(this))->allSubconstants();
+}
 
 Formula::~Formula(){
     switch(this->type){
@@ -48,7 +59,7 @@ std::vector<Formula*> Formula::subformulae() const{
 }
 
 std::vector<Formula*> Formula::allSubformulae() const{
-    std::vector<Formula*> allFormula = {(Formula*)this};
+    std::vector<Formula*> allFormula;
     //Queue based BFS over all nodes
     std::queue<const Formula*> next(std::deque<const Formula*>({this}));
     while(!next.empty()){ 
@@ -85,31 +96,38 @@ size_t Formula::formulaDepth() const{
  * @param base the formula to start the in order traversal at
  * @param predicates the list of predicates being built up in the order they appear within base.
 */
-void inOrderTraversal(Formula* base, std::vector<Formula*>& predicates){
+void inOrderPredicateTraversal(Formula* base, std::vector<Formula*>& predicates){
     switch(base->type){
         case Formula::Type::PRED:
             predicates.push_back(base);
             break;
         case Formula::Type::NOT:
-            inOrderTraversal(base->unary->arg, predicates);
+            inOrderPredicateTraversal(base->unary->arg, predicates);
             break;
         case Formula::Type::AND:
         case Formula::Type::OR:
         case Formula::Type::IF:
         case Formula::Type::IFF:
-            inOrderTraversal(base->binary->left, predicates);
-            inOrderTraversal(base->binary->left, predicates);
+            inOrderPredicateTraversal(base->binary->left, predicates);
+            inOrderPredicateTraversal(base->binary->left, predicates);
             break;
         case Formula::Type::FORALL:
         case Formula::Type::EXISTS:
-            inOrderTraversal(base->quantifier->arg, predicates);
+            inOrderPredicateTraversal(base->quantifier->arg, predicates);
             break;
     }
 }
 
 std::vector<Formula*> Formula::allPredicates() const{
     std::vector<Formula*> predicates;
-    inOrderTraversal((Formula*)this, predicates);
+    inOrderPredicateTraversal((Formula*)this, predicates);
+    return predicates;
+}
+
+std::vector<Formula*> Formula::allPropositions() const{
+    std::vector<Formula*> predicates = this->allPredicates();
+    //filter for out predicates with args
+    std::remove_if(predicates.begin(), predicates.end(), [](Formula* p){return !p->isProposition();});
     return predicates;
 }
 
@@ -117,6 +135,24 @@ std::vector<Formula*> Formula::allPredicates() const{
 bool Formula::isProposition() const{
     return this->type == Type::PRED && this->pred->args.size() == 0;
 }
+
+/**
+ * Recursive in order traversal function for finding the list of bound object variables and the formulae
+ * they bind to. 
+ * @param base The formula to start checking from
+ * @param quantifiers A stack of quantifier formulae in the order to iteratively check 
+ * @param boundObjVars the vector or Object* Formula* pairs the result is written to.
+*/
+void inOrderObjVarTraversal(Formula* base, std::stack<Formula*>& quantifiers,
+                            std::vector<std::pair<Object*, Formula*>>& boundObjVars){
+    
+
+}
+
+std::vector<Object*> Formula::boundObjectVariables() const{
+    
+}
+
 
 
 //Construction Helpers =================================================================================================

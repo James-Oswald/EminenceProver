@@ -1,8 +1,13 @@
 {
     "editor.rulers": [120],
     "cSpell.words": [
+        "biconditional",
         "SEXPRESSION",
-        "subformulae"
+        "subconstants",
+        "subformula",
+        "subformulae",
+        "Subobject",
+        "subobjects"
     ],
     "files.associations": {
         "cctype": "cpp",

@@ -25,6 +25,34 @@ bool Object::operator==(const Object& obj){
     return true;
 }
 
+std::vector<Object*> Object::subconstants() const{
+    std::vector<Object*> rv;
+    for(Object* arg : this->args){
+        if(arg->args.size() == 0){
+            rv.push_back(arg);
+        }
+    }
+    return rv;
+}
+
+void inOrderConstantTraversal(std::vector<Object*> constants){
+
+}
+
+std::vector<Object*> Object::allSubconstants() const {
+    std::vector<Object*> rv;
+    
+}
+
+// Construction Helpers ================================================================================================
+
+Object* Var(std::string name){
+    Object* rv = new Object;
+    rv->name = std::move(name);
+    rv->args = std::vector<Object*>();
+    return rv;
+}
+
 Object* Const(std::string name){
     Object* rv = new Object;
     rv->name = std::move(name);
