@@ -6,11 +6,9 @@
 Formula::~Formula(){
     switch(this->type){
         case Type::PRED:
-            delete this->pred->name;
-            for(Object* arg : *(this->pred->args)){
+            for(Object* arg : this->pred->args){
                 delete arg;
             }
-            delete this->pred->args;
             delete this->pred;
             break;
         case Type::NOT:
@@ -25,7 +23,6 @@ Formula::~Formula(){
             delete this->binary;
         case Type::FORALL:
         case Type::EXISTS:
-            delete this->quantifier->var;
             delete this->quantifier->arg;
             delete this->quantifier;
     }
@@ -83,7 +80,7 @@ size_t Formula::formulaDepth() const{
 }
 
 /**
- * Recursivly performs an inorder traversal of the formula tree to get a vector of all predicates
+ * Recursively performs an in-order traversal of the formula tree to get a vector of all predicates
  * in the order in which they appear in the formula.
  * @param base the formula to start the in order traversal at
  * @param predicates the list of predicates being built up in the order they appear within base.
@@ -118,7 +115,7 @@ std::vector<Formula*> Formula::allPredicates() const{
 
 
 bool Formula::isProposition() const{
-    return this->type == Type::PRED && this->pred->args->size() == 0;
+    return this->type == Type::PRED && this->pred->args.size() == 0;
 }
 
 
@@ -129,8 +126,8 @@ Formula* Prop(std::string name){
     Formula* rv = new Formula;
     rv->type = Formula::Type::PRED;
     rv->pred = new Formula::Pred;
-    rv->pred->name = new std::string(std::move(name));
-    rv->pred->args = new std::vector<Object*>();
+    rv->pred->name = std::move(name);
+    rv->pred->args = std::vector<Object*>();
     return rv;
 }
 
@@ -138,8 +135,8 @@ Formula* Pred(std::string name, std::vector<Object*> args){
     Formula* rv = new Formula;
     rv->type = Formula::Type::PRED;
     rv->pred = new Formula::Pred;
-    rv->pred->name = new std::string(std::move(name));
-    rv->pred->args = new std::vector<Object*>(std::move(args));
+    rv->pred->name = std::move(name);
+    rv->pred->args = std::move(args);
     return rv;
 }
 
@@ -191,7 +188,7 @@ Formula* Forall(std::string varName, Formula* arg){
     Formula* rv = new Formula;
     rv->type = Formula::Type::FORALL;
     rv->quantifier = new Formula::Quantifier;
-    rv->quantifier->var = new std::string(std::move(varName));
+    rv->quantifier->var = std::move(varName);
     rv->quantifier->arg = arg;
     return rv;
 }
@@ -200,7 +197,7 @@ Formula* Exists(std::string varName, Formula* arg){
     Formula* rv = new Formula;
     rv->type = Formula::Type::EXISTS;
     rv->quantifier = new Formula::Quantifier;
-    rv->quantifier->var = new std::string(std::move(varName));
+    rv->quantifier->var = std::move(varName);
     rv->quantifier->arg = arg;
     return rv;
 }

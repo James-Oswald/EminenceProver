@@ -7,11 +7,16 @@ Object::~Object(){
     }
 }
 
+/**
+ * Returns true iff the objects share the same name and, in the event they have arguments,
+ * if they share the same arguments.
+ * @return if the objects are semantically equivelent 
+*/
 bool Object::operator==(const Object& obj){
-    if(this->type != obj.type ||
-      this->name != obj.name ||
-      this->args.size() != obj.args.size())
+    //Name and argument size are the same.
+    if(this->name != obj.name || this->args.size() != obj.args.size())
         return false;
+    //Arguments are the same
     for(size_t i = 0; i < this->args.size(); i++){
         if(!(*this->args[i] == *obj.args[i])){
             return false;
@@ -20,26 +25,16 @@ bool Object::operator==(const Object& obj){
     return true;
 }
 
-Object* Var(std::string name){
-    Object* rv = new Object;
-    rv->type = Object::Type::VAR;
-    rv->name = name;
-    rv->args = std::vector<Object*>();
-    return rv;
-}
-
 Object* Const(std::string name){
     Object* rv = new Object;
-    rv->type = Object::Type::CONST;
-    rv->name = name;
+    rv->name = std::move(name);
     rv->args = std::vector<Object*>();
     return rv;
 }
 
 Object* Func(std::string name, std::vector<Object*> args){
     Object* rv = new Object;
-    rv->type = Object::Type::CONST;
-    rv->name = name;
-    rv->args = args;
+    rv->name = std::move(name);
+    rv->args = std::move(args);
     return rv;
 }

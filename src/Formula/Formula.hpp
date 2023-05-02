@@ -23,8 +23,8 @@ struct Formula{
     } type;
 
     struct Pred{
-        std::string* name; //Could get away without this being a pointer
-        std::vector<Object*>* args; //Could get away without this being a pointer
+        std::string name; //Could get away without this being a pointer
+        std::vector<Object*> args; //Could get away without this being a pointer
     };
     struct UnaryConnective{
         Formula* arg;
@@ -34,7 +34,7 @@ struct Formula{
         Formula* right;
     };
     struct Quantifier{
-        std::string* var;   //Could get away without this being a pointer
+        std::string var;   //Could get away without this being a pointer
         Formula* arg;
     };
 
@@ -49,25 +49,26 @@ struct Formula{
     ~Formula();
     
     /** 
-     * Returns a vector of pointers to imediate subformulae in left to right order.
+     * Returns a vector of pointers to immediate subformulae in left to right order.
      * For example if the formula is `A /\ (B \/ C)` then `.subformulae` returns two pointers
      * to `A` and `(B \/ C)` respectively.
-     * @return A vector of Formula* containing imediate subformulae
+     * @return A vector of Formula* containing immediate subformulae
     */
     std::vector<Formula*> subformulae() const;
 
     /**
      * Gets all subformulae in the entire tree including the formulae itself. 
-     * The vector returned is gaurnteed to have the values in bredth first traversl order. 
+     * The vector returned is guaranteed to have the values in breath first traversal order. 
      * For example if the formula is `A /\ (B \/ ~C)` then `.allSubformulae()` will return
      * pointers to `[A /\ (B \/ ~C), A, (B \/ ~C), B, ~C, C]` in that order.
-     * @return A vector of Formula* of all subformulae encountered in BFS traveral order of the formula tree. 
+     * @return A vector of Formula* of all subformulae encountered in BFS traversal order of the formula tree. 
     */
     std::vector<Formula*> allSubformulae() const;
 
     /**
      * Returns the list of all predicates in the order they appear in the formula via an in-order traversal
-     * of the formula tree.
+     * of the formula tree. For example `A /\ (B(a, d) \/ ~C)` returns a list of formula pointers to 
+     * `[A, B(a, d), C]` in that order.
     */
     std::vector<Formula*> allPredicates() const;
 
@@ -80,7 +81,7 @@ struct Formula{
     /**
      * Tests if a formula is a 0th order (propositional) logic formula. i.e. 
      * 1) contains only propositional variables, no predicates
-     * 2) Exclusivly uses the Not, And, Or, If, and Iff connectives
+     * 2) Exclusively uses the Not, And, Or, If, and Iff connectives
      * @return true iff the formula is a formula from 0th order logic
     */
     bool isZerothOrderFormula() const;
