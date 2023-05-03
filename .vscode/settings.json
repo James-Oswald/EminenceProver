@@ -6,8 +6,10 @@
         "subconstants",
         "subformula",
         "subformulae",
-        "Subobject",
-        "subobjects"
+        "Subterm",
+        "subterms",
+        "tparam",
+        "TPTP"
     ],
     "files.associations": {
         "cctype": "cpp",

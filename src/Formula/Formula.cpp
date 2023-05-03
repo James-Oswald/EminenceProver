@@ -7,28 +7,38 @@
 #include "Formula.hpp"
 
 
-ObjectList Formula::Pred::allConstants() const{
-    ObjectList rv;
-    for(Object* arg : this->args){
+TermList Formula::Pred::allConstants() const{
+    TermList rv;
+    for(Term* arg : this->args){
         //.splice(rv.end(),...) functions as a concat
         rv.splice(rv.end(), arg->allConstants());
     }
     return rv;
 }
 
-ObjectList Formula::Pred::allFunctions() const{
-    ObjectList rv;
-    for(Object* arg : this->args){
+TermList Formula::Pred::allFunctions() const{
+    TermList rv;
+    for(Term* arg : this->args){
         //.splice(rv.end(),...) functions as a concat
         rv.splice(rv.end(), arg->allFunctions());
     }
     return rv;
 }
 
+//Hacky Term code reuse but will at least throw errors
+size_t Formula::Pred::depth() const{
+    Term* dummy = new Term;
+    dummy->name = this->name;
+    dummy->args = this->args;
+    size_t rv = dummy->depth();
+    operator delete(dummy); //Don't call the destructor on dummy
+    return rv;
+}
+
 Formula::~Formula(){
     switch(this->type){
         case Type::PRED:
-            for(Object* arg : this->pred->args){
+            for(Term* arg : this->pred->args){
                 delete arg;
             }
             delete this->pred;
@@ -36,6 +46,7 @@ Formula::~Formula(){
         case Type::NOT:
             delete this->unary->arg;
             delete this->unary;
+            break;
         case Type::AND:
         case Type::OR:
         case Type::IF:
@@ -43,10 +54,12 @@ Formula::~Formula(){
             delete this->binary->left;
             delete this->binary->right;
             delete this->binary;
+            break;
         case Type::FORALL:
         case Type::EXISTS:
             delete this->quantifier->arg;
             delete this->quantifier;
+            break;
     }
 }
 
@@ -54,17 +67,17 @@ Formula::~Formula(){
 FormulaList Formula::subformulae() const{
     switch(this->type){
         case Type::PRED:
-            return {};
+            return FormulaList{};
         case Type::NOT:
-            return {this->unary->arg};
+            return FormulaList{this->unary->arg};
         case Type::AND:
         case Type::OR:
         case Type::IF:
         case Type::IFF:
-            return {this->binary->left, this->binary->right};
+            return FormulaList{this->binary->left, this->binary->right};
         case Type::FORALL:
         case Type::EXISTS:
-            return {this->quantifier->arg};
+            return FormulaList{this->quantifier->arg};
     }
     return {};
 }
@@ -83,22 +96,29 @@ FormulaList Formula::allSubformulae() const{
     return allFormula;
 }
 
-size_t Formula::formulaDepth() const{
-    switch(this->type){
-        case Type::PRED:
-            return 1;
-        case Type::NOT:
-            return 1 + this->unary->arg->formulaDepth();
-        case Type::AND:
-        case Type::OR:
-        case Type::IF:
-        case Type::IFF:
-            return 1 + std::max(this->binary->left->formulaDepth(), this->binary->right->formulaDepth());
-        case Type::FORALL:
-        case Type::EXISTS:
-            return 1 + this->quantifier->arg->formulaDepth();
-    }
-    return -1; 
+size_t depthTraversal(const Formula* base, bool withTerms){
+    switch(base->type){
+        case Formula::Type::PRED:
+            return !withTerms ? 1 : base->pred->depth();
+        default:{
+            size_t max = 0;
+            for(Formula* arg : base->subformulae()){
+                size_t argDepth = depthTraversal(arg, withTerms);
+                if(argDepth > max){
+                    max = argDepth;
+                }
+            }
+            return 1 + max;
+        }
+    } 
+}
+
+size_t Formula::depth() const{
+    return depthTraversal(this, false);
+}
+
+size_t Formula::depthWithTerms() const{
+    return depthTraversal(this, true);
 }
 
 /**
@@ -142,7 +162,6 @@ FormulaList Formula::allPropositions() const{
     return predicates;
 }
 
-
 bool Formula::isProposition() const{
     return this->type == Type::PRED && this->pred->args.size() == 0;
 }
@@ -150,11 +169,11 @@ bool Formula::isProposition() const{
 /**
  * Recursive in-order traversal function for finding a list of items (Predicates, Constants, Functions)
  * of generic type that are bound by quantifiers.
- * @tparam ItemType the type of item that the quantifer formula will be associated with, Object* in the case
- * of quantifying over objects and functions and Formula* in the case of quantifying over Predicates
+ * @tparam ItemType the type of item that the quantifier formula will be associated with, Term* in the case
+ * of quantifying over terms and functions and Formula* in the case of quantifying over Predicates
  * @param base The formula to start checking from
  * @param quantifierStack An iterable stack of quantifier formulae
- * @param boundObjVars the vector or Object* Formula* pairs the result is written to.
+ * @param boundObjVars the vector or Term* Formula* pairs the result is written to.
  * @param baseCase a function mapping Predicates to a list of items with names to check if they are bound
  * @param itemName a function mapping an item to its name to check against the quantifier's bound name
 */
@@ -175,17 +194,17 @@ void inOrderQuantifierTraversal(Formula* base,
                 }
             }
             break;
-        //Recusive case 1: The formula is a quantifier, push onto the quantifier stack to update binding order
+        //Recursive case 1: The formula is a quantifier, push onto the quantifier stack to update binding order
         //and traverse the subformula
         case Formula::Type::FORALL:
         case Formula::Type::EXISTS:
-            //Push the current quantifer onto the list of bound vars we're looking for
+            //Push the current quantifier onto the list of bound vars we're looking for
             quantifierStack.push_front(base);
             inOrderQuantifierTraversal(base->quantifier->arg, quantifierStack, boundObjVars, baseCase, itemName);
-            //Pop the quantifer since we've traversed all its inner vars
+            //Pop the quantifier since we've traversed all its inner vars
             quantifierStack.pop_front();
             break;
-        //Recusive case 2: For any other formula type recurse on all subformulae
+        //Recursive case 2: For any other formula type recurse on all subformulae
         default:
             for(Formula* subformula : base->subformulae()){
                 inOrderQuantifierTraversal(subformula, quantifierStack, boundObjVars, baseCase, itemName);
@@ -193,42 +212,32 @@ void inOrderQuantifierTraversal(Formula* base,
     }
 }
 
-std::list<std::pair<Object*, Formula*>> Formula::boundObjectVariables() const{
-    std::list<std::pair<Object*, Formula*>> rv;
+std::list<std::pair<Term*, Formula*>> Formula::boundTermVariables() const{
+    std::list<std::pair<Term*, Formula*>> rv;
     std::list<Formula*> quantifierStack;
     auto getConstants = [](Formula* f){return f->pred->allConstants();};
-    auto getObjectName = [](Object* o){return o->name;};
-    inOrderQuantifierTraversal<Object*>((Formula*)this, quantifierStack, rv, getConstants, getObjectName);
+    auto getTermName = [](Term* o){return o->name;};
+    inOrderQuantifierTraversal<Term*>((Formula*)this, quantifierStack, rv, getConstants, getTermName);
     return rv;
 }
 
-std::list<std::pair<Object*, Formula*>> Formula::boundFunctionVariables() const{
-    std::list<std::pair<Object*, Formula*>> rv;
+std::list<std::pair<Term*, Formula*>> Formula::boundFunctionVariables() const{
+    std::list<std::pair<Term*, Formula*>> rv;
     std::list<Formula*> quantifierStack;
     auto getFunctions = [](Formula* f){return f->pred->allFunctions();};
-    auto getObjectName = [](Object* o){return o->name;};
-    inOrderQuantifierTraversal<Object*>((Formula*)this, quantifierStack, rv, getFunctions, getObjectName);
+    auto getTermName = [](Term* o){return o->name;};
+    inOrderQuantifierTraversal<Term*>((Formula*)this, quantifierStack, rv, getFunctions, getTermName);
     return rv;
 }
 
 std::list<std::pair<Formula*, Formula*>> Formula::boundPredicateVariables() const{
-    std::list<std::pair<Object*, Formula*>> rv;
+    std::list<std::pair<Formula*, Formula*>> rv;
     std::list<Formula*> quantifierStack;
-    auto getPredicates = [](Formula* p){return p;};
+    auto getPredicates = [](Formula* p){return std::list<Formula*>{p};};
     auto getPredicateName = [](Formula* p){return p->pred->name;};
-    inOrderQuantifierTraversal<Formula*>((Formula*)this, quantifierStack, rv, getPredicateName);
+    inOrderQuantifierTraversal<Formula*>((Formula*)this, quantifierStack, rv, getPredicates, getPredicateName);
     return rv;
 }
-
-/**
- * Recursive in order traversal function for finding the list of bound object variables and the formulae
- * they bind to. 
- * @param base The formula to start checking from
- * @param quantifiers A list representing an iterable stack of quantifier formulae in the order traversed check 
- * @param boundObjVars the vector or Object* Formula* pairs the result is written to.
-*/
-
-
 
 //Construction Helpers =================================================================================================
 
@@ -238,11 +247,11 @@ Formula* Prop(std::string name){
     rv->type = Formula::Type::PRED;
     rv->pred = new Formula::Pred;
     rv->pred->name = std::move(name);
-    rv->pred->args = ObjectList();
+    rv->pred->args = TermList();
     return rv;
 }
 
-Formula* Pred(std::string name, ObjectList args){
+Formula* Pred(std::string name, TermList args){
     Formula* rv = new Formula;
     rv->type = Formula::Type::PRED;
     rv->pred = new Formula::Pred;

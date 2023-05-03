@@ -4,7 +4,7 @@
 #include<string>
 #include<list>
 
-#include"Object.hpp"
+#include"Term.hpp"
 
 struct Formula;
 
@@ -37,18 +37,20 @@ struct Formula{
         EXISTS,     ///< Quantifier, exists
     };
 
+    
+
     struct Pred{
         std::string name;          ///< the identifier for this predicate
-        ObjectList args; ///< the list of arguments to this predicate
+        TermList args; ///< the list of arguments to this predicate
 
-        /**
-         * @return A list of pointers to all constants (and possible bound variables) inside the predicate
-        */
-        ObjectList allConstants() const;
-        /**
-         * @return A list of pointers to all functions (and possible function variables) inside the predicate
-        */
-        ObjectList allFunctions() const;
+        /** @return A list of pointers to all constants (and possible bound variables) inside the predicate */
+        TermList allConstants() const;
+
+        /** @return A list of pointers to all functions (and possible function variables) inside the predicate */
+        TermList allFunctions() const;
+
+        /** @return max height of terms inside the predicate */
+        size_t depth() const;
     };
 
     struct UnaryConnective{
@@ -88,7 +90,7 @@ struct Formula{
 
     ///@}
 
-    /** @name Subformula & Subobject utilities */
+    /** @name Subformula & Subterm utilities */
     ///@{
 
     /** 
@@ -125,24 +127,23 @@ struct Formula{
     FormulaList allPropositions() const;
 
     /**
-     * @return a list of pairs object pointers to variables and pointers to the quantifier formula they are bound to
-     * @example if formula is `Ex: P(x) /\ Ay: Q(x, y)` then `.boundObjectVariables()` returns 
-     * `[(pointer to x object in P(x), pointer to quantifier Ex formula), 
-     *   (pointer to x object in Q(x,y), pointer to quantifier Ex formula), 
-     *   (pointer to y object in Q(x,y), pointer to quantifier Ay formula)]`
+     * @return a list of pairs term pointers to variables and pointers to the quantifier formula they are bound to
+     * @example if formula is `Ex: P(x) /\ Ay: Q(x, y)` then `.boundTermVariables()` returns 
+     * `[(pointer to x term in P(x), pointer to quantifier Ex formula), 
+     *   (pointer to x term in Q(x,y), pointer to quantifier Ex formula), 
+     *   (pointer to y term in Q(x,y), pointer to quantifier Ay formula)]`
      * @example edge case, inner quantifier binds more strongly if shared variable names 
-     * if formula is `Ex: P(x) /\ Ax: Q(x, x)` then `.boundObjectVariables()` returns 
-     * `[(pointer to x object in P(x), pointer to quantifier Ex formula), 
-     *   (pointer to 1st x object in Q(x,x), pointer to quantifier Ex formula), 
-     *   (pointer to 2nd x object in Q(x,x), pointer to quantifier Ax formula)]`
+     * if formula is `Ex: P(x) /\ Ax: Q(x, x)` then `.boundTermVariables()` returns 
+     * `[(pointer to x term in P(x), pointer to quantifier Ex formula), 
+     *   (pointer to 1st x term in Q(x,x), pointer to quantifier Ex formula), 
+     *   (pointer to 2nd x term in Q(x,x), pointer to quantifier Ax formula)]`
     */
-    std::list<std::pair<Object*, Formula*>> boundObjectVariables() const;
+    std::list<std::pair<Term*, Formula*>> boundTermVariables() const;
 
     /**
-     * @return a list of pairs object pointers to variables and pointers to the quantifier formula they are bound to
-     * @example 
+     * @return a list of pairs term pointers to variables and pointers to the quantifier formula they are bound to
     */
-    std::list<std::pair<Object*, Formula*>> boundFunctionVariables() const;
+    std::list<std::pair<Term*, Formula*>> boundFunctionVariables() const;
 
     /**
      * @return the list of Predicate variables bound to quantifiers
@@ -152,11 +153,19 @@ struct Formula{
     //@}
 
     /** @name Formula Metrics and Testers */
+    ///@{
+    
     /**
-     * The maximum depth the formulae is nested.
-     * @return the height of the formula tree >= 0
+     * The depth/height of the formula tree.
+     * @return the height of the formula tree.
     */
-    size_t formulaDepth() const;
+    size_t depth() const;
+    
+    /**
+     * The depth/height of the formula tree, including height of term trees on leaves.
+     * @return The depth/height of the formula tree, including height of term trees on leaves.
+    */
+    size_t depthWithTerms() const;
 
     /**
      * @return true iff the formula is a proposition, that is, a predicate with 0 arguments.
@@ -193,7 +202,7 @@ struct Formula{
 // Construction Helpers ================================================================================================
 
 Formula* Prop(std::string name);
-Formula* Pred(std::string name, ObjectList args);
+Formula* Pred(std::string name, TermList args);
 Formula* Not(Formula* arg);
 Formula* And(Formula* left, Formula* right);
 Formula* Or(Formula* left, Formula* right);
