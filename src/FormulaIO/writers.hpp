@@ -9,5 +9,5 @@ namespace FormulaWriter{
     std::string toSExpression(Term* formula);
     std::string toSExpression(Formula* formula);
     //std::string toNormalExpression(Formula* formula);
-    //std::string toFirstOrderTPTP(Formula* formula);
+    std::string toFirstOrderTPTP(std::string name, std::string type, Formula* formula);
 }

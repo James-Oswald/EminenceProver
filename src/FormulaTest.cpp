@@ -13,6 +13,7 @@ using pFormula = std::unique_ptr<Formula>;
 int main(){
     pFormula f1 (Exists("x", Forall("y", Pred("eq", {Var("x"), Var("y")}))));
     std::cout<<FormulaWriter::toSExpression(f1.get())<<std::endl;
+    std::cout<<FormulaWriter::toFirstOrderTPTP("f1", "hypothesis", f1.get())<<std::endl;
     assert(FormulaWriter::toSExpression(f1.get()) == "(Exists (Forall (eq x y)))");
     assert(f1->depth() == 3);
     assert(f1->depthWithTerms() == 4);
@@ -40,6 +41,7 @@ int main(){
         )
     );
     std::cout<<FormulaWriter::toSExpression(f2.get())<<std::endl;
+    std::cout<<FormulaWriter::toFirstOrderTPTP("f2", "hypothesis", f2.get())<<std::endl;
     assert(FormulaWriter::toSExpression(f2.get()) == 
           "(Forall (If (And (P 0) (Forall (If (P n) (P (add n 1))))) (Forall (P n))))");
     assert(f2->depth() == 6);

@@ -2,6 +2,20 @@
 #Allows us to use #include<vampire/...> from our sources
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
+set(VampireAPIPath ${CMAKE_CURRENT_SOURCE_DIR}/vampire/Api/Problem.hpp)
+if(NOT EXISTS ${VampireAPIPath})
+    #If the vampire files don't exist, make sure the submodule has been initilized
+    execute_process(
+        COMMAND git submodule update --init 
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        RESULT_VARIABLE ExitCode
+    )
+    if(${ExitCode} AND NOT ${ExitCode} EQUAL 0)
+        message(FATAL_ERROR "[EmP] Failed to update submodule")
+    endif()
+endif()
+
+
 #[[
 #TODO Have yet to get building from source to work
 
@@ -14,7 +28,7 @@ add_subdirectory(vampire)
 ]]
 
 SET(LibVampirePath ${CMAKE_CURRENT_BINARY_DIR}/libvampire47.a)
-message("Searching for libvampire47.a at " ${CMAKE_CURRENT_BINARY_DIR})
+message("[EmP] Searching for libvampire47.a at " ${CMAKE_CURRENT_BINARY_DIR})
 if(NOT EXISTS ${LibVampirePath})
     message("[EmP] Downloading libvampire47.a")
     file(DOWNLOAD 
@@ -29,7 +43,7 @@ if(NOT EXISTS ${LibVampirePath})
         RESULT_VARIABLE ExitCode
     )
     if(${ExitCode} AND NOT ${ExitCode} EQUAL 0)
-        message(FATAL_ERROR "[EmP] Extract libvampire47.a")
+        message(FATAL_ERROR "[EmP] Failed to extract libvampire47.a")
     endif()
     message("[EmP] Extracted libvampire47.a")
 endif()
