@@ -2,13 +2,17 @@
 #pragma once
 
 #include<string>
-#include<vector>
+#include<list>
 
 #include"Object.hpp"
 
+struct Formula;
+
+using FormulaList = std::list<Formula*>;
+
 /** 
- * Represents a formulae with a truth value.
- * Note that 
+ * @brief Represents a formulae with a truth value.
+ * The formula is represented as tree.
 */
 struct Formula{
 
@@ -35,10 +39,16 @@ struct Formula{
 
     struct Pred{
         std::string name;          ///< the identifier for this predicate
-        std::vector<Object*> args; ///< the list of arguments to this predicate
+        ObjectList args; ///< the list of arguments to this predicate
 
-        std::vector<Object*> allSubconstants() const;
-        std::vector<Object*> allSubfunctions() const;
+        /**
+         * @return A list of pointers to all constants (and possible bound variables) inside the predicate
+        */
+        ObjectList allConstants() const;
+        /**
+         * @return A list of pointers to all functions (and possible function variables) inside the predicate
+        */
+        ObjectList allFunctions() const;
     };
 
     struct UnaryConnective{
@@ -87,7 +97,7 @@ struct Formula{
      * to `A` and `(B \/ C)` respectively.
      * @return A vector of Formula* containing immediate subformulae
     */
-    std::vector<Formula*> subformulae() const;
+    FormulaList subformulae() const;
 
     /**
      * Gets all subformulae in the entire tree excluding the formulae itself. 
@@ -96,7 +106,7 @@ struct Formula{
      * pointers to `A, (B \/ ~C), B, ~C, C]` in that order.
      * @return A vector of Formula* of all subformulae encountered in BFS traversal order of the formula tree. 
     */
-    std::vector<Formula*> allSubformulae() const;
+    FormulaList allSubformulae() const;
 
     /**
      * Returns the list of all predicates in the order they appear in the formula via an in-order traversal
@@ -104,7 +114,7 @@ struct Formula{
      * `[A, B(a, d), C]` in that order.
      * @return a list of Formula* to propositions in the formula in the order they appear 
     */
-    std::vector<Formula*> allPredicates() const;
+    FormulaList allPredicates() const;
 
     /**
      * @return the list of all propositional variable in the order they appear in the formula via an in-order traversal
@@ -112,7 +122,7 @@ struct Formula{
      * @example `A /\ (B(a, d) \/ ~C)` returns a list of formula pointers to 
      * `[A, C]` in that order.
     */
-    std::vector<Formula*> allPropositions() const;
+    FormulaList allPropositions() const;
 
     /**
      * @return a list of pairs object pointers to variables and pointers to the quantifier formula they are bound to
@@ -126,18 +136,18 @@ struct Formula{
      *   (pointer to 1st x object in Q(x,x), pointer to quantifier Ex formula), 
      *   (pointer to 2nd x object in Q(x,x), pointer to quantifier Ax formula)]`
     */
-    std::vector<std::pair<Object*, Formula*>> boundObjectVariables() const;
+    std::list<std::pair<Object*, Formula*>> boundObjectVariables() const;
 
     /**
      * @return a list of pairs object pointers to variables and pointers to the quantifier formula they are bound to
      * @example 
     */
-    std::vector<std::pair<Object*, Formula*>> boundFunctionVariables() const;
+    std::list<std::pair<Object*, Formula*>> boundFunctionVariables() const;
 
     /**
      * @return the list of Predicate variables bound to quantifiers
     */
-    std::vector<Formula*> boundPredicateVariables() const;
+    std::list<std::pair<Formula*, Formula*>> boundPredicateVariables() const;
 
     //@}
 
@@ -183,7 +193,7 @@ struct Formula{
 // Construction Helpers ================================================================================================
 
 Formula* Prop(std::string name);
-Formula* Pred(std::string name, std::vector<Object*> args);
+Formula* Pred(std::string name, ObjectList args);
 Formula* Not(Formula* arg);
 Formula* And(Formula* left, Formula* right);
 Formula* Or(Formula* left, Formula* right);

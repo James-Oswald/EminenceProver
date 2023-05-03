@@ -1,17 +1,28 @@
 
 #include<queue>
 #include<stack>
-#include<vector>
+#include<list>
 #include<algorithm>
 
 #include "Formula.hpp"
 
-/**
- * @note This only works because Objects and Predicates have the exact same internal 
- * representation, if this ever changes, this won't work.
-*/
-std::vector<Object*> Formula::Pred::allSubconstants() const{
-    return (reinterpret_cast<const Object*>(this))->allSubconstants();
+
+ObjectList Formula::Pred::allConstants() const{
+    ObjectList rv;
+    for(Object* arg : this->args){
+        //.splice(rv.end(),...) functions as a concat
+        rv.splice(rv.end(), arg->allConstants());
+    }
+    return rv;
+}
+
+ObjectList Formula::Pred::allFunctions() const{
+    ObjectList rv;
+    for(Object* arg : this->args){
+        //.splice(rv.end(),...) functions as a concat
+        rv.splice(rv.end(), arg->allFunctions());
+    }
+    return rv;
 }
 
 Formula::~Formula(){
@@ -40,7 +51,7 @@ Formula::~Formula(){
 }
 
 
-std::vector<Formula*> Formula::subformulae() const{
+FormulaList Formula::subformulae() const{
     switch(this->type){
         case Type::PRED:
             return {};
@@ -58,8 +69,8 @@ std::vector<Formula*> Formula::subformulae() const{
     return {};
 }
 
-std::vector<Formula*> Formula::allSubformulae() const{
-    std::vector<Formula*> allFormula;
+FormulaList Formula::allSubformulae() const{
+    FormulaList allFormula;
     //Queue based BFS over all nodes
     std::queue<const Formula*> next(std::deque<const Formula*>({this}));
     while(!next.empty()){ 
@@ -96,7 +107,7 @@ size_t Formula::formulaDepth() const{
  * @param base the formula to start the in order traversal at
  * @param predicates the list of predicates being built up in the order they appear within base.
 */
-void inOrderPredicateTraversal(Formula* base, std::vector<Formula*>& predicates){
+void inOrderPredicateTraversal(Formula* base, FormulaList& predicates){
     switch(base->type){
         case Formula::Type::PRED:
             predicates.push_back(base);
@@ -118,14 +129,14 @@ void inOrderPredicateTraversal(Formula* base, std::vector<Formula*>& predicates)
     }
 }
 
-std::vector<Formula*> Formula::allPredicates() const{
-    std::vector<Formula*> predicates;
+FormulaList Formula::allPredicates() const{
+    FormulaList predicates;
     inOrderPredicateTraversal((Formula*)this, predicates);
     return predicates;
 }
 
-std::vector<Formula*> Formula::allPropositions() const{
-    std::vector<Formula*> predicates = this->allPredicates();
+FormulaList Formula::allPropositions() const{
+    FormulaList predicates = this->allPredicates();
     //filter for out predicates with args
     std::remove_if(predicates.begin(), predicates.end(), [](Formula* p){return !p->isProposition();});
     return predicates;
@@ -137,21 +148,85 @@ bool Formula::isProposition() const{
 }
 
 /**
+ * Recursive in-order traversal function for finding a list of items (Predicates, Constants, Functions)
+ * of generic type that are bound by quantifiers.
+ * @tparam ItemType the type of item that the quantifer formula will be associated with, Object* in the case
+ * of quantifying over objects and functions and Formula* in the case of quantifying over Predicates
+ * @param base The formula to start checking from
+ * @param quantifierStack An iterable stack of quantifier formulae
+ * @param boundObjVars the vector or Object* Formula* pairs the result is written to.
+ * @param baseCase a function mapping Predicates to a list of items with names to check if they are bound
+ * @param itemName a function mapping an item to its name to check against the quantifier's bound name
+*/
+template<typename ItemType>
+void inOrderQuantifierTraversal(Formula* base, 
+                                std::list<Formula*>& quantifierStack,
+                                std::list<std::pair<ItemType, Formula*>>& boundObjVars,
+                                std::list<ItemType> (*baseCase)(Formula*),
+                                std::string (*itemName)(ItemType)){
+    switch(base->type){
+        //Base Case 1: the formula is a Predicate check if we associate with anything and leave
+        case Formula::Type::PRED:
+            for(ItemType arg : baseCase(base)){
+                for(Formula* quantifierFormula : quantifierStack){
+                    if(quantifierFormula->quantifier->var == itemName(arg)){
+                        boundObjVars.push_back(std::make_pair(arg, quantifierFormula));
+                    }
+                }
+            }
+            break;
+        //Recusive case 1: The formula is a quantifier, push onto the quantifier stack to update binding order
+        //and traverse the subformula
+        case Formula::Type::FORALL:
+        case Formula::Type::EXISTS:
+            //Push the current quantifer onto the list of bound vars we're looking for
+            quantifierStack.push_front(base);
+            inOrderQuantifierTraversal(base->quantifier->arg, quantifierStack, boundObjVars, baseCase, itemName);
+            //Pop the quantifer since we've traversed all its inner vars
+            quantifierStack.pop_front();
+            break;
+        //Recusive case 2: For any other formula type recurse on all subformulae
+        default:
+            for(Formula* subformula : base->subformulae()){
+                inOrderQuantifierTraversal(subformula, quantifierStack, boundObjVars, baseCase, itemName);
+            }
+    }
+}
+
+std::list<std::pair<Object*, Formula*>> Formula::boundObjectVariables() const{
+    std::list<std::pair<Object*, Formula*>> rv;
+    std::list<Formula*> quantifierStack;
+    auto getConstants = [](Formula* f){return f->pred->allConstants();};
+    auto getObjectName = [](Object* o){return o->name;};
+    inOrderQuantifierTraversal<Object*>((Formula*)this, quantifierStack, rv, getConstants, getObjectName);
+    return rv;
+}
+
+std::list<std::pair<Object*, Formula*>> Formula::boundFunctionVariables() const{
+    std::list<std::pair<Object*, Formula*>> rv;
+    std::list<Formula*> quantifierStack;
+    auto getFunctions = [](Formula* f){return f->pred->allFunctions();};
+    auto getObjectName = [](Object* o){return o->name;};
+    inOrderQuantifierTraversal<Object*>((Formula*)this, quantifierStack, rv, getFunctions, getObjectName);
+    return rv;
+}
+
+std::list<std::pair<Formula*, Formula*>> Formula::boundPredicateVariables() const{
+    std::list<std::pair<Object*, Formula*>> rv;
+    std::list<Formula*> quantifierStack;
+    auto getPredicates = [](Formula* p){return p;};
+    auto getPredicateName = [](Formula* p){return p->pred->name;};
+    inOrderQuantifierTraversal<Formula*>((Formula*)this, quantifierStack, rv, getPredicateName);
+    return rv;
+}
+
+/**
  * Recursive in order traversal function for finding the list of bound object variables and the formulae
  * they bind to. 
  * @param base The formula to start checking from
- * @param quantifiers A stack of quantifier formulae in the order to iteratively check 
+ * @param quantifiers A list representing an iterable stack of quantifier formulae in the order traversed check 
  * @param boundObjVars the vector or Object* Formula* pairs the result is written to.
 */
-void inOrderObjVarTraversal(Formula* base, std::stack<Formula*>& quantifiers,
-                            std::vector<std::pair<Object*, Formula*>>& boundObjVars){
-    
-
-}
-
-std::vector<Object*> Formula::boundObjectVariables() const{
-    
-}
 
 
 
@@ -163,11 +238,11 @@ Formula* Prop(std::string name){
     rv->type = Formula::Type::PRED;
     rv->pred = new Formula::Pred;
     rv->pred->name = std::move(name);
-    rv->pred->args = std::vector<Object*>();
+    rv->pred->args = ObjectList();
     return rv;
 }
 
-Formula* Pred(std::string name, std::vector<Object*> args){
+Formula* Pred(std::string name, ObjectList args){
     Formula* rv = new Formula;
     rv->type = Formula::Type::PRED;
     rv->pred = new Formula::Pred;
