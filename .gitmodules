@@ -1,0 +1,5 @@
+[submodule "garden/vampire"]
+	path = garden/vampire
+	url = https://github.com/vprover/vampire.git
+	branch = v4.7
+	shallow = true

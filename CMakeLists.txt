@@ -14,4 +14,4 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3 -fstack-protector -s")
 # Sources =====================================================================
 
 add_subdirectory(src)       #Our code
-add_subdirectory(Garden)    #Submodules 
+add_subdirectory(garden)    #Submodules 
