@@ -31,6 +31,36 @@ Formula::~Formula(){
     }
 }
 
+Formula* Formula::copy() const{
+    Formula* rv = new Formula;
+    rv->type = this->type;
+    rv->connectiveType = this->connectiveType;
+    switch(this->connectiveType){
+        case ConnectiveType::PRED:
+            rv->pred = new Pred;
+            rv->pred->name = this->pred->name;
+            rv->pred->args = TermList();
+            for(Term * arg : this->pred->args){
+                rv->pred->args.push_back(arg->copy());
+            }
+            return rv;
+        case ConnectiveType::UNARY:
+            rv->unary = new UnaryConnective;
+            rv->unary->arg = this->unary->arg->copy();
+            return rv;
+        case ConnectiveType::BINARY:
+            rv->binary = new BinaryConnective;
+            rv->binary->left = this->binary->left->copy(); 
+            rv->binary->right = this->binary->right->copy();
+            return rv;
+        case ConnectiveType::QUANT:
+            rv->quantifier = new Quantifier;
+            rv->quantifier->var = this->quantifier->var;
+            rv->quantifier->arg = this->quantifier->arg->copy();
+            return rv;
+    }
+    return nullptr;
+}
 
 FormulaList Formula::subformulae() const{
     switch(this->connectiveType){
@@ -59,6 +89,9 @@ FormulaList Formula::allSubformulae() const{
     }
     return allFormula;
 }
+
+
+
 
 /**
  * Recursively traverses a formula tree in-order and returns the depth
@@ -119,6 +152,34 @@ FormulaList Formula::allPropositions() const{
     //filter for out predicates with args
     std::remove_if(predicates.begin(), predicates.end(), [](Formula* p){return !p->isProposition();});
     return predicates;
+}
+
+TermList Formula::allConstants() const{
+    TermList rv;
+    for(const Formula* p : this->allPredicates()){
+        TermList constants = p->pred->allConstants();
+        rv.splice(rv.end(), constants, constants.begin(), constants.end());
+    }
+    return rv;
+}
+
+TermList Formula::allFunctions() const{
+    TermList rv;
+    for(const Formula* p : this->allPredicates()){
+        TermList functions = p->pred->allFunctions();
+        rv.splice(rv.end(), functions, functions.begin(), functions.end());
+    }
+    return rv;
+}
+
+FormulaList Formula::allQuantified() const{
+    FormulaList rv;
+    for(Formula* f : this->allSubformulae()){
+        if(f->connectiveType == ConnectiveType::QUANT){
+            rv.push_back(f);
+        }
+    }
+    return rv;
 }
 
 bool Formula::isProposition() const{

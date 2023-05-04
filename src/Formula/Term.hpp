@@ -29,6 +29,14 @@ struct Term{
 
     Term() = default;
     ~Term();
+
+    /** Return true iff two terms are syntactically equivelent */
+    bool operator==(const Term& term);
+
+    /**
+     * Creates a copy of this term and returns a newly allocated pointer to it.
+    */
+    Term* copy() const;
     
     /**
      * @brief Return all immediate subconstants of the current term.
@@ -75,10 +83,6 @@ struct Term{
     */
     std::unordered_set<std::string> identifiers() const;
 
-    /**
-     * Return true iff two terms are syntactically equivelent
-    */
-    bool operator==(const Term& term);
 };
 
 Term* Var(std::string name);

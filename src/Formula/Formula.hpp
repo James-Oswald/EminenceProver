@@ -105,11 +105,11 @@ struct Formula{
     /** @brief Default constructor, leaves everything uninitialized */
     Formula() = default;
 
-    /** @brief copy constructor, copes the entire formula */
-    Formula(const Formula& toCopy);
-
     /** @brief Destructor, frees all subformulae */
     ~Formula();
+
+    /** @brief Returns a pointer to a copy of this formula */
+    Formula* copy() const;
 
     ///@}
 
@@ -140,6 +140,21 @@ struct Formula{
      * @return a list of Formula* to propositions in the formula in the order they appear 
     */
     FormulaList allPredicates() const;
+
+    /**
+     * @return a list of pointer to all term level constants (including constant variables) in the formula
+    */
+    TermList allConstants() const;
+
+    /**
+     * @return a list of pointer to all term level functions (including function variables) in the formula
+    */
+    TermList allFunctions() const;
+
+    /**
+     * @return a list of all subformulae that are quantified at the top level
+    */
+    FormulaList allQuantified() const;
 
     /**
      * @return the list of all propositional variable in the order they appear in the formula via an in-order traversal

@@ -2,11 +2,20 @@
 #include "Term.hpp"
 
 
-
 Term::~Term(){
     for(Term* arg : args){
         delete arg;
     }
+}
+
+Term* Term::copy() const{
+    Term* rv = new Term;
+    rv->name = this->name;
+    rv->args = TermList();
+    for(Term* arg : this->args){
+        rv->args.push_back(arg->copy());
+    }
+    return rv;
 }
 
 /**
