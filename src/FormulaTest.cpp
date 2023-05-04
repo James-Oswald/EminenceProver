@@ -20,6 +20,10 @@ int main(){
     assert(f01->isZerothOrderFormula());
     assert(f01->isFirstOrderFormula());
     assert(f01->isSecondOrderFormula());
+    assert(f01->allFunctions().size() == 0);
+    assert(f01->allConstants().size() == 0);
+    assert(f01->allPredicates().size() == 1);
+    assert(f01->isProposition());
 
     pFormula f02 (And(Pred("eq", {Func("S", {Const("1")}), Const("2")}), Pred("eq", {Func("S", {Const("2")}), Const("3")})));
     std::cout<<FormulaWriter::toSExpression(f02.get())<<std::endl;
@@ -30,6 +34,10 @@ int main(){
     assert(f02->isZerothOrderFormula());
     assert(f02->isFirstOrderFormula());
     assert(f02->isSecondOrderFormula());
+    assert(f02->allFunctions().size() == 2);
+    assert(f02->allConstants().size() == 4);
+    assert(f02->allPredicates().size() == 2);
+    assert(!f02->isProposition());
 
     pFormula f1 (Exists("x", Forall("y", Pred("eq", {Var("x"), Var("y")}))));
     std::cout<<FormulaWriter::toSExpression(f1.get())<<std::endl;
@@ -46,6 +54,10 @@ int main(){
     assert(!f1->isZerothOrderFormula());
     assert(f1->isFirstOrderFormula());
     assert(f1->isSecondOrderFormula());
+    assert(f1->allFunctions().size() == 0);
+    assert(f1->allConstants().size() == 2);
+    assert(f1->allPredicates().size() == 1);
+    assert(!f1->isProposition());
 
     //Mathmatical Induction in 2nd order logic
     pFormula f2 (
@@ -78,4 +90,8 @@ int main(){
     assert(!f2->isZerothOrderFormula());
     assert(!f2->isFirstOrderFormula());
     assert(f2->isSecondOrderFormula());
+    assert(f2->allFunctions().size() == 1);
+    assert(f2->allConstants().size() == 5);
+    assert(f2->allPredicates().size() == 4);
+    assert(!f2->isProposition());
 }

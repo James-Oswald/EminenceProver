@@ -105,7 +105,7 @@ Formula* makeLegalTPTP(const Formula* formula){
     
     //Get the set of all bound constants
     BoundTermSet boundTerms;
-    for(auto [term, quantifierFormula] : formula->boundTermVariables()){
+    for(auto [term, quantifierFormula] : rv->boundTermVariables()){
         boundTerms.insert(term);
     }
 
@@ -146,20 +146,13 @@ const TPTPStringMapType TPTPStringMap = {
     {Formula::Type::EXISTS, "?"},        
 };
 
-std::string recursiveToTPTP(Term* term, BoundTermSet boundTerms){
+std::string recursiveToTPTP(Term* term){
     if(term->args.size() == 0){
-        BoundTermSet::const_iterator itr = boundTerms.find(term);
-        if(itr == boundTerms.end()){
-            //If we are not bound we are a constant and need to wrap in quotes
-            return "\"" + term->name + "\"";
-        }else{
-            //We are a term variable and not wrapped in quotes 
-            return term->name;
-        }
+        return term->name;
     }else{
         std::string rv = term->name + "(";
         for(Term* arg : term->args){
-            rv += recursiveToTPTP(arg, boundTerms) + ", ";
+            rv += recursiveToTPTP(arg) + ", ";
         }
         rv.pop_back();
         rv.pop_back();
@@ -168,11 +161,11 @@ std::string recursiveToTPTP(Term* term, BoundTermSet boundTerms){
     }
 }
 
-std::string recursiveToTPTP(Formula* formula, BoundTermSet boundTerms){
+std::string recursiveToTPTP(Formula* formula){
     switch(formula->type){
         case Formula::Type::PRED:{
             std::string rv;
-            formula->pred->applyToAsTerm([&rv, boundTerms](Term* t){
+            formula->pred->applyToAsTerm([&rv](Term* t){
                 rv = recursiveToTPTP(t);
             });
             return rv;
@@ -183,7 +176,7 @@ std::string recursiveToTPTP(Formula* formula, BoundTermSet boundTerms){
         case Formula::Type::OR:
         case Formula::Type::IF:
         case Formula::Type::IFF:
-            return "(" + recursiveToTPTP(formula->binary->left, boundTerms) + TPTPStringMap.at(formula->type) +
+            return "(" + recursiveToTPTP(formula->binary->left) + TPTPStringMap.at(formula->type) +
                    recursiveToTPTP(formula->binary->right) + ")";
         case Formula::Type::FORALL:
         case Formula::Type::EXISTS:
@@ -200,5 +193,5 @@ std::string FormulaWriter::toFirstOrderTPTP(std::string name, std::string type, 
     Formula* cleanFormula = makeLegalTPTP(formula);
     std::string tptpFormulaString = "fof(" + name + "," + type + "," + recursiveToTPTP(cleanFormula) + ").";
     delete cleanFormula;
-    return 
+    return tptpFormulaString;
 }

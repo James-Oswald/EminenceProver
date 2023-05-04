@@ -90,7 +90,7 @@ TermList Term::allSubfunctions() const {
 
 TermList Term::allFunctions() const {
     TermList rv = this->allSubfunctions();
-    if(rv.size() > 0){
+    if(this->args.size() > 0){
         rv.push_front((Term*)this);
     }
     return rv;

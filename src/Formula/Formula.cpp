@@ -174,6 +174,9 @@ TermList Formula::allFunctions() const{
 
 FormulaList Formula::allQuantified() const{
     FormulaList rv;
+    if(this->connectiveType == ConnectiveType::QUANT){
+        rv.push_back((Formula*)this);
+    }
     for(Formula* f : this->allSubformulae()){
         if(f->connectiveType == ConnectiveType::QUANT){
             rv.push_back(f);

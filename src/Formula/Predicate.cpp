@@ -12,24 +12,12 @@ void Formula::Pred::applyToAsTerm(std::function<void(Term*)> termContext) const{
 
 TermList Formula::Pred::allConstants() const{
     TermList rv;
-    applyToAsTerm([&rv](Term* t){rv = t->allConstants();});
+    for(Term* arg : this->args){
+        //.splice(rv.end(),...) functions as a concat
+        rv.splice(rv.end(), arg->allConstants());
+    }
     return rv;
 }
-
-TermList Formula::Pred::allFunctions() const{
-    TermList rv;
-    applyToAsTerm([&rv](Term* t){rv = t->allSubfunctions();});
-    return rv;
-}
-
-size_t Formula::Pred::depth() const{
-    size_t rv = 0;
-    applyToAsTerm([&rv](Term* t){rv = t->depth();});
-    return rv;
-}
-
-//With code reuse
-/* 
 
 TermList Formula::Pred::allFunctions() const{
     TermList rv;
@@ -52,4 +40,3 @@ size_t Formula::Pred::depth() const{
     return 1 + termDepth;
 }
 
-*/
