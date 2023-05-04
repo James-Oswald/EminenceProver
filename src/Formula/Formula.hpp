@@ -3,10 +3,11 @@
 
 #include<string>
 #include<list>
+#include<functional>
 
 #include"Term.hpp"
 
-struct Formula;
+class Formula;
 
 using FormulaList = std::list<Formula*>;
 
@@ -23,7 +24,7 @@ struct Formula{
     */
 
     /**
-     * The type of the top level operator or connective
+     * @brief The type of the top level operator or connective
      * in the formation tree.
     */
     enum class Type{
@@ -37,7 +38,15 @@ struct Formula{
         EXISTS,     ///< Quantifier, exists
     };
 
-    
+    /**
+     * @brief The class of the top level connective of the current formula
+    */
+    enum class ConnectiveType{
+        PRED,
+        UNARY,
+        BINARY,
+        QUANT,
+    };
 
     struct Pred{
         std::string name;          ///< the identifier for this predicate
@@ -51,6 +60,13 @@ struct Formula{
 
         /** @return max height of terms inside the predicate */
         size_t depth() const;
+
+        /** Provides a memory safe context in which the predicate is interpreted as a term. 
+         *  This is useful as it allows us to take advantage of 
+         *  @param termContext a lambda which takes the predicate interpreted as a term and does something with it
+         *  output can be obtained via binding outside vars by reference.  
+        */
+        void applyToAsTerm(std::function<void(Term*)> termContext) const;
     };
 
     struct UnaryConnective{
@@ -74,6 +90,7 @@ struct Formula{
     */
 
     Type type;                      ///< The type of the formula
+    ConnectiveType connectiveType;  ///< The connective class of the formula
     union{
         Pred* pred;                 ///< Valid iff type == PRED
         UnaryConnective* unary;     ///< Valid iff type == NOT
@@ -82,10 +99,16 @@ struct Formula{
     };
 
     // Methods =========================================================================================
-    /** @name Constructors & Destructors */
+    /** @name Constructors, Destructors, operators */
     ///@{
-
+    
+    /** @brief Default constructor, leaves everything uninitialized */
     Formula() = default;
+
+    /** @brief copy constructor, copes the entire formula */
+    Formula(const Formula& toCopy);
+
+    /** @brief Destructor, frees all subformulae */
     ~Formula();
 
     ///@}
@@ -150,6 +173,15 @@ struct Formula{
     */
     std::list<std::pair<Formula*, Formula*>> boundPredicateVariables() const;
 
+    /**
+     * gets the set of all identifiers in the formula as strings. Identifiers include:
+     * 1) all bound quantifier variable names
+     * 2) all term constant and term variable names 
+     * 3) all predicate and predicate variable names
+     * 4) all all function and function variable names 
+    */
+    std::unordered_set<std::string> identifiers() const;
+
     //@}
 
     /** @name Formula Metrics and Testers */
@@ -173,19 +205,27 @@ struct Formula{
     bool isProposition() const;
 
     /**
-     * Tests if a formula is a 0th order (propositional) logic formula. i.e. 
-     * 1) contains only propositional variables, no predicates
-     * 2) Exclusively uses the Not, And, Or, If, and Iff connectives
-     * @return true iff the formula is a formula from 0th order logic
+     * Tests if the formula is a propositional calculus formula.
+     * I.E. contains only the connectives: not, and, or, if, iff
+     * and contains only propositional variables
+     * @return true iff the formula can be interpreted as propositional
+    */
+    bool isPropositionalFormula() const;
+
+    /**
+     * Tests if a formula is a 0th order predicate logic formula.
+     * I.E. contains only the connectives: not, and, or, if, iff
+     * but may contain predicates and terms that are composed of constants
+     * @return true iff the formula can be interpreted as zeroth order
     */
     bool isZerothOrderFormula() const;
 
 
     /**
      * Tests if a 1st order logic formula i.e
-     * 1) quantifies only over variables and not predicates or functions. 
-     * 2) does not contain any modal operators. 
-     * @return true if the formula is minimally 1st order
+     * I.E. contains only the connectives: not, and, or, if, iff
+     * and quantifies over term constants, but not predicates or functions
+     * @return true iff the formula can be interpreted as first order
     */
     bool isFirstOrderFormula() const;
 
@@ -210,3 +250,4 @@ Formula* If(Formula* left, Formula* right);
 Formula* Iff(Formula* left, Formula* right);
 Formula* Forall(std::string varName, Formula* arg);
 Formula* Exists(std::string varName, Formula* arg);
+

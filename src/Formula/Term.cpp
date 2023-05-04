@@ -1,6 +1,8 @@
 
 #include "Term.hpp"
 
+
+
 Term::~Term(){
     for(Term* arg : args){
         delete arg;
@@ -94,6 +96,14 @@ size_t Term::depth() const{
         }
     }
     return 1 + termDepth;
+}
+
+std::unordered_set<std::string> Term::identifiers() const{
+    std::unordered_set<std::string> rv = {this->name};
+    for(Term* arg : args){
+        rv.merge(arg->identifiers());
+    }
+    return rv;
 }
 
 // Construction Helpers ================================================================================================

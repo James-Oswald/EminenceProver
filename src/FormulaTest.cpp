@@ -11,6 +11,26 @@
 using pFormula = std::unique_ptr<Formula>;
 
 int main(){
+    pFormula f01 (Prop("A"));
+    std::cout<<FormulaWriter::toSExpression(f01.get())<<std::endl;
+    std::cout<<FormulaWriter::toFirstOrderTPTP("f01", "hypothesis", f01.get())<<std::endl;
+    assert(f01->depth() == 1);
+    assert(f01->depthWithTerms() == 1);
+    assert(f01->isPropositionalFormula());
+    assert(f01->isZerothOrderFormula());
+    assert(f01->isFirstOrderFormula());
+    assert(f01->isSecondOrderFormula());
+
+    pFormula f02 (And(Pred("eq", {Func("S", {Const("1")}), Const("2")}), Pred("eq", {Func("S", {Const("2")}), Const("3")})));
+    std::cout<<FormulaWriter::toSExpression(f02.get())<<std::endl;
+    std::cout<<FormulaWriter::toFirstOrderTPTP("f02", "hypothesis", f02.get())<<std::endl;
+    assert(f02->depth() == 2);
+    assert(f02->depthWithTerms() == 4);
+    assert(!f02->isPropositionalFormula());
+    assert(f02->isZerothOrderFormula());
+    assert(f02->isFirstOrderFormula());
+    assert(f02->isSecondOrderFormula());
+
     pFormula f1 (Exists("x", Forall("y", Pred("eq", {Var("x"), Var("y")}))));
     std::cout<<FormulaWriter::toSExpression(f1.get())<<std::endl;
     std::cout<<FormulaWriter::toFirstOrderTPTP("f1", "hypothesis", f1.get())<<std::endl;
@@ -22,6 +42,10 @@ int main(){
     assert(f1->boundTermVariables().size() == 2);
     assert(f1->boundFunctionVariables().size() == 0);
     assert(f1->boundPredicateVariables().size() == 0);
+    assert(!f1->isPropositionalFormula());
+    assert(!f1->isZerothOrderFormula());
+    assert(f1->isFirstOrderFormula());
+    assert(f1->isSecondOrderFormula());
 
     //Mathmatical Induction in 2nd order logic
     pFormula f2 (
@@ -41,7 +65,7 @@ int main(){
         )
     );
     std::cout<<FormulaWriter::toSExpression(f2.get())<<std::endl;
-    std::cout<<FormulaWriter::toFirstOrderTPTP("f2", "hypothesis", f2.get())<<std::endl;
+    //std::cout<<FormulaWriter::toFirstOrderTPTP("f2", "hypothesis", f2.get())<<std::endl;
     assert(FormulaWriter::toSExpression(f2.get()) == 
           "(Forall (If (And (P 0) (Forall (If (P n) (P (add n 1))))) (Forall (P n))))");
     assert(f2->depth() == 6);
@@ -50,4 +74,8 @@ int main(){
     assert(f2->boundTermVariables().size() == 3);
     assert(f2->boundFunctionVariables().size() == 0);
     assert(f2->boundPredicateVariables().size() == 4);
+    assert(!f2->isPropositionalFormula());
+    assert(!f2->isZerothOrderFormula());
+    assert(!f2->isFirstOrderFormula());
+    assert(f2->isSecondOrderFormula());
 }

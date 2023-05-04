@@ -3,6 +3,7 @@
 
 #include<string>
 #include<list>
+#include<unordered_set>
 
 struct Term;
 
@@ -66,6 +67,13 @@ struct Term{
      * @brief returns the hight of the term tree.
     */
     size_t depth() const;
+
+    /**
+     * @brief gets the set of all identifier names in the term. This includes
+     * 1) all constant and constant variable names
+     * 2) all function and function variable names
+    */
+    std::unordered_set<std::string> identifiers() const;
 
     /**
      * Return true iff two terms are syntactically equivelent

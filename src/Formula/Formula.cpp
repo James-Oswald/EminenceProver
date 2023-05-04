@@ -7,56 +7,24 @@
 #include "Formula.hpp"
 
 
-TermList Formula::Pred::allConstants() const{
-    TermList rv;
-    for(Term* arg : this->args){
-        //.splice(rv.end(),...) functions as a concat
-        rv.splice(rv.end(), arg->allConstants());
-    }
-    return rv;
-}
-
-TermList Formula::Pred::allFunctions() const{
-    TermList rv;
-    for(Term* arg : this->args){
-        //.splice(rv.end(),...) functions as a concat
-        rv.splice(rv.end(), arg->allFunctions());
-    }
-    return rv;
-}
-
-//Hacky Term code reuse but will at least throw errors
-size_t Formula::Pred::depth() const{
-    Term* dummy = new Term;
-    dummy->name = this->name;
-    dummy->args = this->args;
-    size_t rv = dummy->depth();
-    operator delete(dummy); //Don't call the destructor on dummy
-    return rv;
-}
-
 Formula::~Formula(){
-    switch(this->type){
-        case Type::PRED:
+    switch(this->connectiveType){
+        case ConnectiveType::PRED:
             for(Term* arg : this->pred->args){
                 delete arg;
             }
             delete this->pred;
             break;
-        case Type::NOT:
+        case ConnectiveType::UNARY:
             delete this->unary->arg;
             delete this->unary;
             break;
-        case Type::AND:
-        case Type::OR:
-        case Type::IF:
-        case Type::IFF:
+        case ConnectiveType::BINARY:
             delete this->binary->left;
             delete this->binary->right;
             delete this->binary;
             break;
-        case Type::FORALL:
-        case Type::EXISTS:
+        case ConnectiveType::QUANT:
             delete this->quantifier->arg;
             delete this->quantifier;
             break;
@@ -65,18 +33,14 @@ Formula::~Formula(){
 
 
 FormulaList Formula::subformulae() const{
-    switch(this->type){
-        case Type::PRED:
+    switch(this->connectiveType){
+        case ConnectiveType::PRED:
             return FormulaList{};
-        case Type::NOT:
+        case ConnectiveType::UNARY:
             return FormulaList{this->unary->arg};
-        case Type::AND:
-        case Type::OR:
-        case Type::IF:
-        case Type::IFF:
+        case ConnectiveType::BINARY:
             return FormulaList{this->binary->left, this->binary->right};
-        case Type::FORALL:
-        case Type::EXISTS:
+        case ConnectiveType::QUANT:
             return FormulaList{this->quantifier->arg};
     }
     return {};
@@ -96,6 +60,12 @@ FormulaList Formula::allSubformulae() const{
     return allFormula;
 }
 
+/**
+ * Recursively traverses a formula tree in-order and returns the depth
+ * @param base the tree to traverse and get the depth of
+ * @param withTerms if true, will count the depth of term trees else treats predicates as leaves.
+ * @return the depth of the tree
+*/
 size_t depthTraversal(const Formula* base, bool withTerms){
     switch(base->type){
         case Formula::Type::PRED:
@@ -128,24 +98,13 @@ size_t Formula::depthWithTerms() const{
  * @param predicates the list of predicates being built up in the order they appear within base.
 */
 void inOrderPredicateTraversal(Formula* base, FormulaList& predicates){
-    switch(base->type){
-        case Formula::Type::PRED:
+    switch(base->connectiveType){
+        case Formula::ConnectiveType::PRED:
             predicates.push_back(base);
             break;
-        case Formula::Type::NOT:
-            inOrderPredicateTraversal(base->unary->arg, predicates);
-            break;
-        case Formula::Type::AND:
-        case Formula::Type::OR:
-        case Formula::Type::IF:
-        case Formula::Type::IFF:
-            inOrderPredicateTraversal(base->binary->left, predicates);
-            inOrderPredicateTraversal(base->binary->left, predicates);
-            break;
-        case Formula::Type::FORALL:
-        case Formula::Type::EXISTS:
-            inOrderPredicateTraversal(base->quantifier->arg, predicates);
-            break;
+        default:
+            for(Formula* f : base->subformulae())
+                inOrderPredicateTraversal(f, predicates);
     }
 }
 
@@ -167,8 +126,8 @@ bool Formula::isProposition() const{
 }
 
 /**
- * Recursive in-order traversal function for finding a list of items (Predicates, Constants, Functions)
- * of generic type that are bound by quantifiers.
+ * Recursive in-order traversal function for finding a list of items (Predicates, Constants, or Functions)
+ * of that are bound by quantifiers.
  * @tparam ItemType the type of item that the quantifier formula will be associated with, Term* in the case
  * of quantifying over terms and functions and Formula* in the case of quantifying over Predicates
  * @param base The formula to start checking from
@@ -183,9 +142,9 @@ void inOrderQuantifierTraversal(Formula* base,
                                 std::list<std::pair<ItemType, Formula*>>& boundObjVars,
                                 std::list<ItemType> (*baseCase)(Formula*),
                                 std::string (*itemName)(ItemType)){
-    switch(base->type){
+    switch(base->connectiveType){
         //Base Case 1: the formula is a Predicate check if we associate with anything and leave
-        case Formula::Type::PRED:
+        case Formula::ConnectiveType::PRED:
             for(ItemType arg : baseCase(base)){
                 for(Formula* quantifierFormula : quantifierStack){
                     if(quantifierFormula->quantifier->var == itemName(arg)){
@@ -196,8 +155,7 @@ void inOrderQuantifierTraversal(Formula* base,
             break;
         //Recursive case 1: The formula is a quantifier, push onto the quantifier stack to update binding order
         //and traverse the subformula
-        case Formula::Type::FORALL:
-        case Formula::Type::EXISTS:
+        case Formula::ConnectiveType::QUANT:
             //Push the current quantifier onto the list of bound vars we're looking for
             quantifierStack.push_front(base);
             inOrderQuantifierTraversal(base->quantifier->arg, quantifierStack, boundObjVars, baseCase, itemName);
@@ -239,6 +197,94 @@ std::list<std::pair<Formula*, Formula*>> Formula::boundPredicateVariables() cons
     return rv;
 }
 
+std::unordered_set<std::string> Formula::identifiers() const{
+    switch (this->connectiveType){
+        case ConnectiveType::PRED:{
+            std::unordered_set<std::string> rv;
+            this->pred->applyToAsTerm([&rv](Term* t){rv = t->identifiers();});
+            return rv;
+        }
+        default:{
+            std::unordered_set<std::string> rv;
+            for(Formula* subformula : this->subformulae()){
+                rv.merge(subformula->identifiers());
+            }
+            return rv;
+        }
+    }
+}
+
+// Formula Class testers -----------------------------------------------------------------------------------------------
+
+/**
+ * @brief tests if a formula only contains the given connectives
+ * @param connectives the set of connectives to check if the formula contains
+ * @param formula the formula to test
+ * @return true iff formula contains only propositional connectives
+*/
+bool onlyConnectives(std::unordered_set<Formula::Type> connectives, const Formula * formula){
+    for(Formula* subformula : formula->allSubformulae()){
+        if(subformula->type != Formula::Type::PRED && 
+           connectives.find(subformula->type) == connectives.end()){
+            return false;
+        }
+    }
+    return true;
+}
+
+const std::unordered_set<Formula::Type> PropositionalConnectives = 
+{Formula::Type::NOT, Formula::Type::AND, Formula::Type::OR, Formula::Type::IF, Formula::Type::IFF};
+
+const std::unordered_set<Formula::Type> BaseConnectives = 
+{Formula::Type::NOT, Formula::Type::AND, Formula::Type::OR,
+ Formula::Type::IF, Formula::Type::IFF, Formula::Type::EXISTS, Formula::Type::FORALL};
+
+bool Formula::isPropositionalFormula() const{
+    
+    //Make sure we only use propositional connectives
+    if(!onlyConnectives(PropositionalConnectives, this)){
+        return false;
+    }
+    
+    //Make sure all predicates are propositions
+    for(Formula * predicate : this->allPredicates()){
+        if(!predicate->isProposition()){
+            return false;
+        }
+    }
+
+    return true;
+}
+
+
+bool Formula::isZerothOrderFormula() const{
+    return onlyConnectives(PropositionalConnectives, this);
+}
+
+bool Formula::isFirstOrderFormula() const{
+    //Make sure we only use base connectives (Prop + quantifiers)
+    if(!onlyConnectives(BaseConnectives, this)){
+        return false;
+    }
+
+    //Make sure we don't quantify over predicates or formulae
+    if(this->boundPredicateVariables().size() > 0 || this->boundFunctionVariables().size() > 0){
+        return false;
+    }
+
+    return true;
+}
+
+
+bool Formula::isSecondOrderFormula() const{
+    //Make sure we only use base connectives (Prop + quantifiers)
+    if(!onlyConnectives(BaseConnectives, this)){
+        return false;
+    }
+
+    return true;
+}
+
 //Construction Helpers =================================================================================================
 
 
@@ -254,6 +300,7 @@ Formula* Prop(std::string name){
 Formula* Pred(std::string name, TermList args){
     Formula* rv = new Formula;
     rv->type = Formula::Type::PRED;
+    rv->connectiveType = Formula::ConnectiveType::PRED;
     rv->pred = new Formula::Pred;
     rv->pred->name = std::move(name);
     rv->pred->args = std::move(args);
@@ -263,6 +310,7 @@ Formula* Pred(std::string name, TermList args){
 Formula* Not(Formula* arg){
     Formula* rv = new Formula;
     rv->type = Formula::Type::NOT;
+    rv->connectiveType = Formula::ConnectiveType::UNARY;
     rv->unary = new Formula::UnaryConnective;
     rv->unary->arg = arg;
     return rv;
@@ -271,6 +319,7 @@ Formula* Not(Formula* arg){
 Formula* And(Formula* left, Formula* right){
     Formula* rv = new Formula;
     rv->type = Formula::Type::AND;
+    rv->connectiveType = Formula::ConnectiveType::BINARY;
     rv->binary = new Formula::BinaryConnective;
     rv->binary->left = left;
     rv->binary->right = right;
@@ -280,6 +329,7 @@ Formula* And(Formula* left, Formula* right){
 Formula* Or(Formula* left, Formula* right){
     Formula* rv = new Formula;
     rv->type = Formula::Type::OR;
+    rv->connectiveType = Formula::ConnectiveType::BINARY;
     rv->binary = new Formula::BinaryConnective;
     rv->binary->left = left;
     rv->binary->right = right;
@@ -289,6 +339,7 @@ Formula* Or(Formula* left, Formula* right){
 Formula* If(Formula* left, Formula* right){
     Formula* rv = new Formula;
     rv->type = Formula::Type::IF;
+    rv->connectiveType = Formula::ConnectiveType::BINARY;
     rv->binary = new Formula::BinaryConnective;
     rv->binary->left = left;
     rv->binary->right = right;
@@ -298,6 +349,7 @@ Formula* If(Formula* left, Formula* right){
 Formula* Iff(Formula* left, Formula* right){
     Formula* rv = new Formula;
     rv->type = Formula::Type::IFF;
+    rv->connectiveType = Formula::ConnectiveType::BINARY;
     rv->binary = new Formula::BinaryConnective;
     rv->binary->left = left;
     rv->binary->right = right;
@@ -307,6 +359,7 @@ Formula* Iff(Formula* left, Formula* right){
 Formula* Forall(std::string varName, Formula* arg){
     Formula* rv = new Formula;
     rv->type = Formula::Type::FORALL;
+    rv->connectiveType = Formula::ConnectiveType::QUANT;
     rv->quantifier = new Formula::Quantifier;
     rv->quantifier->var = std::move(varName);
     rv->quantifier->arg = arg;
@@ -316,6 +369,7 @@ Formula* Forall(std::string varName, Formula* arg){
 Formula* Exists(std::string varName, Formula* arg){
     Formula* rv = new Formula;
     rv->type = Formula::Type::EXISTS;
+    rv->connectiveType = Formula::ConnectiveType::QUANT;
     rv->quantifier = new Formula::Quantifier;
     rv->quantifier->var = std::move(varName);
     rv->quantifier->arg = arg;

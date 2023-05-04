@@ -6,4 +6,5 @@ target_sources(Formula PRIVATE
     Formula.hpp
     Term.hpp
     Term.cpp
+    Predicate.cpp
 )
