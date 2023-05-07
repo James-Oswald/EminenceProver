@@ -225,7 +225,7 @@ struct Formula{
      * and contains only propositional variables
      * @return true iff the formula can be interpreted as propositional
     */
-    bool isPropositionalFormula() const;
+    bool isPropositional() const;
 
     /**
      * Tests if a formula is a 0th order predicate logic formula.
@@ -233,7 +233,7 @@ struct Formula{
      * but may contain predicates and terms that are composed of constants
      * @return true iff the formula can be interpreted as zeroth order
     */
-    bool isZerothOrderFormula() const;
+    bool isZerothOrder() const;
 
 
     /**
@@ -242,14 +242,14 @@ struct Formula{
      * and quantifies over term constants, but not predicates or functions
      * @return true iff the formula can be interpreted as first order
     */
-    bool isFirstOrderFormula() const;
+    bool isFirstOrder() const;
 
     /**
      * Tests if a 2nd order formula i.e
      * Contains quantification over Predicates or Functions
      * @return true iff the formula is minimally 2nd order
     */
-    bool isSecondOrderFormula() const;
+    bool isSecondOrder() const;
 
     //@}
 };

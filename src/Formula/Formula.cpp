@@ -303,7 +303,7 @@ const std::unordered_set<Formula::Type> BaseConnectives =
 {Formula::Type::NOT, Formula::Type::AND, Formula::Type::OR,
  Formula::Type::IF, Formula::Type::IFF, Formula::Type::EXISTS, Formula::Type::FORALL};
 
-bool Formula::isPropositionalFormula() const{
+bool Formula::isPropositional() const{
     
     //Make sure we only use propositional connectives
     if(!onlyConnectives(PropositionalConnectives, this)){
@@ -321,11 +321,11 @@ bool Formula::isPropositionalFormula() const{
 }
 
 
-bool Formula::isZerothOrderFormula() const{
+bool Formula::isZerothOrder() const{
     return onlyConnectives(PropositionalConnectives, this);
 }
 
-bool Formula::isFirstOrderFormula() const{
+bool Formula::isFirstOrder() const{
     //Make sure we only use base connectives (Prop + quantifiers)
     if(!onlyConnectives(BaseConnectives, this)){
         return false;
@@ -340,7 +340,7 @@ bool Formula::isFirstOrderFormula() const{
 }
 
 
-bool Formula::isSecondOrderFormula() const{
+bool Formula::isSecondOrder() const{
     //Make sure we only use base connectives (Prop + quantifiers)
     if(!onlyConnectives(BaseConnectives, this)){
         return false;

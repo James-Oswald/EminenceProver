@@ -1,5 +1,17 @@
 
 
+#Compile vampire without Z3 support
+add_subdirectory(vampire)
+set_target_properties(vampire PROPERTIES
+    OUTPUT_NAME vampire
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
+)
+#Don't build the vampire vtest executable, we don't need it
+set_target_properties(vtest PROPERTIES 
+    EXCLUDE_FROM_ALL 1 
+    EXCLUDE_FROM_DEFAULT_BUILD 1
+)
+
 #[[
 #TODO Have yet to get building from source to work
 
@@ -11,6 +23,8 @@ find_package(Z3 CONFIG REQUIRED) #This is a hack to foce Vampire to find Z3
 add_subdirectory(vampire)
 ]]
 
+#From Back when i thought this was downloading the library rather than the binary exec lmao
+#[[
 message("[EmP] Searching for Vampire header files at at " ${CMAKE_CURRENT_SOURCE_DIR} "/vampire/Api")
 set(VampireAPIPath ${CMAKE_CURRENT_SOURCE_DIR}/vampire/Api/Problem.hpp)
 if(NOT EXISTS ${VampireAPIPath})
@@ -32,10 +46,7 @@ if(NOT EXISTS ${VampireAPIPath})
 endif()
 
 
-message("[EmP] found Vampire API, adding include path")
-
-#Allows us to use #include<vampire/...> from our sources
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+message("[EmP] found Vampire API")
 
 SET(LibVampirePath ${CMAKE_CURRENT_BINARY_DIR}/libvampire47.a)
 message("[EmP] Searching for libvampire47.a at " ${CMAKE_CURRENT_BINARY_DIR})
@@ -69,3 +80,34 @@ message("[EmP] libvampire47.a found")
 #Add it as a library
 add_library(Vampire STATIC IMPORTED)
 set_target_properties(Vampire PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_BINARY_DIR}/libvampire47.a)
+]]
+
+#[[
+SET(VampirePath ${CMAKE_CURRENT_BINARY_DIR}/vampire)
+message("[EmP] Searching for Vampire binary at " ${CMAKE_CURRENT_BINARY_DIR})
+if(NOT EXISTS ${VampirePath})
+
+    #Try to download it if it dosen't exist
+    message("[EmP] Not found, downloading Vampire binary")
+    file(DOWNLOAD 
+        https://github.com/vprover/vampire/releases/download/v4.7/vampire4.7.zip 
+        ${CMAKE_CURRENT_BINARY_DIR}/vampire47.zip
+    )
+    message("[EmP] Downloaded Vampire binary")
+    message("[EmP] Extracting Vampire binary")
+    execute_process(
+        COMMAND bash -c "unzip -o vampire47.zip -d . && mv vampire_z3_rel_static_HEAD_6295 vampire"
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        RESULT_VARIABLE ExitCode
+    )
+    if(${ExitCode} AND NOT ${ExitCode} EQUAL 0)
+        message(FATAL_ERROR "[EmP] Failed to extract Vampire binary")
+    endif()
+    message("[EmP] Extracted Vampire binary")
+
+    #If downloading library still hasn't worked to get the API, fail
+    if(NOT EXISTS ${VampirePath})
+        message(FATAL_ERROR "[EmP] libvampire47.a not found, Falied")
+    endif()
+endif()
+#]]

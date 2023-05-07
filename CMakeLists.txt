@@ -11,7 +11,16 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g -ggdb -Wall")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3 -fstack-protector -s")
 
+# Include Paths ===============================================================
+
+include_directories(${CMAKE_SOURCE_DIR}/garden)
+include_directories(${CMAKE_SOURCE_DIR}/src)
+
+
 # Sources =====================================================================
 
-add_subdirectory(src)       #Our code
 add_subdirectory(garden)    #Submodules 
+add_subdirectory(src)       #Our code
+
+enable_testing()
+add_subdirectory(test)      #Testing

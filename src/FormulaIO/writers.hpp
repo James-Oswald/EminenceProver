@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "../Formula/Formula.hpp"
+#include <Formula/Formula.hpp>
 
 #include<string>
 
