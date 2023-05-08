@@ -16,11 +16,12 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3 -fstack-protector -s")
 include_directories(${CMAKE_SOURCE_DIR}/garden)
 include_directories(${CMAKE_SOURCE_DIR}/src)
 
-
 # Sources =====================================================================
 
 add_subdirectory(garden)    #Submodules 
 add_subdirectory(src)       #Our code
+
+# Tests =======================================================================
 
 enable_testing()
 add_subdirectory(test)      #Testing

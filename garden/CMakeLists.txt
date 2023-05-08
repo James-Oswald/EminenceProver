@@ -1,4 +1,6 @@
 
+#TODO automatically download the submodule if it dosen't exist yet
+
 #Avoid reconfiguring / re-building vampire, manually edit the cache to rebuild
 message("[Eminence Prover] Looking for vampire at " ${CMAKE_BINARY_DIR}/bin/vampire)
 if(NOT EXISTS ${CMAKE_BINARY_DIR}/bin/vampire)
@@ -18,18 +20,6 @@ else()
     message("[Eminence Prover] Vampire found, will not reconfigure or rebuild")
 endif()
 
-
-
-#[[
-#TODO Have yet to get building from source to work
-1
-message("[Eminence Prover] Configuring Z3")
-add_subdirectory(vampire/Z3)
-
-message("[Eminence Prover] Configuring Vampire")
-find_package(Z3 CONFIG REQUIRED) #This is a hack to foce Vampire to find Z3
-add_subdirectory(vampire)
-]]
 
 #From Back when i thought this was downloading the library rather than the binary exec lmao
 #[[

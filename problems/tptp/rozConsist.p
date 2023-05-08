@@ -7,4 +7,4 @@ fof(lt_assym, axiom,
     ![X, Y] : (lt(X, Y) <=> ~lt(Y, X))
 ).
 
-fof(prove, conjecture, $true).
+fof(prove, conjecture, $false).

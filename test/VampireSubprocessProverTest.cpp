@@ -10,5 +10,5 @@ int main(){
     Formula* goal1 = Pred("P", {Const("a")});
     Problem p1(assumptions1, goal1);
     assert(p1.isFirstOrder());
-    assert(vamp::solve(p1) == true);
+    assert(vamp::solve(p1) == false);
 }

@@ -11,6 +11,17 @@ cmake ..
 make
 ```
 
+We build the docs separately from the CMake build
+```
+doxygen Doxyfile
+```
+
 ## Dependencies
-Maybe:
+For Building:
+* [CMake](https://cmake.org/)
+* [Boost C++ Libraries](https://www.boost.org/)
+* [Vampire Theorem Prover (included as a submodule)](https://github.com/vprover/vampire)
+For Docs:
+* [doxygen](https://www.doxygen.nl/)
+Not currently a dependency but was or may be at some point:
 * [BNFC](https://github.com/BNFC/bnfc)
