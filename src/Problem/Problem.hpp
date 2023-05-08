@@ -1,4 +1,6 @@
 
+#pragma once
+
 #include<list>
 
 #include "../Formula/Formula.hpp"

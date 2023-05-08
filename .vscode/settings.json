@@ -1,16 +1,21 @@
 {
     "editor.rulers": [120],
     "cSpell.words": [
+        "bdll",
         "biconditional",
         "BNFC",
+        "idents",
+        "ipstream",
         "SEXPRESSION",
+        "smtcomp",
         "subconstants",
         "subformula",
         "subformulae",
         "Subterm",
         "subterms",
         "tparam",
-        "TPTP"
+        "TPTP",
+        "unsat"
     ],
     "files.associations": {
         "cctype": "cpp",
@@ -80,7 +85,11 @@
         "semaphore": "cpp",
         "stop_token": "cpp",
         "csignal": "cpp",
-        "iomanip": "cpp"
+        "iomanip": "cpp",
+        "bitset": "cpp",
+        "codecvt": "cpp",
+        "complex": "cpp",
+        "typeindex": "cpp"
     },
     "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools"
 }

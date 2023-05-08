@@ -1,20 +1,28 @@
 
+#Avoid reconfiguring / re-building vampire, manually edit the cache to rebuild
+message("[Eminence Prover] Looking for vampire at " ${CMAKE_BINARY_DIR}/bin/vampire)
+if(NOT EXISTS ${CMAKE_BINARY_DIR}/bin/vampire)
+    message("[Eminence Prover] Vampire not found, will build from source")
+    #Compile vampire without Z3 support
+    add_subdirectory(vampire)
+    set_target_properties(vampire PROPERTIES
+        OUTPUT_NAME vampire
+        RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
+    )
+    #Don't build the vampire vtest executable, we don't need it
+    set_target_properties(vtest PROPERTIES 
+        EXCLUDE_FROM_ALL 1 
+        EXCLUDE_FROM_DEFAULT_BUILD 1
+    )
+else()
+    message("[Eminence Prover] Vampire found, will not reconfigure or rebuild")
+endif()
 
-#Compile vampire without Z3 support
-add_subdirectory(vampire)
-set_target_properties(vampire PROPERTIES
-    OUTPUT_NAME vampire
-    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
-)
-#Don't build the vampire vtest executable, we don't need it
-set_target_properties(vtest PROPERTIES 
-    EXCLUDE_FROM_ALL 1 
-    EXCLUDE_FROM_DEFAULT_BUILD 1
-)
+
 
 #[[
 #TODO Have yet to get building from source to work
-
+1
 message("[Eminence Prover] Configuring Z3")
 add_subdirectory(vampire/Z3)
 

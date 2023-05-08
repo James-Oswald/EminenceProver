@@ -18,10 +18,10 @@ std::string Problem::toFirstOrderTPTP() const{
     std::string rv = "";
     FormulaList::const_iterator itr = assumptions.begin();
     for(size_t i = 0; i < assumptions.size(); i++, itr++){
-        std::string name = "Assumption" + std::to_string(i);
-        rv += FormulaWriter::toFirstOrderTPTP(name, "hypothesis", *itr) + "\n\n";
+        std::string name = "assumption" + std::to_string(i);
+        rv += FormulaWriter::toFirstOrderTPTP(name, "axiom", *itr) + "\n\n";
     }
-    rv += FormulaWriter::toFirstOrderTPTP("Goal", "goal", goal);
+    rv += FormulaWriter::toFirstOrderTPTP("goal", "conjecture", goal);
     return rv;
 }
 
@@ -42,15 +42,16 @@ void Problem::saveAsTPTP(std::string name) const{
 /**
  * @brief checks if a problem conforms to a formula class restriction, that is, all of its assumptions
  * and goal formulae have some boolean property.
- * @param problem
+ * @param problem the problem containing formulae to check against
+ * @param propertyCallback a callback that takes a formula and returns true if the formula has a property
 */
-bool isFormulaClass(const Problem* problem, bool(*formulaClassCallback)(const Formula*)){
+bool isFormulaClass(const Problem* problem, bool(*propertyCallback)(const Formula*)){
     for(Formula* f : problem->assumptions){
-        if(formulaClassCallback(f)){
+        if(!propertyCallback(f)){
             return false;
         }
     }
-    return formulaClassCallback(problem->goal);
+    return propertyCallback(problem->goal);
 }
 
 bool Problem::isPropositional() const{

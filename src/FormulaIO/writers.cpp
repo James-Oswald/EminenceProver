@@ -63,11 +63,11 @@ std::string FormulaWriter::toSExpression(Formula* formula){
 using BoundTermSet = std::unordered_set<Term*>;
 
 /**
- *  Converts an arbitrary eminence prover identifier to an TPTP identifer
- *  All TPTP identifiers start with a letter followed by any lenth of letters and numbers
+ *  Converts an arbitrary eminence prover identifier to an TPTP identifier
+ *  All TPTP identifiers start with a letter followed by any length of letters and numbers
  *  Functions and Predicates are use lowercase letters 
  *  Quantified variables are forced to use upper case letters
- *  @param epIdentifier the identifier string provided by emenence prover
+ *  @param epIdentifier the identifier string provided by eminence prover
  *  @param upper if the identifier should be upper cased, I.E. is a 
  *  @return a legal TPTP Identifier 
 */
@@ -86,7 +86,7 @@ std::string makeLegalTPTPIdentifier(const std::string& epIdentifier, bool upper)
 }
 
 /**
- * Makes all identifers an constants in the given formula a "legal" for conversion to a TPTP formula
+ * Makes all identifiers an constants in the given formula a "legal" for conversion to a TPTP formula
  * 1) Converts bound variables to legal uppercase idents 
  * 2) Converts functions to be valid TPTP identifiers
  * 3) Converts predicates to be valid TPTP identifiers 
@@ -97,7 +97,7 @@ std::string makeLegalTPTPIdentifier(const std::string& epIdentifier, bool upper)
  * 
  * @todo Potential optimizations, 
  * 1) create a map of identifiers that have already been converted to TPTP idents so we don't waste time reconverting
- * 2) check if an identifier is a legal TPTP identifer before converting
+ * 2) check if an identifier is a legal TPTP identifier before converting
 */
 Formula* makeLegalTPTP(const Formula* formula){
     
@@ -187,7 +187,7 @@ std::string recursiveToTPTP(Formula* formula){
 }
 
 std::string FormulaWriter::toFirstOrderTPTP(std::string name, std::string type, Formula* formula){
-    if(!formula->isFirstOrderFormula()){
+    if(!formula->isFirstOrder()){
         throw std::runtime_error("Trying to convert a non-first order formula to first order TPTP");
     }
     Formula* cleanFormula = makeLegalTPTP(formula);
