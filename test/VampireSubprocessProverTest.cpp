@@ -32,4 +32,20 @@ int main(){
     assert(p3.isFirstOrder());
     assert(p3.isSecondOrder());
     assert(vamp::solve(p3) == false);
+
+    //Rozek Contradictory axioms test
+    FormulaList assumptions4 = {
+        Forall("x", Pred("lt", {Var("x"), Var("x")})),
+        Forall("x", Forall("y", Iff(
+            Pred("lt", {Var("x"), Var("y")}),
+            Not(Pred("lt", {Var("y"), Var("x")}))
+        ))),
+    };
+    Formula* goal4 = And(Prop("A"), Not(Prop("A")));
+    Problem p4(assumptions4, goal4);
+    assert(!p4.isPropositional());
+    assert(!p4.isZerothOrder());
+    assert(p4.isFirstOrder());
+    assert(p4.isSecondOrder());
+    assert(vamp::solve(p4) == false);
 }

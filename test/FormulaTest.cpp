@@ -24,6 +24,9 @@ int main(){
     assert(f01->allConstants().size() == 0);
     assert(f01->allPredicates().size() == 1);
     assert(f01->isProposition());
+    assert(f01->boundTermVariables().size() == 0);
+    assert(f01->boundFunctionVariables().size() == 0);
+    assert(f01->boundPredicateVariables().size() == 0);
 
     pFormula f02 (And(Pred("eq", {Func("S", {Const("1")}), Const("2")}), Pred("eq", {Func("S", {Const("2")}), Const("3")})));
     std::cout<<FormulaWriter::toSExpression(f02.get())<<std::endl;
@@ -38,6 +41,9 @@ int main(){
     assert(f02->allConstants().size() == 4);
     assert(f02->allPredicates().size() == 2);
     assert(!f02->isProposition());
+    assert(f02->boundTermVariables().size() == 0);
+    assert(f02->boundFunctionVariables().size() == 0);
+    assert(f02->boundPredicateVariables().size() == 0);
 
     pFormula f1 (Exists("x", Forall("y", Pred("eq", {Var("x"), Var("y")}))));
     std::cout<<FormulaWriter::toSExpression(f1.get())<<std::endl;
