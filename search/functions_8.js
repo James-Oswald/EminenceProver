@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['_7eformula_85',['~Formula',['../structFormula.html#a2f3b495f0e348c4d2a543f3f61660d94',1,'Formula']]]
+  ['saveastptp_80',['saveAsTPTP',['../structProblem.html#a6ebc4151e4120a90d6ac63e6e4f60822',1,'Problem']]],
+  ['solve_81',['solve',['../namespacevamp.html#a31750deff89b30cc15729b9ea13e5a3f',1,'vamp']]]
 ];

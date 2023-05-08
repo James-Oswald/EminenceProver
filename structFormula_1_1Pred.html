@@ -74,67 +74,42 @@ $(function() {
 <div class="title">Formula::Pred Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Predicate representation.  
+ <a href="structFormula_1_1Pred.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="Formula_8hpp_source.html">Formula.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a4b64261e5c175603d25efcfbe156f35e"><td class="memItemLeft" align="right" valign="top">TermList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula_1_1Pred.html#a4b64261e5c175603d25efcfbe156f35e">allConstants</a> () const</td></tr>
+<tr class="memitem:a4b64261e5c175603d25efcfbe156f35e"><td class="memItemLeft" align="right" valign="top"><a id="a4b64261e5c175603d25efcfbe156f35e"></a>
+TermList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula_1_1Pred.html#a4b64261e5c175603d25efcfbe156f35e">allConstants</a> () const</td></tr>
+<tr class="memdesc:a4b64261e5c175603d25efcfbe156f35e"><td class="mdescLeft">&#160;</td><td class="mdescRight">gets A list of pointers to all constants (and possible bound variables) inside the predicate. <br /></td></tr>
 <tr class="separator:a4b64261e5c175603d25efcfbe156f35e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a42232da19ce1cb4c26dbcd634cbc450e"><td class="memItemLeft" align="right" valign="top">TermList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula_1_1Pred.html#a42232da19ce1cb4c26dbcd634cbc450e">allFunctions</a> () const</td></tr>
+<tr class="memitem:a42232da19ce1cb4c26dbcd634cbc450e"><td class="memItemLeft" align="right" valign="top"><a id="a42232da19ce1cb4c26dbcd634cbc450e"></a>
+TermList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula_1_1Pred.html#a42232da19ce1cb4c26dbcd634cbc450e">allFunctions</a> () const</td></tr>
+<tr class="memdesc:a42232da19ce1cb4c26dbcd634cbc450e"><td class="mdescLeft">&#160;</td><td class="mdescRight">gets A list of pointers to all functions (and possible function variables) inside the predicate. <br /></td></tr>
 <tr class="separator:a42232da19ce1cb4c26dbcd634cbc450e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad5c0ca59140b27d956d49e274b32d1ff"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula_1_1Pred.html#ad5c0ca59140b27d956d49e274b32d1ff">depth</a> () const</td></tr>
 <tr class="separator:ad5c0ca59140b27d956d49e274b32d1ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9433f27ea5b8c8b73ebf5cb8d2c5ff90"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula_1_1Pred.html#a9433f27ea5b8c8b73ebf5cb8d2c5ff90">applyToAsTerm</a> (std::function&lt; void(<a class="el" href="structTerm.html">Term</a> *)&gt; termContext) const</td></tr>
-<tr class="memdesc:a9433f27ea5b8c8b73ebf5cb8d2c5ff90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides a memory safe context in which the predicate is interpreted as a term.  <a href="structFormula_1_1Pred.html#a9433f27ea5b8c8b73ebf5cb8d2c5ff90">More...</a><br /></td></tr>
+<tr class="memdesc:a9433f27ea5b8c8b73ebf5cb8d2c5ff90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interpret a predicate as a term and apply an arbitrary function to it.  <a href="structFormula_1_1Pred.html#a9433f27ea5b8c8b73ebf5cb8d2c5ff90">More...</a><br /></td></tr>
 <tr class="separator:a9433f27ea5b8c8b73ebf5cb8d2c5ff90"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:ac485aaeb2f898d2d8e63adfa4fddd5b1"><td class="memItemLeft" align="right" valign="top"><a id="ac485aaeb2f898d2d8e63adfa4fddd5b1"></a>
 std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula_1_1Pred.html#ac485aaeb2f898d2d8e63adfa4fddd5b1">name</a></td></tr>
-<tr class="memdesc:ac485aaeb2f898d2d8e63adfa4fddd5b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">the identifier for this predicate <br /></td></tr>
+<tr class="memdesc:ac485aaeb2f898d2d8e63adfa4fddd5b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">the identifier for this predicate. <br /></td></tr>
 <tr class="separator:ac485aaeb2f898d2d8e63adfa4fddd5b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a21b9053871d6838d50555f0dce4e4d2c"><td class="memItemLeft" align="right" valign="top"><a id="a21b9053871d6838d50555f0dce4e4d2c"></a>
 TermList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula_1_1Pred.html#a21b9053871d6838d50555f0dce4e4d2c">args</a></td></tr>
-<tr class="memdesc:a21b9053871d6838d50555f0dce4e4d2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">the list of arguments to this predicate <br /></td></tr>
+<tr class="memdesc:a21b9053871d6838d50555f0dce4e4d2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">the list of arguments to this predicate. <br /></td></tr>
 <tr class="separator:a21b9053871d6838d50555f0dce4e4d2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a4b64261e5c175603d25efcfbe156f35e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4b64261e5c175603d25efcfbe156f35e">&#9670;&nbsp;</a></span>allConstants()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TermList Formula::Pred::allConstants </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>A list of pointers to all constants (and possible bound variables) inside the predicate </dd></dl>
-
-</div>
-</div>
-<a id="a42232da19ce1cb4c26dbcd634cbc450e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a42232da19ce1cb4c26dbcd634cbc450e">&#9670;&nbsp;</a></span>allFunctions()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TermList Formula::Pred::allFunctions </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>A list of pointers to all functions (and possible function variables) inside the predicate </dd></dl>
-
-</div>
-</div>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Predicate representation. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a9433f27ea5b8c8b73ebf5cb8d2c5ff90"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9433f27ea5b8c8b73ebf5cb8d2c5ff90">&#9670;&nbsp;</a></span>applyToAsTerm()</h2>
 
@@ -151,10 +126,10 @@ TermList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
       </table>
 </div><div class="memdoc">
 
-<p>Provides a memory safe context in which the predicate is interpreted as a term. </p>
-<p>This is useful as it allows us to take advantage of </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Interpret a predicate as a term and apply an arbitrary function to it. </p>
+<p>Provides a memory safe context in which the predicate is interpreted as a term. This is useful as it allows us to take advantage of the shared structure underlying predicates and terms </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">termContext</td><td>a lambda which takes the predicate interpreted as a term and does something with it output can be obtained via binding outside vars by reference. <br  />
+    <tr><td class="paramname">termContext</td><td>a function which takes the predicate interpreted as a term and does something with it output can be obtained via binding outside vars by reference. <br  />
  </td></tr>
   </table>
   </dd>
@@ -176,7 +151,7 @@ TermList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>max height of terms inside the predicate </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>max height of terms inside the predicate. </dd></dl>
 
 </div>
 </div>

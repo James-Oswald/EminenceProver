@@ -77,24 +77,31 @@ $(function() {
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;../Formula/Formula.hpp&quot;</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="structProblem.html">    8</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structProblem.html">Problem</a>{</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    std::list&lt;Formula*&gt; assumptions;</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    <a class="code" href="structFormula.html">Formula</a>* goal;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <a class="code" href="structProblem.html">Problem</a>(std::list&lt;Formula*&gt; assumptions, <a class="code" href="structFormula.html">Formula</a>* goal);</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    std::string toFirstOrderTPTP() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="structProblem.html#a6ebc4151e4120a90d6ac63e6e4f60822">saveAsTPTP</a>(std::string fileName) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keywordtype">bool</span> isPropositional() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keywordtype">bool</span> isZerothOrder() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keywordtype">bool</span> isFirstOrder() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keywordtype">bool</span> isSecondOrder() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;};</div>
-<div class="ttc" id="astructFormula_html"><div class="ttname"><a href="structFormula.html">Formula</a></div><div class="ttdoc">Represents a formulae with a truth value.</div><div class="ttdef"><b>Definition:</b> Formula.hpp:18</div></div>
-<div class="ttc" id="astructProblem_html"><div class="ttname"><a href="structProblem.html">Problem</a></div><div class="ttdef"><b>Definition:</b> Problem.hpp:8</div></div>
-<div class="ttc" id="astructProblem_html_a6ebc4151e4120a90d6ac63e6e4f60822"><div class="ttname"><a href="structProblem.html#a6ebc4151e4120a90d6ac63e6e4f60822">Problem::saveAsTPTP</a></div><div class="ttdeci">void saveAsTPTP(std::string fileName) const</div><div class="ttdoc">saves a problem as a TPTP file.</div><div class="ttdef"><b>Definition:</b> Problem.cpp:28</div></div>
+<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="structProblem.html">   11</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structProblem.html">Problem</a>{</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    std::list&lt;Formula*&gt; assumptions;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <a class="code" href="structFormula.html">Formula</a>* goal;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    </div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <a class="code" href="structProblem.html">Problem</a>() = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <a class="code" href="structProblem.html">Problem</a>(std::list&lt;Formula*&gt; assumptions, <a class="code" href="structFormula.html">Formula</a>* goal);</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    </div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    std::string <a class="code" href="structProblem.html#a4dae54a5b193c1db6eae7eb9a8d573ee">toFirstOrderTPTP</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    </div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="structProblem.html#a6ebc4151e4120a90d6ac63e6e4f60822">saveAsTPTP</a>(std::string fileName) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="structProblem.html#a2e7d35c4ce83f1786533a0bf813d684b">isPropositional</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="structProblem.html#a0f937a3bbe15a3f8216ed53ed13efc11">isZerothOrder</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="structProblem.html#a88eb6bf015f524c8bb65fe74918c9240">isFirstOrder</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="structProblem.html#af4b6e94db11d537a7f0c657d7d73be9b">isSecondOrder</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;};</div>
+<div class="ttc" id="astructFormula_html"><div class="ttname"><a href="structFormula.html">Formula</a></div><div class="ttdoc">Represents a formulae with a truth value.</div><div class="ttdef"><b>Definition:</b> Formula.hpp:23</div></div>
+<div class="ttc" id="astructProblem_html"><div class="ttname"><a href="structProblem.html">Problem</a></div><div class="ttdoc">represents a problem to be solved by a theorem prover</div><div class="ttdef"><b>Definition:</b> Problem.hpp:11</div></div>
+<div class="ttc" id="astructProblem_html_a0f937a3bbe15a3f8216ed53ed13efc11"><div class="ttname"><a href="structProblem.html#a0f937a3bbe15a3f8216ed53ed13efc11">Problem::isZerothOrder</a></div><div class="ttdeci">bool isZerothOrder() const</div><div class="ttdoc">if the problem is representable in 0th order logic</div><div class="ttdef"><b>Definition:</b> Problem.cpp:61</div></div>
+<div class="ttc" id="astructProblem_html_a2e7d35c4ce83f1786533a0bf813d684b"><div class="ttname"><a href="structProblem.html#a2e7d35c4ce83f1786533a0bf813d684b">Problem::isPropositional</a></div><div class="ttdeci">bool isPropositional() const</div><div class="ttdoc">if the problem is representable in propositional logic</div><div class="ttdef"><b>Definition:</b> Problem.cpp:57</div></div>
+<div class="ttc" id="astructProblem_html_a4dae54a5b193c1db6eae7eb9a8d573ee"><div class="ttname"><a href="structProblem.html#a4dae54a5b193c1db6eae7eb9a8d573ee">Problem::toFirstOrderTPTP</a></div><div class="ttdeci">std::string toFirstOrderTPTP() const</div><div class="ttdoc">Converts a first order problem to contents of a TPTP problem.</div><div class="ttdef"><b>Definition:</b> Problem.cpp:17</div></div>
+<div class="ttc" id="astructProblem_html_a6ebc4151e4120a90d6ac63e6e4f60822"><div class="ttname"><a href="structProblem.html#a6ebc4151e4120a90d6ac63e6e4f60822">Problem::saveAsTPTP</a></div><div class="ttdeci">void saveAsTPTP(std::string fileName) const</div><div class="ttdoc">saves a first order problem as a TPTP file.</div><div class="ttdef"><b>Definition:</b> Problem.cpp:28</div></div>
+<div class="ttc" id="astructProblem_html_a88eb6bf015f524c8bb65fe74918c9240"><div class="ttname"><a href="structProblem.html#a88eb6bf015f524c8bb65fe74918c9240">Problem::isFirstOrder</a></div><div class="ttdeci">bool isFirstOrder() const</div><div class="ttdoc">if the problem is representable in 1st order logic</div><div class="ttdef"><b>Definition:</b> Problem.cpp:65</div></div>
+<div class="ttc" id="astructProblem_html_af4b6e94db11d537a7f0c657d7d73be9b"><div class="ttname"><a href="structProblem.html#af4b6e94db11d537a7f0c657d7d73be9b">Problem::isSecondOrder</a></div><div class="ttdeci">bool isSecondOrder() const</div><div class="ttdoc">if the problem is representable in 2nd order logic</div><div class="ttdef"><b>Definition:</b> Problem.cpp:69</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

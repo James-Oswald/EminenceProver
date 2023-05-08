@@ -64,8 +64,6 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#pub-types">Public Types</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="structFormula-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Formula Struct Reference</div>  </div>
@@ -82,26 +80,31 @@ Collaboration diagram for Formula:</div>
 <div class="center"><img src="structFormula__coll__graph.png" border="0" usemap="#aFormula_coll__map" alt="Collaboration graph"/></div>
 <map name="aFormula_coll__map" id="aFormula_coll__map">
 <area shape="rect" title="Represents a formulae with a truth value." alt="" coords="199,103,273,129"/>
-<area shape="rect" href="structFormula_1_1BinaryConnective.html" title=" " alt="" coords="388,23,587,49"/>
-<area shape="rect" href="structFormula_1_1UnaryConnective.html" title=" " alt="" coords="390,93,585,120"/>
-<area shape="rect" href="structFormula_1_1Quantifier.html" title=" " alt="" coords="414,193,561,220"/>
-<area shape="rect" href="structFormula_1_1Pred.html" title=" " alt="" coords="5,103,117,129"/>
+<area shape="rect" href="structFormula_1_1BinaryConnective.html" title="Binary Connective formula representation." alt="" coords="388,23,587,49"/>
+<area shape="rect" href="structFormula_1_1UnaryConnective.html" title="Unary Connective formula representation." alt="" coords="390,93,585,120"/>
+<area shape="rect" href="structFormula_1_1Quantifier.html" title="Quantifier formula representation." alt="" coords="414,193,561,220"/>
+<area shape="rect" href="structFormula_1_1Pred.html" title="Predicate representation." alt="" coords="5,103,117,129"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula_1_1BinaryConnective.html">BinaryConnective</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Binary Connective formula representation.  <a href="structFormula_1_1BinaryConnective.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula_1_1Pred.html">Pred</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Predicate representation.  <a href="structFormula_1_1Pred.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula_1_1Quantifier.html">Quantifier</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structFormula_1_1Quantifier.html" title="Quantifier formula representation.">Quantifier</a> formula representation.  <a href="structFormula_1_1Quantifier.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula_1_1UnaryConnective.html">UnaryConnective</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unary Connective formula representation.  <a href="structFormula_1_1UnaryConnective.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
+<tr><td colspan="2"><div class="groupHeader">Inner Enums / Structs</div></td></tr>
 <tr class="memitem:ab5f0b340ed1faac8f341ad2e8a98a301"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula.html#ab5f0b340ed1faac8f341ad2e8a98a301">Type</a> { <br />
 &#160;&#160;<a class="el" href="structFormula.html#ab5f0b340ed1faac8f341ad2e8a98a301a39e59205523085dd3cc96030e4170e53">PRED</a>
 , <a class="el" href="structFormula.html#ab5f0b340ed1faac8f341ad2e8a98a301a10df3d67626099df882920ba6552f16d">NOT</a>
@@ -116,12 +119,12 @@ Public Types</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:ab5f0b340ed1faac8f341ad2e8a98a301"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type of the top level operator or connective in the formation tree.  <a href="structFormula.html#ab5f0b340ed1faac8f341ad2e8a98a301">More...</a><br /></td></tr>
 <tr class="separator:ab5f0b340ed1faac8f341ad2e8a98a301"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5fa1477df7e0bc9e6e194d088c427b5b"><td class="memItemLeft" align="right" valign="top"><a id="a5fa1477df7e0bc9e6e194d088c427b5b"></a>enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula.html#a5fa1477df7e0bc9e6e194d088c427b5b">ConnectiveType</a> { <b>PRED</b>
-, <b>UNARY</b>
-, <b>BINARY</b>
-, <b>QUANT</b>
+<tr class="memitem:a5fa1477df7e0bc9e6e194d088c427b5b"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula.html#a5fa1477df7e0bc9e6e194d088c427b5b">ConnectiveType</a> { <a class="el" href="structFormula.html#a5fa1477df7e0bc9e6e194d088c427b5ba39e59205523085dd3cc96030e4170e53">PRED</a>
+, <a class="el" href="structFormula.html#a5fa1477df7e0bc9e6e194d088c427b5ba8ca44f46ef1f04b2113678603c3800b4">UNARY</a>
+, <a class="el" href="structFormula.html#a5fa1477df7e0bc9e6e194d088c427b5ba98ad0e8750ae10ad556ed7a62affb452">BINARY</a>
+, <a class="el" href="structFormula.html#a5fa1477df7e0bc9e6e194d088c427b5ba04ca454cb3af1531e443f1b30b8fd740">QUANT</a>
  }</td></tr>
-<tr class="memdesc:a5fa1477df7e0bc9e6e194d088c427b5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The class of the top level connective of the current formula. <br /></td></tr>
+<tr class="memdesc:a5fa1477df7e0bc9e6e194d088c427b5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The underlying representation class of the current formula.  <a href="structFormula.html#a5fa1477df7e0bc9e6e194d088c427b5b">More...</a><br /></td></tr>
 <tr class="separator:a5fa1477df7e0bc9e6e194d088c427b5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -140,20 +143,24 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a4e9224344b5280c4a56eada876ed0527"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a pointer to a copy of this formula. <br /></td></tr>
 <tr class="separator:a4e9224344b5280c4a56eada876ed0527"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Subformula &amp; Subterm utilities</div></td></tr>
-<tr class="memitem:a98a14c845e976ae54385f9e89538dba1"><td class="memItemLeft" align="right" valign="top">FormulaList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula.html#a98a14c845e976ae54385f9e89538dba1">subformulae</a> () const</td></tr>
-<tr class="memdesc:a98a14c845e976ae54385f9e89538dba1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a vector of pointers to immediate subformulae in left to right order.  <a href="structFormula.html#a98a14c845e976ae54385f9e89538dba1">More...</a><br /></td></tr>
+<tr class="memitem:a98a14c845e976ae54385f9e89538dba1"><td class="memItemLeft" align="right" valign="top"><a id="a98a14c845e976ae54385f9e89538dba1"></a>
+FormulaList&#160;</td><td class="memItemRight" valign="bottom"><b>subformulae</b> () const</td></tr>
 <tr class="separator:a98a14c845e976ae54385f9e89538dba1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa6092c4d988ef54ad063d59af74c3d41"><td class="memItemLeft" align="right" valign="top">FormulaList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula.html#aa6092c4d988ef54ad063d59af74c3d41">allSubformulae</a> () const</td></tr>
-<tr class="memdesc:aa6092c4d988ef54ad063d59af74c3d41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets all subformulae in the entire tree excluding the formulae itself.  <a href="structFormula.html#aa6092c4d988ef54ad063d59af74c3d41">More...</a><br /></td></tr>
+<tr class="memitem:aa6092c4d988ef54ad063d59af74c3d41"><td class="memItemLeft" align="right" valign="top"><a id="aa6092c4d988ef54ad063d59af74c3d41"></a>
+FormulaList&#160;</td><td class="memItemRight" valign="bottom"><b>allSubformulae</b> () const</td></tr>
 <tr class="separator:aa6092c4d988ef54ad063d59af74c3d41"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae1d1046d132b797c4d7064b53db08eab"><td class="memItemLeft" align="right" valign="top">FormulaList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula.html#ae1d1046d132b797c4d7064b53db08eab">allPredicates</a> () const</td></tr>
-<tr class="memdesc:ae1d1046d132b797c4d7064b53db08eab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the list of all predicates in the order they appear in the formula via an in-order traversal of the formula tree.  <a href="structFormula.html#ae1d1046d132b797c4d7064b53db08eab">More...</a><br /></td></tr>
+<tr class="memitem:ae1d1046d132b797c4d7064b53db08eab"><td class="memItemLeft" align="right" valign="top"><a id="ae1d1046d132b797c4d7064b53db08eab"></a>
+FormulaList&#160;</td><td class="memItemRight" valign="bottom"><b>allPredicates</b> () const</td></tr>
 <tr class="separator:ae1d1046d132b797c4d7064b53db08eab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa9846f82950ddabd19a8b900ea4563a8"><td class="memItemLeft" align="right" valign="top">TermList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula.html#aa9846f82950ddabd19a8b900ea4563a8">allConstants</a> () const</td></tr>
+<tr class="memitem:aa9846f82950ddabd19a8b900ea4563a8"><td class="memItemLeft" align="right" valign="top"><a id="aa9846f82950ddabd19a8b900ea4563a8"></a>
+TermList&#160;</td><td class="memItemRight" valign="bottom"><b>allConstants</b> () const</td></tr>
 <tr class="separator:aa9846f82950ddabd19a8b900ea4563a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c2a5a98dc6a91f24e6a12a3f2b6faff"><td class="memItemLeft" align="right" valign="top">TermList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula.html#a2c2a5a98dc6a91f24e6a12a3f2b6faff">allFunctions</a> () const</td></tr>
+<tr class="memitem:a2c2a5a98dc6a91f24e6a12a3f2b6faff"><td class="memItemLeft" align="right" valign="top"><a id="a2c2a5a98dc6a91f24e6a12a3f2b6faff"></a>
+TermList&#160;</td><td class="memItemRight" valign="bottom"><b>allFunctions</b> () const</td></tr>
 <tr class="separator:a2c2a5a98dc6a91f24e6a12a3f2b6faff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6d568299843d62c26b3fb72c5b5e7a8e"><td class="memItemLeft" align="right" valign="top">FormulaList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula.html#a6d568299843d62c26b3fb72c5b5e7a8e">allQuantified</a> () const</td></tr>
+<tr class="memitem:a6d568299843d62c26b3fb72c5b5e7a8e"><td class="memItemLeft" align="right" valign="top"><a id="a6d568299843d62c26b3fb72c5b5e7a8e"></a>
+FormulaList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula.html#a6d568299843d62c26b3fb72c5b5e7a8e">allQuantified</a> () const</td></tr>
+<tr class="memdesc:a6d568299843d62c26b3fb72c5b5e7a8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a list of all subformulae that are quantified at the top level. <br /></td></tr>
 <tr class="separator:a6d568299843d62c26b3fb72c5b5e7a8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7bc440aa73414906b9a00ccedc7c9dea"><td class="memItemLeft" align="right" valign="top"><a id="a7bc440aa73414906b9a00ccedc7c9dea"></a>
 FormulaList&#160;</td><td class="memItemRight" valign="bottom"><b>allPropositions</b> () const</td></tr>
@@ -161,37 +168,60 @@ FormulaList&#160;</td><td class="memItemRight" valign="bottom"><b>allProposition
 <tr class="memitem:a9ed422e193be6097d2a59dd64828f188"><td class="memItemLeft" align="right" valign="top"><a id="a9ed422e193be6097d2a59dd64828f188"></a>
 std::list&lt; std::pair&lt; <a class="el" href="structTerm.html">Term</a> *, <a class="el" href="structFormula.html">Formula</a> * &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>boundTermVariables</b> () const</td></tr>
 <tr class="separator:a9ed422e193be6097d2a59dd64828f188"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7d15e19ef98f991eb80e64a8efb4b899"><td class="memItemLeft" align="right" valign="top">std::list&lt; std::pair&lt; <a class="el" href="structTerm.html">Term</a> *, <a class="el" href="structFormula.html">Formula</a> * &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula.html#a7d15e19ef98f991eb80e64a8efb4b899">boundFunctionVariables</a> () const</td></tr>
+<tr class="memitem:a7d15e19ef98f991eb80e64a8efb4b899"><td class="memItemLeft" align="right" valign="top"><a id="a7d15e19ef98f991eb80e64a8efb4b899"></a>
+std::list&lt; std::pair&lt; <a class="el" href="structTerm.html">Term</a> *, <a class="el" href="structFormula.html">Formula</a> * &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula.html#a7d15e19ef98f991eb80e64a8efb4b899">boundFunctionVariables</a> () const</td></tr>
+<tr class="memdesc:a7d15e19ef98f991eb80e64a8efb4b899"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a list of pairs of pointers to function variables and the quantifier formula they are bound to. <br /></td></tr>
 <tr class="separator:a7d15e19ef98f991eb80e64a8efb4b899"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4cc515d83df8b768549d805ecfab7a51"><td class="memItemLeft" align="right" valign="top">std::list&lt; std::pair&lt; <a class="el" href="structFormula.html">Formula</a> *, <a class="el" href="structFormula.html">Formula</a> * &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula.html#a4cc515d83df8b768549d805ecfab7a51">boundPredicateVariables</a> () const</td></tr>
+<tr class="memitem:a4cc515d83df8b768549d805ecfab7a51"><td class="memItemLeft" align="right" valign="top"><a id="a4cc515d83df8b768549d805ecfab7a51"></a>
+std::list&lt; std::pair&lt; <a class="el" href="structFormula.html">Formula</a> *, <a class="el" href="structFormula.html">Formula</a> * &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula.html#a4cc515d83df8b768549d805ecfab7a51">boundPredicateVariables</a> () const</td></tr>
+<tr class="memdesc:a4cc515d83df8b768549d805ecfab7a51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a list of pairs of pointers to predicate variables and the quantifier formula they are bound to. <br /></td></tr>
 <tr class="separator:a4cc515d83df8b768549d805ecfab7a51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a585f7ce4ffb292ee1fd75b3264b47c95"><td class="memItemLeft" align="right" valign="top">std::unordered_set&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula.html#a585f7ce4ffb292ee1fd75b3264b47c95">identifiers</a> () const</td></tr>
 <tr class="memdesc:a585f7ce4ffb292ee1fd75b3264b47c95"><td class="mdescLeft">&#160;</td><td class="mdescRight">gets the set of all identifiers in the formula as strings.  <a href="structFormula.html#a585f7ce4ffb292ee1fd75b3264b47c95">More...</a><br /></td></tr>
 <tr class="separator:a585f7ce4ffb292ee1fd75b3264b47c95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Formula Metrics and Testers</div></td></tr>
 <tr class="memitem:a336ea6b5b5e56ae51eb4c5169e39198a"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula.html#a336ea6b5b5e56ae51eb4c5169e39198a">depth</a> () const</td></tr>
-<tr class="memdesc:a336ea6b5b5e56ae51eb4c5169e39198a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The depth/height of the formula tree.  <a href="structFormula.html#a336ea6b5b5e56ae51eb4c5169e39198a">More...</a><br /></td></tr>
+<tr class="memdesc:a336ea6b5b5e56ae51eb4c5169e39198a"><td class="mdescLeft">&#160;</td><td class="mdescRight">gets the depth/height of the formula tree.  <a href="structFormula.html#a336ea6b5b5e56ae51eb4c5169e39198a">More...</a><br /></td></tr>
 <tr class="separator:a336ea6b5b5e56ae51eb4c5169e39198a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2ca81d7fffbd94a3cbae9dcf13845e6b"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula.html#a2ca81d7fffbd94a3cbae9dcf13845e6b">depthWithTerms</a> () const</td></tr>
-<tr class="memdesc:a2ca81d7fffbd94a3cbae9dcf13845e6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The depth/height of the formula tree, including height of term trees on leaves.  <a href="structFormula.html#a2ca81d7fffbd94a3cbae9dcf13845e6b">More...</a><br /></td></tr>
+<tr class="memdesc:a2ca81d7fffbd94a3cbae9dcf13845e6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">gets the depth/height of the formula tree, including height of term trees on leaves.  <a href="structFormula.html#a2ca81d7fffbd94a3cbae9dcf13845e6b">More...</a><br /></td></tr>
 <tr class="separator:a2ca81d7fffbd94a3cbae9dcf13845e6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac38321d2c7e6330355076d0f8238c463"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula.html#ac38321d2c7e6330355076d0f8238c463">isProposition</a> () const</td></tr>
+<tr class="memitem:ac38321d2c7e6330355076d0f8238c463"><td class="memItemLeft" align="right" valign="top"><a id="ac38321d2c7e6330355076d0f8238c463"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula.html#ac38321d2c7e6330355076d0f8238c463">isProposition</a> () const</td></tr>
+<tr class="memdesc:ac38321d2c7e6330355076d0f8238c463"><td class="mdescLeft">&#160;</td><td class="mdescRight">true iff the formula is a proposition, that is, a predicate with 0 arguments. <br /></td></tr>
 <tr class="separator:ac38321d2c7e6330355076d0f8238c463"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5035de714dc18224d0bb8010aefa9c61"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula.html#a5035de714dc18224d0bb8010aefa9c61">isPropositional</a> () const</td></tr>
-<tr class="memdesc:a5035de714dc18224d0bb8010aefa9c61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests if the formula is a propositional calculus formula.  <a href="structFormula.html#a5035de714dc18224d0bb8010aefa9c61">More...</a><br /></td></tr>
+<tr class="memdesc:a5035de714dc18224d0bb8010aefa9c61"><td class="mdescLeft">&#160;</td><td class="mdescRight">test if the formula is propositional logic  <a href="structFormula.html#a5035de714dc18224d0bb8010aefa9c61">More...</a><br /></td></tr>
 <tr class="separator:a5035de714dc18224d0bb8010aefa9c61"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4e9bbad4c33c3d1658369b6d495a78a5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula.html#a4e9bbad4c33c3d1658369b6d495a78a5">isZerothOrder</a> () const</td></tr>
-<tr class="memdesc:a4e9bbad4c33c3d1658369b6d495a78a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests if a formula is a 0th order predicate logic formula.  <a href="structFormula.html#a4e9bbad4c33c3d1658369b6d495a78a5">More...</a><br /></td></tr>
+<tr class="memdesc:a4e9bbad4c33c3d1658369b6d495a78a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">test if the formula is 0th order logic  <a href="structFormula.html#a4e9bbad4c33c3d1658369b6d495a78a5">More...</a><br /></td></tr>
 <tr class="separator:a4e9bbad4c33c3d1658369b6d495a78a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7140a4e1f63d6a41438fd1775fa238c2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula.html#a7140a4e1f63d6a41438fd1775fa238c2">isFirstOrder</a> () const</td></tr>
-<tr class="memdesc:a7140a4e1f63d6a41438fd1775fa238c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests if a 1st order logic formula i.e I.E.  <a href="structFormula.html#a7140a4e1f63d6a41438fd1775fa238c2">More...</a><br /></td></tr>
+<tr class="memdesc:a7140a4e1f63d6a41438fd1775fa238c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">test if the formula is 1st order logic  <a href="structFormula.html#a7140a4e1f63d6a41438fd1775fa238c2">More...</a><br /></td></tr>
 <tr class="separator:a7140a4e1f63d6a41438fd1775fa238c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac024beacebeefa8f4a8cdf7bf0bd106b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula.html#ac024beacebeefa8f4a8cdf7bf0bd106b">isSecondOrder</a> () const</td></tr>
-<tr class="memdesc:ac024beacebeefa8f4a8cdf7bf0bd106b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests if a 2nd order formula i.e Contains quantification over Predicates or Functions.  <a href="structFormula.html#ac024beacebeefa8f4a8cdf7bf0bd106b">More...</a><br /></td></tr>
+<tr class="memdesc:ac024beacebeefa8f4a8cdf7bf0bd106b"><td class="mdescLeft">&#160;</td><td class="mdescRight">test if the formula is 2nd order logic  <a href="structFormula.html#ac024beacebeefa8f4a8cdf7bf0bd106b">More...</a><br /></td></tr>
 <tr class="separator:ac024beacebeefa8f4a8cdf7bf0bd106b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
+<tr class="memitem:a86c248c635cae167e45b5f9972918cf4"><td class="memItemLeft" align="right" valign="top"><a id="a86c248c635cae167e45b5f9972918cf4"></a>
+<a class="el" href="structFormula_1_1Pred.html">Pred</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula.html#a86c248c635cae167e45b5f9972918cf4">pred</a></td></tr>
+<tr class="memdesc:a86c248c635cae167e45b5f9972918cf4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Valid iff type == PRED. <br /></td></tr>
+<tr class="separator:a86c248c635cae167e45b5f9972918cf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa274ebe5a6cefdb53a5bcfc32ad25e1c"><td class="memItemLeft" align="right" valign="top"><a id="aa274ebe5a6cefdb53a5bcfc32ad25e1c"></a>
+<a class="el" href="structFormula_1_1UnaryConnective.html">UnaryConnective</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula.html#aa274ebe5a6cefdb53a5bcfc32ad25e1c">unary</a></td></tr>
+<tr class="memdesc:aa274ebe5a6cefdb53a5bcfc32ad25e1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Valid iff type == NOT. <br /></td></tr>
+<tr class="separator:aa274ebe5a6cefdb53a5bcfc32ad25e1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7f4ede3c45d0a45ccb29d03095eea1a"><td class="memItemLeft" align="right" valign="top"><a id="af7f4ede3c45d0a45ccb29d03095eea1a"></a>
+<a class="el" href="structFormula_1_1BinaryConnective.html">BinaryConnective</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula.html#af7f4ede3c45d0a45ccb29d03095eea1a">binary</a></td></tr>
+<tr class="memdesc:af7f4ede3c45d0a45ccb29d03095eea1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Valid iff type == AND, OR, IF, IFF. <br /></td></tr>
+<tr class="separator:af7f4ede3c45d0a45ccb29d03095eea1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abdb57224724d30530936fa496f5092fe"><td class="memItemLeft" align="right" valign="top"><a id="abdb57224724d30530936fa496f5092fe"></a>
+<a class="el" href="structFormula_1_1Quantifier.html">Quantifier</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula.html#abdb57224724d30530936fa496f5092fe">quantifier</a></td></tr>
+<tr class="memdesc:abdb57224724d30530936fa496f5092fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Valid iff type == FORALL, EXISTS. <br /></td></tr>
+<tr class="separator:abdb57224724d30530936fa496f5092fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Internal Representation</div></td></tr>
 <tr class="memitem:a36f9cca9bfbb95e69ad9a0212703fc87"><td class="memItemLeft" align="right" valign="top"><a id="a36f9cca9bfbb95e69ad9a0212703fc87"></a>
 <a class="el" href="structFormula.html#ab5f0b340ed1faac8f341ad2e8a98a301">Type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFormula.html#a36f9cca9bfbb95e69ad9a0212703fc87">type</a></td></tr>
 <tr class="memdesc:a36f9cca9bfbb95e69ad9a0212703fc87"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type of the formula. <br /></td></tr>
@@ -223,8 +253,43 @@ union {</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents a formulae with a truth value. </p>
-<p>The formula is represented as tree. </p>
+<p>The formula is represented as tree. it has both a high level ConnectiveType representing its internal representation and an exact Type representing its connective. <br  />
+ </p>
 </div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="a5fa1477df7e0bc9e6e194d088c427b5b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5fa1477df7e0bc9e6e194d088c427b5b">&#9670;&nbsp;</a></span>ConnectiveType</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="structFormula.html#a5fa1477df7e0bc9e6e194d088c427b5b">Formula::ConnectiveType</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The underlying representation class of the current formula. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a5fa1477df7e0bc9e6e194d088c427b5ba39e59205523085dd3cc96030e4170e53"></a>PRED&#160;</td><td class="fielddoc"><p>A Predicate or proposition if 0 arguments. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a5fa1477df7e0bc9e6e194d088c427b5ba8ca44f46ef1f04b2113678603c3800b4"></a>UNARY&#160;</td><td class="fielddoc"><p>A single formula operand. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a5fa1477df7e0bc9e6e194d088c427b5ba98ad0e8750ae10ad556ed7a62affb452"></a>BINARY&#160;</td><td class="fielddoc"><p>left and right formulae operands </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a5fa1477df7e0bc9e6e194d088c427b5ba04ca454cb3af1531e443f1b30b8fd740"></a>QUANT&#160;</td><td class="fielddoc"><p>A named identifier (variable) and a bound formulae. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <a id="ab5f0b340ed1faac8f341ad2e8a98a301"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab5f0b340ed1faac8f341ad2e8a98a301">&#9670;&nbsp;</a></span>Type</h2>
 
@@ -249,155 +314,25 @@ union {</td></tr>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ab5f0b340ed1faac8f341ad2e8a98a301a39e59205523085dd3cc96030e4170e53"></a>PRED&#160;</td><td class="fielddoc"><p>A Predicate or proposition if 0 arguments. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ab5f0b340ed1faac8f341ad2e8a98a301a10df3d67626099df882920ba6552f16d"></a>NOT&#160;</td><td class="fielddoc"><p>Unary connective, logical not. </p>
+<tr><td class="fieldname"><a id="ab5f0b340ed1faac8f341ad2e8a98a301a10df3d67626099df882920ba6552f16d"></a>NOT&#160;</td><td class="fielddoc"><p><a class="el" href="structFormula_1_1UnaryConnective.html" title="Unary Connective formula representation.">UnaryConnective</a>, logical not. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ab5f0b340ed1faac8f341ad2e8a98a301a558ffc8f5770d8e4f95f51d822685532"></a>AND&#160;</td><td class="fielddoc"><p>Binary connective, logical and. </p>
+<tr><td class="fieldname"><a id="ab5f0b340ed1faac8f341ad2e8a98a301a558ffc8f5770d8e4f95f51d822685532"></a>AND&#160;</td><td class="fielddoc"><p><a class="el" href="structFormula_1_1BinaryConnective.html" title="Binary Connective formula representation.">BinaryConnective</a>, logical and. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ab5f0b340ed1faac8f341ad2e8a98a301a1d00e7dce692e8dc3f6877f035e3a616"></a>OR&#160;</td><td class="fielddoc"><p>Binary connective, logical or. </p>
+<tr><td class="fieldname"><a id="ab5f0b340ed1faac8f341ad2e8a98a301a1d00e7dce692e8dc3f6877f035e3a616"></a>OR&#160;</td><td class="fielddoc"><p><a class="el" href="structFormula_1_1BinaryConnective.html" title="Binary Connective formula representation.">BinaryConnective</a>, logical or. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ab5f0b340ed1faac8f341ad2e8a98a301ade6ee2b5d856295add4d5e3631fbfb93"></a>IF&#160;</td><td class="fielddoc"><p>Binary connective, conditional. </p>
+<tr><td class="fieldname"><a id="ab5f0b340ed1faac8f341ad2e8a98a301ade6ee2b5d856295add4d5e3631fbfb93"></a>IF&#160;</td><td class="fielddoc"><p><a class="el" href="structFormula_1_1BinaryConnective.html" title="Binary Connective formula representation.">BinaryConnective</a>, conditional. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ab5f0b340ed1faac8f341ad2e8a98a301ac1cbcd58f852f8efa45845cf292e350c"></a>IFF&#160;</td><td class="fielddoc"><p>Binary connective, biconditional. </p>
+<tr><td class="fieldname"><a id="ab5f0b340ed1faac8f341ad2e8a98a301ac1cbcd58f852f8efa45845cf292e350c"></a>IFF&#160;</td><td class="fielddoc"><p><a class="el" href="structFormula_1_1BinaryConnective.html" title="Binary Connective formula representation.">BinaryConnective</a>, biconditional. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ab5f0b340ed1faac8f341ad2e8a98a301a6e5a8a2e655574b65920ce0c5d2f0010"></a>FORALL&#160;</td><td class="fielddoc"><p><a class="el" href="structFormula_1_1Quantifier.html">Quantifier</a>, forall. </p>
+<tr><td class="fieldname"><a id="ab5f0b340ed1faac8f341ad2e8a98a301a6e5a8a2e655574b65920ce0c5d2f0010"></a>FORALL&#160;</td><td class="fielddoc"><p><a class="el" href="structFormula_1_1Quantifier.html" title="Quantifier formula representation.">Quantifier</a>, forall. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="ab5f0b340ed1faac8f341ad2e8a98a301a6a240802522e95fc9e2c1d09122d8ec4"></a>EXISTS&#160;</td><td class="fielddoc"><p><a class="el" href="structFormula_1_1Quantifier.html">Quantifier</a>, exists. </p>
+<tr><td class="fieldname"><a id="ab5f0b340ed1faac8f341ad2e8a98a301a6a240802522e95fc9e2c1d09122d8ec4"></a>EXISTS&#160;</td><td class="fielddoc"><p><a class="el" href="structFormula_1_1Quantifier.html" title="Quantifier formula representation.">Quantifier</a>, exists. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="aa9846f82950ddabd19a8b900ea4563a8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa9846f82950ddabd19a8b900ea4563a8">&#9670;&nbsp;</a></span>allConstants()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TermList Formula::allConstants </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>a list of pointer to all term level constants (including constant variables) in the formula </dd></dl>
-
-</div>
-</div>
-<a id="a2c2a5a98dc6a91f24e6a12a3f2b6faff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2c2a5a98dc6a91f24e6a12a3f2b6faff">&#9670;&nbsp;</a></span>allFunctions()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">TermList Formula::allFunctions </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>a list of pointer to all term level functions (including function variables) in the formula </dd></dl>
-
-</div>
-</div>
-<a id="ae1d1046d132b797c4d7064b53db08eab"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae1d1046d132b797c4d7064b53db08eab">&#9670;&nbsp;</a></span>allPredicates()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">FormulaList Formula::allPredicates </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Returns the list of all predicates in the order they appear in the formula via an in-order traversal of the formula tree. </p>
-<p>For example <code>A /\ (B(a, d) \/ ~C)</code> returns a list of formula pointers to <code>[A, B(a, d), C]</code> in that order. </p><dl class="section return"><dt>Returns</dt><dd>a list of Formula* to propositions in the formula in the order they appear </dd></dl>
-
-</div>
-</div>
-<a id="a6d568299843d62c26b3fb72c5b5e7a8e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6d568299843d62c26b3fb72c5b5e7a8e">&#9670;&nbsp;</a></span>allQuantified()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">FormulaList Formula::allQuantified </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>a list of all subformulae that are quantified at the top level </dd></dl>
-
-</div>
-</div>
-<a id="aa6092c4d988ef54ad063d59af74c3d41"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa6092c4d988ef54ad063d59af74c3d41">&#9670;&nbsp;</a></span>allSubformulae()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">FormulaList Formula::allSubformulae </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Gets all subformulae in the entire tree excluding the formulae itself. </p>
-<p>The vector returned is guaranteed to have the values in breath first traversal order. For example if the formula is <code>A /\ (B \/ ~C)</code> then <code>.<a class="el" href="structFormula.html#aa6092c4d988ef54ad063d59af74c3d41" title="Gets all subformulae in the entire tree excluding the formulae itself.">allSubformulae()</a></code> will return pointers to <code>A, (B \/ ~C), B, ~C, C]</code> in that order. </p><dl class="section return"><dt>Returns</dt><dd>A vector of Formula* of all subformulae encountered in BFS traversal order of the formula tree. </dd></dl>
-
-</div>
-</div>
-<a id="a7d15e19ef98f991eb80e64a8efb4b899"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7d15e19ef98f991eb80e64a8efb4b899">&#9670;&nbsp;</a></span>boundFunctionVariables()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::list&lt; std::pair&lt; <a class="el" href="structTerm.html">Term</a> *, <a class="el" href="structFormula.html">Formula</a> * &gt; &gt; Formula::boundFunctionVariables </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>a list of pairs term pointers to variables and pointers to the quantifier formula they are bound to </dd></dl>
-
-</div>
-</div>
-<a id="a4cc515d83df8b768549d805ecfab7a51"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4cc515d83df8b768549d805ecfab7a51">&#9670;&nbsp;</a></span>boundPredicateVariables()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::list&lt; std::pair&lt; <a class="el" href="structFormula.html">Formula</a> *, <a class="el" href="structFormula.html">Formula</a> * &gt; &gt; Formula::boundPredicateVariables </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>the list of Predicate variables bound to quantifiers </dd></dl>
-
-</div>
-</div>
 <a id="a336ea6b5b5e56ae51eb4c5169e39198a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a336ea6b5b5e56ae51eb4c5169e39198a">&#9670;&nbsp;</a></span>depth()</h2>
 
@@ -413,7 +348,7 @@ union {</td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>The depth/height of the formula tree. </p>
+<p>gets the depth/height of the formula tree. </p>
 <dl class="section return"><dt>Returns</dt><dd>the height of the formula tree. </dd></dl>
 
 </div>
@@ -433,7 +368,7 @@ union {</td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>The depth/height of the formula tree, including height of term trees on leaves. </p>
+<p>gets the depth/height of the formula tree, including height of term trees on leaves. </p>
 <dl class="section return"><dt>Returns</dt><dd>The depth/height of the formula tree, including height of term trees on leaves. </dd></dl>
 
 </div>
@@ -473,26 +408,8 @@ union {</td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Tests if a 1st order logic formula i.e I.E. </p>
-<p>contains only the connectives: not, and, or, if, iff and quantifies over term constants, but not predicates or functions </p><dl class="section return"><dt>Returns</dt><dd>true iff the formula can be interpreted as first order </dd></dl>
-
-</div>
-</div>
-<a id="ac38321d2c7e6330355076d0f8238c463"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac38321d2c7e6330355076d0f8238c463">&#9670;&nbsp;</a></span>isProposition()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool Formula::isProposition </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>true iff the formula is a proposition, that is, a predicate with 0 arguments. </dd></dl>
+<p>test if the formula is 1st order logic </p>
+<p>Tests if a 1st order logic formula i.e I.E. contains only the connectives: not, and, or, if, iff and quantifies over term constants, but not predicates or functions </p><dl class="section return"><dt>Returns</dt><dd>true iff the formula can be interpreted as first order </dd></dl>
 
 </div>
 </div>
@@ -511,8 +428,8 @@ union {</td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Tests if the formula is a propositional calculus formula. </p>
-<p>I.E. contains only the connectives: not, and, or, if, iff and contains only propositional variables </p><dl class="section return"><dt>Returns</dt><dd>true iff the formula can be interpreted as propositional </dd></dl>
+<p>test if the formula is propositional logic </p>
+<p>if the formula is a propositional calculus formula. I.E. contains only the connectives: not, and, or, if, iff and contains only propositional variables </p><dl class="section return"><dt>Returns</dt><dd>true iff the formula can be interpreted as propositional </dd></dl>
 
 </div>
 </div>
@@ -531,8 +448,8 @@ union {</td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Tests if a 2nd order formula i.e Contains quantification over Predicates or Functions. </p>
-<dl class="section return"><dt>Returns</dt><dd>true iff the formula is minimally 2nd order </dd></dl>
+<p>test if the formula is 2nd order logic </p>
+<p>Tests if a 2nd order formula i.e Contains quantification over Predicates or Functions </p><dl class="section return"><dt>Returns</dt><dd>true iff the formula is minimally 2nd order </dd></dl>
 
 </div>
 </div>
@@ -551,28 +468,8 @@ union {</td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Tests if a formula is a 0th order predicate logic formula. </p>
-<p>I.E. contains only the connectives: not, and, or, if, iff but may contain predicates and terms that are composed of constants </p><dl class="section return"><dt>Returns</dt><dd>true iff the formula can be interpreted as zeroth order </dd></dl>
-
-</div>
-</div>
-<a id="a98a14c845e976ae54385f9e89538dba1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a98a14c845e976ae54385f9e89538dba1">&#9670;&nbsp;</a></span>subformulae()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">FormulaList Formula::subformulae </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Returns a vector of pointers to immediate subformulae in left to right order. </p>
-<p>For example if the formula is <code>A /\ (B \/ C)</code> then <code>.subformulae</code> returns two pointers to <code>A</code> and <code>(B \/ C)</code> respectively. </p><dl class="section return"><dt>Returns</dt><dd>A vector of Formula* containing immediate subformulae </dd></dl>
+<p>test if the formula is 0th order logic </p>
+<p>Tests if a formula is a 0th order predicate logic formula. I.E. contains only the connectives: not, and, or, if, iff but may contain predicates and terms that are composed of constants </p><dl class="section return"><dt>Returns</dt><dd>true iff the formula can be interpreted as zeroth order </dd></dl>
 
 </div>
 </div>

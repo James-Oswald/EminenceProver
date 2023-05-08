@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['not_105',['NOT',['../structFormula.html#ab5f0b340ed1faac8f341ad2e8a98a301a10df3d67626099df882920ba6552f16d',1,'Formula']]]
+  ['if_102',['IF',['../structFormula.html#ab5f0b340ed1faac8f341ad2e8a98a301ade6ee2b5d856295add4d5e3631fbfb93',1,'Formula']]],
+  ['iff_103',['IFF',['../structFormula.html#ab5f0b340ed1faac8f341ad2e8a98a301ac1cbcd58f852f8efa45845cf292e350c',1,'Formula']]]
 ];

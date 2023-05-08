@@ -79,7 +79,7 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a715c93377e992319fda4f75c0c901a92"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTerm.html#a715c93377e992319fda4f75c0c901a92">operator==</a> (const <a class="el" href="structTerm.html">Term</a> &amp;term)</td></tr>
-<tr class="memdesc:a715c93377e992319fda4f75c0c901a92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true iff two terms are syntactically equivelent.  <a href="structTerm.html#a715c93377e992319fda4f75c0c901a92">More...</a><br /></td></tr>
+<tr class="memdesc:a715c93377e992319fda4f75c0c901a92"><td class="mdescLeft">&#160;</td><td class="mdescRight">true iff two terms are syntactically equivelent  <a href="structTerm.html#a715c93377e992319fda4f75c0c901a92">More...</a><br /></td></tr>
 <tr class="separator:a715c93377e992319fda4f75c0c901a92"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a77d51e47e6bc9160b0ebf78e90f4f7b2"><td class="memItemLeft" align="right" valign="top"><a id="a77d51e47e6bc9160b0ebf78e90f4f7b2"></a>
 <a class="el" href="structTerm.html">Term</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTerm.html#a77d51e47e6bc9160b0ebf78e90f4f7b2">copy</a> () const</td></tr>
@@ -99,9 +99,7 @@ TermList&#160;</td><td class="memItemRight" valign="bottom"><b>allSubfunctions</
 <tr class="memitem:a5114bfc35ec72b487b8cc991ff9f2208"><td class="memItemLeft" align="right" valign="top"><a id="a5114bfc35ec72b487b8cc991ff9f2208"></a>
 TermList&#160;</td><td class="memItemRight" valign="bottom"><b>allFunctions</b> () const</td></tr>
 <tr class="separator:a5114bfc35ec72b487b8cc991ff9f2208"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7885215ca18852cef8b7859778ff03f4"><td class="memItemLeft" align="right" valign="top"><a id="a7885215ca18852cef8b7859778ff03f4"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTerm.html#a7885215ca18852cef8b7859778ff03f4">depth</a> () const</td></tr>
-<tr class="memdesc:a7885215ca18852cef8b7859778ff03f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">returns the hight of the term tree. <br /></td></tr>
+<tr class="memitem:a7885215ca18852cef8b7859778ff03f4"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTerm.html#a7885215ca18852cef8b7859778ff03f4">depth</a> () const</td></tr>
 <tr class="separator:a7885215ca18852cef8b7859778ff03f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa671313b0ef1e0c0d45694c71fe0ad97"><td class="memItemLeft" align="right" valign="top">std::unordered_set&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTerm.html#aa671313b0ef1e0c0d45694c71fe0ad97">identifiers</a> () const</td></tr>
 <tr class="memdesc:aa671313b0ef1e0c0d45694c71fe0ad97"><td class="mdescLeft">&#160;</td><td class="mdescRight">gets the set of all identifier names in the term.  <a href="structTerm.html#aa671313b0ef1e0c0d45694c71fe0ad97">More...</a><br /></td></tr>
@@ -141,6 +139,24 @@ TermList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 
 </div>
 </div>
+<a id="a7885215ca18852cef8b7859778ff03f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7885215ca18852cef8b7859778ff03f4">&#9670;&nbsp;</a></span>depth()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t Term::depth </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>the hight of the term tree. </dd></dl>
+
+</div>
+</div>
 <a id="aa671313b0ef1e0c0d45694c71fe0ad97"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa671313b0ef1e0c0d45694c71fe0ad97">&#9670;&nbsp;</a></span>identifiers()</h2>
 
@@ -177,7 +193,7 @@ TermList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
       </table>
 </div><div class="memdoc">
 
-<p>Return true iff two terms are syntactically equivelent. </p>
+<p>true iff two terms are syntactically equivelent </p>
 <p>Returns true iff the terms share the same name and, in the event they have arguments, if they share the same arguments.</p>
 <dl class="section return"><dt>Returns</dt><dd>if the terms are semantically equivelent </dd></dl>
 

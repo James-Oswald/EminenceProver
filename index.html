@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Eminence Prover: Main Page</title>
+<title>Eminence Prover: EminenceProver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -61,11 +61,52 @@ $(function() {
 </iframe>
 </div>
 
-<div class="header">
+<div class="PageDoc"><div class="header">
   <div class="headertitle">
-<div class="title">Eminence Prover Documentation</div>  </div>
+<div class="title">EminenceProver </div>  </div>
 </div><!--header-->
 <div class="contents">
+<div class="textblock"><p><a class="anchor" id="md_README"></a>:spades: Eminence in shadowing :chess_pawn:</p>
+<h1><a class="anchor" id="autotoc_md1"></a>
+About</h1>
+<p>EminenceProver is a high-order modal logic theorem prover, particularly designed for reasoning in the logics DCEC* and IDCEC. On the backend we make use of a garden of other theorem provers which currently include:</p><ul>
+<li>Vampire</li>
+</ul>
+<p>We intend to someday also include backends for:</p><ul>
+<li>E</li>
+<li>Leo III</li>
+<li>Z3</li>
+<li>SNARK</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md2"></a>
+Build from source</h1>
+<p>With CMake </p><div class="fragment"><div class="line">git clone --recurse-submodules -j 8 https://github.com/James-Oswald/EminenceProver.git</div>
+<div class="line">cd EminenceProver</div>
+<div class="line">mkdir build</div>
+<div class="line">cd build</div>
+<div class="line">cmake ..</div>
+<div class="line">make</div>
+</div><!-- fragment --><p>We build the docs separately from the CMake build </p><div class="fragment"><div class="line">#In the project root </div>
+<div class="line">doxygen Doxyfile</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md3"></a>
+Dependencies</h1>
+<p>For Building:</p><ul>
+<li><a href="https://cmake.org/">CMake</a></li>
+<li><a href="https://www.boost.org/">Boost C++ Libraries</a></li>
+<li><a href="https://github.com/vprover/vampire">Vampire Theorem Prover (included as a submodule)</a></li>
+</ul>
+<div class="fragment"><div class="line">#Install on Ubuntu</div>
+<div class="line">sudo apt-get install -y libboost-filesystem-dev libboost-dev</div>
+</div><!-- fragment --><p>For Docs:</p><ul>
+<li><a href="https://graphviz.org/">dot (graphviz)</a></li>
+<li><a href="https://www.doxygen.nl/">doxygen</a></li>
+</ul>
+<div class="fragment"><div class="line">#Install on Ubuntu</div>
+<div class="line">sudo apt-get install -y graphviz doxygen</div>
+</div><!-- fragment --><p>Not currently a dependency but was or may be at some point:</p><ul>
+<li><a href="https://github.com/BNFC/bnfc">BNFC</a> </li>
+</ul>
+</div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

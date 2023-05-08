@@ -1,8 +1,8 @@
 <map id="Problem" name="Problem">
-<area shape="rect" id="node1" title=" " alt="" coords="449,5,525,32"/>
+<area shape="rect" id="node1" title="represents a problem to be solved by a theorem prover" alt="" coords="449,5,525,32"/>
 <area shape="rect" id="node2" href="$structFormula.html" title="Represents a formulae with a truth value." alt="" coords="199,156,273,183"/>
-<area shape="rect" id="node3" href="$structFormula_1_1BinaryConnective.html" title=" " alt="" coords="388,85,587,112"/>
-<area shape="rect" id="node5" href="$structFormula_1_1UnaryConnective.html" title=" " alt="" coords="390,179,585,205"/>
-<area shape="rect" id="node6" href="$structFormula_1_1Quantifier.html" title=" " alt="" coords="414,269,561,296"/>
-<area shape="rect" id="node4" href="$structFormula_1_1Pred.html" title=" " alt="" coords="5,156,117,183"/>
+<area shape="rect" id="node3" href="$structFormula_1_1BinaryConnective.html" title="Binary Connective formula representation." alt="" coords="388,85,587,112"/>
+<area shape="rect" id="node5" href="$structFormula_1_1UnaryConnective.html" title="Unary Connective formula representation." alt="" coords="390,179,585,205"/>
+<area shape="rect" id="node6" href="$structFormula_1_1Quantifier.html" title="Quantifier formula representation." alt="" coords="414,269,561,296"/>
+<area shape="rect" id="node4" href="$structFormula_1_1Pred.html" title="Predicate representation." alt="" coords="5,156,117,183"/>
 </map>

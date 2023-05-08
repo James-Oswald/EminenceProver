@@ -70,42 +70,51 @@ $(function() {
 <div class="title">Problem Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>represents a problem to be solved by a theorem prover  
+ <a href="structProblem.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="Problem_8hpp_source.html">Problem.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for Problem:</div>
 <div class="dyncontent">
 <div class="center"><img src="structProblem__coll__graph.png" border="0" usemap="#aProblem_coll__map" alt="Collaboration graph"/></div>
 <map name="aProblem_coll__map" id="aProblem_coll__map">
-<area shape="rect" title=" " alt="" coords="449,5,525,32"/>
+<area shape="rect" title="represents a problem to be solved by a theorem prover" alt="" coords="449,5,525,32"/>
 <area shape="rect" href="structFormula.html" title="Represents a formulae with a truth value." alt="" coords="199,156,273,183"/>
-<area shape="rect" href="structFormula_1_1BinaryConnective.html" title=" " alt="" coords="388,85,587,112"/>
-<area shape="rect" href="structFormula_1_1UnaryConnective.html" title=" " alt="" coords="390,179,585,205"/>
-<area shape="rect" href="structFormula_1_1Quantifier.html" title=" " alt="" coords="414,269,561,296"/>
-<area shape="rect" href="structFormula_1_1Pred.html" title=" " alt="" coords="5,156,117,183"/>
+<area shape="rect" href="structFormula_1_1BinaryConnective.html" title="Binary Connective formula representation." alt="" coords="388,85,587,112"/>
+<area shape="rect" href="structFormula_1_1UnaryConnective.html" title="Unary Connective formula representation." alt="" coords="390,179,585,205"/>
+<area shape="rect" href="structFormula_1_1Quantifier.html" title="Quantifier formula representation." alt="" coords="414,269,561,296"/>
+<area shape="rect" href="structFormula_1_1Pred.html" title="Predicate representation." alt="" coords="5,156,117,183"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ab9d67848ddeb39e95acdd65746987067"><td class="memItemLeft" align="right" valign="top"><a id="ab9d67848ddeb39e95acdd65746987067"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Problem</b> (std::list&lt; <a class="el" href="structFormula.html">Formula</a> * &gt; assumptions, <a class="el" href="structFormula.html">Formula</a> *goal)</td></tr>
+<tr class="memitem:ab9d67848ddeb39e95acdd65746987067"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structProblem.html#ab9d67848ddeb39e95acdd65746987067">Problem</a> (std::list&lt; <a class="el" href="structFormula.html">Formula</a> * &gt; assumptions, <a class="el" href="structFormula.html">Formula</a> *goal)</td></tr>
+<tr class="memdesc:ab9d67848ddeb39e95acdd65746987067"><td class="mdescLeft">&#160;</td><td class="mdescRight">construct a new problem from a list of assumptions and a goal.  <a href="structProblem.html#ab9d67848ddeb39e95acdd65746987067">More...</a><br /></td></tr>
 <tr class="separator:ab9d67848ddeb39e95acdd65746987067"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4dae54a5b193c1db6eae7eb9a8d573ee"><td class="memItemLeft" align="right" valign="top"><a id="a4dae54a5b193c1db6eae7eb9a8d573ee"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>toFirstOrderTPTP</b> () const</td></tr>
+<tr class="memitem:a4dae54a5b193c1db6eae7eb9a8d573ee"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structProblem.html#a4dae54a5b193c1db6eae7eb9a8d573ee">toFirstOrderTPTP</a> () const</td></tr>
+<tr class="memdesc:a4dae54a5b193c1db6eae7eb9a8d573ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a first order problem to contents of a TPTP problem.  <a href="structProblem.html#a4dae54a5b193c1db6eae7eb9a8d573ee">More...</a><br /></td></tr>
 <tr class="separator:a4dae54a5b193c1db6eae7eb9a8d573ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6ebc4151e4120a90d6ac63e6e4f60822"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structProblem.html#a6ebc4151e4120a90d6ac63e6e4f60822">saveAsTPTP</a> (std::string fileName) const</td></tr>
-<tr class="memdesc:a6ebc4151e4120a90d6ac63e6e4f60822"><td class="mdescLeft">&#160;</td><td class="mdescRight">saves a problem as a TPTP file.  <a href="structProblem.html#a6ebc4151e4120a90d6ac63e6e4f60822">More...</a><br /></td></tr>
+<tr class="memdesc:a6ebc4151e4120a90d6ac63e6e4f60822"><td class="mdescLeft">&#160;</td><td class="mdescRight">saves a first order problem as a TPTP file.  <a href="structProblem.html#a6ebc4151e4120a90d6ac63e6e4f60822">More...</a><br /></td></tr>
 <tr class="separator:a6ebc4151e4120a90d6ac63e6e4f60822"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2e7d35c4ce83f1786533a0bf813d684b"><td class="memItemLeft" align="right" valign="top"><a id="a2e7d35c4ce83f1786533a0bf813d684b"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>isPropositional</b> () const</td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structProblem.html#a2e7d35c4ce83f1786533a0bf813d684b">isPropositional</a> () const</td></tr>
+<tr class="memdesc:a2e7d35c4ce83f1786533a0bf813d684b"><td class="mdescLeft">&#160;</td><td class="mdescRight">if the problem is representable in propositional logic <br /></td></tr>
 <tr class="separator:a2e7d35c4ce83f1786533a0bf813d684b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0f937a3bbe15a3f8216ed53ed13efc11"><td class="memItemLeft" align="right" valign="top"><a id="a0f937a3bbe15a3f8216ed53ed13efc11"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>isZerothOrder</b> () const</td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structProblem.html#a0f937a3bbe15a3f8216ed53ed13efc11">isZerothOrder</a> () const</td></tr>
+<tr class="memdesc:a0f937a3bbe15a3f8216ed53ed13efc11"><td class="mdescLeft">&#160;</td><td class="mdescRight">if the problem is representable in 0th order logic <br /></td></tr>
 <tr class="separator:a0f937a3bbe15a3f8216ed53ed13efc11"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a88eb6bf015f524c8bb65fe74918c9240"><td class="memItemLeft" align="right" valign="top"><a id="a88eb6bf015f524c8bb65fe74918c9240"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>isFirstOrder</b> () const</td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structProblem.html#a88eb6bf015f524c8bb65fe74918c9240">isFirstOrder</a> () const</td></tr>
+<tr class="memdesc:a88eb6bf015f524c8bb65fe74918c9240"><td class="mdescLeft">&#160;</td><td class="mdescRight">if the problem is representable in 1st order logic <br /></td></tr>
 <tr class="separator:a88eb6bf015f524c8bb65fe74918c9240"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af4b6e94db11d537a7f0c657d7d73be9b"><td class="memItemLeft" align="right" valign="top"><a id="af4b6e94db11d537a7f0c657d7d73be9b"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>isSecondOrder</b> () const</td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structProblem.html#af4b6e94db11d537a7f0c657d7d73be9b">isSecondOrder</a> () const</td></tr>
+<tr class="memdesc:af4b6e94db11d537a7f0c657d7d73be9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">if the problem is representable in 2nd order logic <br /></td></tr>
 <tr class="separator:af4b6e94db11d537a7f0c657d7d73be9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
@@ -117,6 +126,46 @@ std::list&lt; <a class="el" href="structFormula.html">Formula</a> * &gt;&#160;</
 <a class="el" href="structFormula.html">Formula</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>goal</b></td></tr>
 <tr class="separator:a739ad01a2109257d79652b2893bc2f3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>represents a problem to be solved by a theorem prover </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="ab9d67848ddeb39e95acdd65746987067"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab9d67848ddeb39e95acdd65746987067">&#9670;&nbsp;</a></span>Problem()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Problem::Problem </td>
+          <td>(</td>
+          <td class="paramtype">std::list&lt; <a class="el" href="structFormula.html">Formula</a> * &gt;&#160;</td>
+          <td class="paramname"><em>assumptions</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structFormula.html">Formula</a> *&#160;</td>
+          <td class="paramname"><em>goal</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>construct a new problem from a list of assumptions and a goal. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">assumptions</td><td>a list of formulae which serve as the assumptions from which we will try to prove the goal. </td></tr>
+    <tr><td class="paramname">goal</td><td>the formula we will try to prove. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a6ebc4151e4120a90d6ac63e6e4f60822"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6ebc4151e4120a90d6ac63e6e4f60822">&#9670;&nbsp;</a></span>saveAsTPTP()</h2>
@@ -134,13 +183,34 @@ std::list&lt; <a class="el" href="structFormula.html">Formula</a> * &gt;&#160;</
       </table>
 </div><div class="memdoc">
 
-<p>saves a problem as a TPTP file. </p>
+<p>saves a first order problem as a TPTP file. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">filename</td><td>the path and name of the file to save the problem to. this name is expected to include the file extension in it. </td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a4dae54a5b193c1db6eae7eb9a8d573ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4dae54a5b193c1db6eae7eb9a8d573ee">&#9670;&nbsp;</a></span>toFirstOrderTPTP()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Problem::toFirstOrderTPTP </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Converts a first order problem to contents of a TPTP problem. </p>
+<p>will set assumptions to TPTP hypothesis and the goal to a conjecture </p><dl class="section return"><dt>Returns</dt><dd>a string which will be a valid TPTP file if saved. <br  />
+ </dd></dl>
 
 </div>
 </div>

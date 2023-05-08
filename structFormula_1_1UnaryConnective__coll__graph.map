@@ -1,7 +1,7 @@
 <map id="Formula::UnaryConnective" name="Formula::UnaryConnective">
-<area shape="rect" id="node1" title=" " alt="" coords="37,5,231,32"/>
+<area shape="rect" id="node1" title="Unary Connective formula representation." alt="" coords="37,5,231,32"/>
 <area shape="rect" id="node2" href="$structFormula.html" title="Represents a formulae with a truth value." alt="" coords="169,95,243,121"/>
-<area shape="rect" id="node3" href="$structFormula_1_1BinaryConnective.html" title=" " alt="" coords="5,199,204,225"/>
-<area shape="rect" id="node5" href="$structFormula_1_1Quantifier.html" title=" " alt="" coords="229,199,375,225"/>
-<area shape="rect" id="node4" href="$structFormula_1_1Pred.html" title=" " alt="" coords="255,5,367,32"/>
+<area shape="rect" id="node3" href="$structFormula_1_1BinaryConnective.html" title="Binary Connective formula representation." alt="" coords="5,199,204,225"/>
+<area shape="rect" id="node5" href="$structFormula_1_1Quantifier.html" title="Quantifier formula representation." alt="" coords="229,199,375,225"/>
+<area shape="rect" id="node4" href="$structFormula_1_1Pred.html" title="Predicate representation." alt="" coords="255,5,367,32"/>
 </map>

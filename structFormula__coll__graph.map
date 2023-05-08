@@ -1,7 +1,7 @@
 <map id="Formula" name="Formula">
 <area shape="rect" id="node1" title="Represents a formulae with a truth value." alt="" coords="199,103,273,129"/>
-<area shape="rect" id="node2" href="$structFormula_1_1BinaryConnective.html" title=" " alt="" coords="388,23,587,49"/>
-<area shape="rect" id="node4" href="$structFormula_1_1UnaryConnective.html" title=" " alt="" coords="390,93,585,120"/>
-<area shape="rect" id="node5" href="$structFormula_1_1Quantifier.html" title=" " alt="" coords="414,193,561,220"/>
-<area shape="rect" id="node3" href="$structFormula_1_1Pred.html" title=" " alt="" coords="5,103,117,129"/>
+<area shape="rect" id="node2" href="$structFormula_1_1BinaryConnective.html" title="Binary Connective formula representation." alt="" coords="388,23,587,49"/>
+<area shape="rect" id="node4" href="$structFormula_1_1UnaryConnective.html" title="Unary Connective formula representation." alt="" coords="390,93,585,120"/>
+<area shape="rect" id="node5" href="$structFormula_1_1Quantifier.html" title="Quantifier formula representation." alt="" coords="414,193,561,220"/>
+<area shape="rect" id="node3" href="$structFormula_1_1Pred.html" title="Predicate representation." alt="" coords="5,103,117,129"/>
 </map>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['pred_107',['PRED',['../structFormula.html#ab5f0b340ed1faac8f341ad2e8a98a301a39e59205523085dd3cc96030e4170e53',1,'Formula']]]
+  ['or_105',['OR',['../structFormula.html#ab5f0b340ed1faac8f341ad2e8a98a301a1d00e7dce692e8dc3f6877f035e3a616',1,'Formula']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['prover_62',['Prover',['../namespaceProver.html',1,'']]]
+  ['vamp_61',['vamp',['../namespacevamp.html',1,'']]]
 ];
