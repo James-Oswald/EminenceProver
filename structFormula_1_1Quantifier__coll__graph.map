@@ -1,0 +1,7 @@
+<map id="Formula::Quantifier" name="Formula::Quantifier">
+<area shape="rect" id="node1" title=" " alt="" coords="55,5,202,32"/>
+<area shape="rect" id="node2" href="$structFormula.html" title="Represents a formulae with a truth value." alt="" coords="189,95,263,121"/>
+<area shape="rect" id="node3" href="$structFormula_1_1BinaryConnective.html" title=" " alt="" coords="5,199,204,225"/>
+<area shape="rect" id="node5" href="$structFormula_1_1UnaryConnective.html" title=" " alt="" coords="229,199,423,225"/>
+<area shape="rect" id="node4" href="$structFormula_1_1Pred.html" title=" " alt="" coords="226,5,338,32"/>
+</map>
