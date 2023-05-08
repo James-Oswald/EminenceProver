@@ -7,11 +7,12 @@
 
 struct Term;
 
+/** @brief represents a list of term trees */
 using TermList = std::list<Term*>;
 
 /**
  * @brief Represents an term level construct such as constants, term variables, functions with args,
- * and function variables.
+ * and function variables. 
  * @details There is no semantic distinction made here at the representation level between 
  * variables and constants. An constant is considered to be a bound variable if it is bound
  * at the formula level, i.e. there exists a quantifier that binds it, otherwise it is a constant.
@@ -30,11 +31,11 @@ struct Term{
     Term() = default;
     ~Term();
 
-    /** Return true iff two terms are syntactically equivelent */
+    /** @brief  true iff two terms are syntactically equivelent */
     bool operator==(const Term& term);
 
     /**
-     * Creates a copy of this term and returns a newly allocated pointer to it.
+     * @brief Creates a copy of this term and returns a newly allocated pointer to it.
     */
     Term* copy() const;
     
@@ -46,9 +47,10 @@ struct Term{
     TermList subconstants() const;
 
     /**
-     * @brief Returns all subconstants 
+     * @return a list of all subconstants: constants and variables, including the top level term 
      * @example if term is `f(z, g(x), h(x, y), y)` then `.subconstants()` returns a list of pointers 
      * [z, x in g(x), x in h(x, y), y in h(x, y), y]
+     * @example `x` returns a pointer to itself
     */
     TermList allSubconstants() const;
 
@@ -72,7 +74,7 @@ struct Term{
     TermList allFunctions() const;
 
     /**
-     * @brief returns the hight of the term tree.
+     * @return the hight of the term tree.
     */
     size_t depth() const;
 
@@ -85,6 +87,29 @@ struct Term{
 
 };
 
+/**
+ * @brief Construct a Variable Term.
+ * @details Since we make no semantic distinction at the representational level, this function is identical
+ * to Const, but can aide in the visual representation of formulae construction.
+ * @param name the identifier for this variable. 
+ * @return a pointer to a new variable term.
+*/
 Term* Var(std::string name);
+
+/**
+ * @brief Construct a Constant Term.
+ * @details Since we make no semantic distinctions at the representational level, we can also use this to create vars.
+ * @param name the identifier for this constant. 
+ * @return a pointer to a new constant term.
+*/
 Term* Const(std::string name);
+
+/**
+ * @brief Construct a Function/Function Variable Term.
+ * @details Since we make no semantic distinctions at the representational level, we can use this for either functions 
+ * or function variables. 
+ * @param name the identifier for this function. 
+ * @param args A list of terms that are arguments to this function.
+ * @return a pointer to a new variable term.
+*/
 Term* Func(std::string name, TermList args);
