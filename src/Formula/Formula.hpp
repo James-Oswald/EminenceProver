@@ -132,10 +132,19 @@ struct Formula{
      * @brief Gets all subformulae in the entire tree excluding the formulae itself. 
      * The vector returned is guaranteed to have the values in breath first traversal order. 
      * @example if the formula is `A /\ (B \/ ~C)` then `.allSubformulae()` will return
-     * pointers to `A, (B \/ ~C), B, ~C, C]` in that order.
+     * pointers to `[A, (B \/ ~C), B, ~C, C]` in that order.
      * @return A list of Formula* of all subformulae encountered in BFS traversal order of the formula tree. 
     */
     FormulaList allSubformulae() const;
+
+    /**
+     * @brief Gets all subformulae in the entire tree including the formulae itself. 
+     * The vector returned is guaranteed to have the values in breath first traversal order. 
+     * @example if the formula is `A /\ (B \/ ~C)` then `.allFormulae()` will return
+     * pointers to `[A /\ (B \/ ~C), A, (B \/ ~C), B, ~C, C]` in that order.
+     * @return A list of Formula* of all subformulae encountered in BFS traversal order of the formula tree. 
+    */
+    FormulaList allFormulae() const;
 
     /**
      * @brief Gets a list of all predicates in the order they appear in the formula via an in-order traversal

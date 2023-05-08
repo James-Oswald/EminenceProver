@@ -10,7 +10,7 @@ int main(){
     Formula* goal1 = Pred("P", {Const("a")});
     Problem p1(assumptions1, goal1);
     assert(!p1.isPropositional());
-    //assert(!p1.isZerothOrder());
+    assert(!p1.isZerothOrder());
     assert(p1.isFirstOrder());
     assert(p1.isSecondOrder());
     assert(vamp::solve(p1) == true);
@@ -28,7 +28,7 @@ int main(){
     Formula* goal3 = Pred("P", {Const("a")});
     Problem p3(assumptions3, goal3);
     assert(!p3.isPropositional());
-    //assert(!p3.isZerothOrder());
+    assert(!p3.isZerothOrder());
     assert(p3.isFirstOrder());
     assert(p3.isSecondOrder());
     assert(vamp::solve(p3) == false);

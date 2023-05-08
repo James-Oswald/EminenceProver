@@ -91,7 +91,11 @@ FormulaList Formula::allSubformulae() const{
     return allFormula;
 }
 
-
+FormulaList Formula::allFormulae() const{
+    FormulaList allFormula = this->allSubformulae();
+    allFormula.push_front((Formula*)this);
+    return allFormula;
+}
 
 
 /**
@@ -288,7 +292,7 @@ std::unordered_set<std::string> Formula::identifiers() const{
  * @return true iff formula contains only propositional connectives
 */
 bool onlyConnectives(std::unordered_set<Formula::Type> connectives, const Formula * formula){
-    for(Formula* subformula : formula->allSubformulae()){
+    for(Formula* subformula : formula->allFormulae()){
         if(subformula->type != Formula::Type::PRED && 
            connectives.find(subformula->type) == connectives.end()){
             return false;
