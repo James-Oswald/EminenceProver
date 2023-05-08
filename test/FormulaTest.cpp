@@ -94,4 +94,18 @@ int main(){
     assert(f2->allConstants().size() == 5);
     assert(f2->allPredicates().size() == 4);
     assert(!f2->isProposition());
+
+    pFormula f3 (Iff(Not(And(Prop("A"), Prop("B"))), Or(Not(Prop("A")), Not(Prop("B")))));
+    std::cout<<FormulaWriter::toSExpression(f3.get())<<std::endl;
+    std::cout<<FormulaWriter::toFirstOrderTPTP("f3", "hypothesis", f3.get())<<std::endl;
+    assert(f3->depth() == 4);
+    assert(f3->depthWithTerms() == 4);
+    assert(f3->isPropositional());
+    assert(f3->isZerothOrder());
+    assert(f3->isFirstOrder());
+    assert(f3->isSecondOrder());
+    assert(f3->allFunctions().size() == 0);
+    assert(f3->allConstants().size() == 0);
+    assert(f3->allPredicates().size() == 4);
+    assert(!f3->isProposition());
 }

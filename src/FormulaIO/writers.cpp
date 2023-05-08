@@ -186,6 +186,7 @@ std::string recursiveToTPTP(Formula* formula){
     throw std::runtime_error("invalid ");
 }
 
+
 std::string FormulaWriter::toFirstOrderTPTP(std::string name, std::string type, Formula* formula){
     if(!formula->isFirstOrder()){
         throw std::runtime_error("Trying to convert a non-first order formula to first order TPTP");

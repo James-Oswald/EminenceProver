@@ -34,27 +34,48 @@ bool vamp::solve(const Problem& p){
     int resultCode = bp::system(
         vampireExecPath,
         "--input_syntax", "tptp",
-        "-om", "smtcomp",
+        "-om", "szs",
         "--input_file",
         problemFilePath.string(),
         bp::std_out>vampireOutput
     );
 
-    //Process vampire output and return
+    //Process vampire output
     std::string resultString;
     std::getline(vampireOutput, resultString, {});
-    ba::trim(resultString);
+    //If vampire has exited with a non-zero exit code
     if(resultCode != 0){
-        throw std::runtime_error("Vampire prover exited with an error! Vampire output:\n" 
-            + resultString + "\nProblem Contents:\n" + tptpContents + "\n");
-    }
-    if(resultString == "sat"){
-        return true;
-    }else if(resultString == "unsat"){
-        return false;
+        size_t incompleteStrat = resultString.find("incomplete strategy");
+        size_t userError = resultString.find("User error");
+        if(userError != std::string::npos){
+            ba::trim(resultString);
+            throw std::runtime_error("Vampire prover exited with a user error! Vampire output:\n" 
+                + resultString + "\nProblem Contents:\n" + tptpContents + "\n");
+        }else if(incompleteStrat != std::string::npos){
+            //Vampire was not able to find a proof due to an incomplete stratagy, return false
+            //since we are unable to solve it
+            return false;
+        }else{
+            ba::trim(resultString);
+            throw std::runtime_error("Vampire prover exited with an error! Vampire output:\n" 
+                + resultString + "\nProblem Contents:\n" + tptpContents + "\n");
+        }
+    //Vampire exited sucessfully
     }else{
-        throw std::runtime_error(
-            "Vampire completed successfully with an unexpected result! Vampire output:\n" + resultString
-        );
+        std::string szsStatusString = "SZS status";
+        size_t szsStatusLocationStart = resultString.find(szsStatusString) + szsStatusString.length() + 1;
+        if(szsStatusLocationStart == std::string::npos){
+            ba::trim(resultString);
+            throw std::runtime_error(
+                "Vampire completed successfully with an unexpected result! Vampire output:\n" + resultString
+            );
+        }
+        size_t szsStatusLocationEnd = resultString.find(" ", szsStatusLocationStart);
+        std::string szsStatus = resultString.substr(szsStatusLocationStart, szsStatusLocationEnd-szsStatusLocationStart);
+        if(szsStatus == "Theorem" || szsStatus == "Tautology"){
+            return true;
+        }else{
+            return false;
+        }
     }
 }

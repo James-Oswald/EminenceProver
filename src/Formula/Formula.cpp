@@ -3,6 +3,7 @@
 #include<stack>
 #include<list>
 #include<algorithm>
+#include<stdexcept>
 
 #include "Formula.hpp"
 
@@ -59,7 +60,7 @@ Formula* Formula::copy() const{
             rv->quantifier->arg = this->quantifier->arg->copy();
             return rv;
     }
-    return nullptr;
+    throw std::runtime_error("Invalid connective type");
 }
 
 FormulaList Formula::subformulae() const{
@@ -73,7 +74,7 @@ FormulaList Formula::subformulae() const{
         case ConnectiveType::QUANT:
             return FormulaList{this->quantifier->arg};
     }
-    return {};
+    throw std::runtime_error("Invalid connective type");
 }
 
 FormulaList Formula::allSubformulae() const{
@@ -355,6 +356,7 @@ bool Formula::isSecondOrder() const{
 Formula* Prop(std::string name){
     Formula* rv = new Formula;
     rv->type = Formula::Type::PRED;
+    rv->connectiveType = Formula::ConnectiveType::PRED;
     rv->pred = new Formula::Pred;
     rv->pred->name = std::move(name);
     rv->pred->args = TermList();
