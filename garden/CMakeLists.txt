@@ -11,11 +11,13 @@ if(NOT EXISTS ${CMAKE_BINARY_DIR}/bin/vampire)
         OUTPUT_NAME vampire
         RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
     )
-    #Don't build the vampire vtest executable, we don't need it
-    set_target_properties(vtest PROPERTIES 
-        EXCLUDE_FROM_ALL 1 
-        EXCLUDE_FROM_DEFAULT_BUILD 1
-    )
+    #Don't build the vampire vtest executable in debug mode, we don't need it
+    if(TARGET vtest)
+        set_target_properties(vtest PROPERTIES 
+            EXCLUDE_FROM_ALL 1 
+            EXCLUDE_FROM_DEFAULT_BUILD 1
+        )
+    endif()
 else()
     message("[Eminence Prover] Vampire found, will not reconfigure or rebuild")
 endif()
