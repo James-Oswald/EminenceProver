@@ -10,6 +10,8 @@ target_link_libraries(Eminence Threads::Threads Boost::filesystem ${CMAKE_DL_LIB
 target_sources(Eminence PRIVATE
     EminenceProver.hpp
     EminenceProver.cpp
+    Expanders.hpp
+    Expanders.cpp
     VampireSubprocessProver.hpp
     VampireSubprocessProver.cpp
 )

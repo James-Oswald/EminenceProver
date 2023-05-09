@@ -41,7 +41,7 @@ struct Formula{
         NES,        ///< UnaryConnective, Modal nessecity
         POS,        ///< UnaryConnective, Modal possiblity
         BELIEF,     ///< UnaryTimeAgent, DCEC Belief
-        KNOWLEDGE,  ///< UnaryTimeAgent, DCEC Knowledge
+        KNOW,       ///< UnaryTimeAgent, DCEC Knowledge
     };
 
     /** @brief The underlying representation class of the current formula */
@@ -96,10 +96,10 @@ struct Formula{
 
     /** @brief A unary operator with an associated time and agent term */
     struct UnaryTimeAgent{
-        Term* time;
-        Term* agent;
+        std::string time;  //Time identifier or quantified time varible
+        std::string agent; //Agent identifier or quantified agent variable 
         Formula* arg;
-    }
+    };
     ///@}
     // Internal Representation =========================================================================================
     /** @name Internal Representation */
@@ -109,9 +109,10 @@ struct Formula{
     ConnectiveType connectiveType;  ///< The connective class of the formula
     union{
         Pred* pred;                 ///< Valid iff type == PRED
-        UnaryConnective* unary;     ///< Valid iff type == NOT
+        UnaryConnective* unary;     ///< Valid iff type == NOT, NES, POS
         BinaryConnective* binary;   ///< Valid iff type == AND, OR, IF, IFF
         Quantifier* quantifier;     ///< Valid iff type == FORALL, EXISTS
+        UnaryTimeAgent* unaryTA;    ///< Valid iff type == KNOW, BELIEF
     };
 
     ///@}
