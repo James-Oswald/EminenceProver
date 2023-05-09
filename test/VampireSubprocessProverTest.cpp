@@ -7,7 +7,7 @@
 #include<Question/Question.hpp>
 #include<Formula/Formula.hpp>
 
-std::string answerToString(const std::optional<Question::answer> ans) {
+std::string answerToString(const std::optional<Question::Answer> ans) {
     std::string ansStr;
     if (!ans.has_value()) {
         ansStr = "No Answer Found";
@@ -15,6 +15,18 @@ std::string answerToString(const std::optional<Question::answer> ans) {
         const auto ans_value = ans.value();
         for (const auto an : ans_value) {
             ansStr += an.first->name + ", " + an.second->name + "\n";
+        }
+    }
+    return ansStr;
+}
+
+std::string answersToString(const std::optional<Question::Answers> ans) {
+    std::string ansStr;
+    if (!ans.has_value()) {
+        ansStr = "No Answers Found";
+    } else {
+        for (const auto an : ans.value()) {
+            ansStr += answerToString(std::make_optional(an));
         }
     }
     return ansStr;
@@ -95,14 +107,33 @@ int main(){
         "X, \"Brandon\"\n"
     );
 
+    // Testing for multiple answers
+    assert(
+        answersToString(vamp::extractAnswers(q1))
+        ==
+        "X, \"Brandon\"\nX, \"James\"\n"
+    );
+
+
     // Testing single answer extraction for binary predicate
-    FormulaList assumptions7 = {Pred("likes", {Const("Brandon"), Const("Clare")}), Pred("happy", {Const("James")})};
+    FormulaList assumptions7 = {
+        Pred("likes", {Const("Brandon"), Const("Clare")}),
+        Pred("happy", {Const("James")}),
+        Pred("likes", {Const("Clare"), Const("Brandon")}),
+    };
     Formula* goal7 = Pred("likes", {X, Y});
     Question q2(assumptions7, goal7, {X, Y});
     assert(
         answerToString(vamp::extractAnswer(q2))
         ==
         "X, \"Brandon\"\nY, \"Clare\"\n"
+    );
+
+    // Testing for multiple ansewrs
+    assert(
+        answersToString(vamp::extractAnswers(q2))
+        ==
+        "X, \"Brandon\"\nY, \"Clare\"\nX, \"Clare\"\nY, \"Brandon\"\n"
     );
 
 }

@@ -19,6 +19,6 @@ namespace vamp {
      * @param problem a first order problem
      * @return An optional list of assignments if exists
     */
-    std::optional<Question::answer> extractAnswer(const Question& q);
-    std::optional<Question::answers> extractAnswers(const Question& q);
+    std::optional<Question::Answer> extractAnswer(const Question& q);
+    std::optional<Question::Answers> extractAnswers(const Question& q);
 }

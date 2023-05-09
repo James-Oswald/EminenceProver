@@ -90,8 +90,7 @@ bool vamp::solve(const Problem& p){
     This is vampire specific, some provers allow
     for the entire answer list.
 */
-std::optional<Question::answer> extractAnswer(
-    const Question& q, const Question::answers& forbiddenAnswers) {
+std::optional<Question::Answer> vamp::extractAnswer(const Question& q) {
 
     // BEGIN COPY PASTE
 
@@ -103,8 +102,6 @@ std::optional<Question::answer> extractAnswer(
     }
 
     std::string tptpContents = q.toFirstOrderTPTP(); // EDIT
-
-    // TODO: Need to include way to not allow forbidden answers within problem file
 
     std::fwrite(tptpContents.c_str(), sizeof(char), tptpContents.length(), problemFile);
     std::fclose(problemFile);
@@ -198,7 +195,7 @@ std::optional<Question::answer> extractAnswer(
     // Combine the answer and variable list to create a mapping
     auto szsAnswerIt = szsAnswer.begin();
     auto varsIt = q.variablesToAnswer.begin();
-    Question::answer answer;
+    Question::Answer answer;
     while (szsAnswerIt != szsAnswer.end() && varsIt != q.variablesToAnswer.end()) {
         answer.push_back(std::make_pair(*varsIt, *szsAnswerIt));
         ++szsAnswerIt;
@@ -208,18 +205,18 @@ std::optional<Question::answer> extractAnswer(
     return answer;
 }
 
-std::optional<Question::answer> vamp::extractAnswer(const Question& q) {
-    return extractAnswer(q, {});
-}
 
-std::optional<Question::answers> vamp::extractAnswers(const Question& q) {
-    Question::answers priorAnswers;
+
+std::optional<Question::Answers> vamp::extractAnswers(const Question& q) {
+    Question::Answers priorAnswers;
 
     bool answerFound = true;
+    Question newQuestion = q;
     while (answerFound) {
-        std::optional<Question::answer> ans = extractAnswer(q, priorAnswers);
+        std::optional<Question::Answer> ans = extractAnswer(newQuestion);
         if (ans.has_value()) {
             priorAnswers.push_back(ans.value());
+            newQuestion.restrictions.push_back(ans.value());
         } else {
             answerFound = false;
         }
