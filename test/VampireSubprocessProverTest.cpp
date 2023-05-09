@@ -1,9 +1,24 @@
 
 #include<cassert>
+#include<iostream>
 
 #include<Eminence/VampireSubprocessProver.hpp>
 #include<Problem/Problem.hpp>
+#include<Question/Question.hpp>
 #include<Formula/Formula.hpp>
+
+std::string answerToString(const std::optional<Question::answer> ans) {
+    std::string ansStr;
+    if (!ans.has_value()) {
+        ansStr = "No Answer Found";
+    } else {
+        const auto ans_value = ans.value();
+        for (const auto an : ans_value) {
+            ansStr += an.first->name + ", " + an.second->name + "\n";
+        }
+    }
+    return ansStr;
+}
 
 int main(){
     FormulaList assumptions1 = {Forall("x", Pred("P", {Var("x")}))};
@@ -48,4 +63,46 @@ int main(){
     assert(p4.isFirstOrder());
     assert(p4.isSecondOrder());
     assert(vamp::solve(p4) == false);
+
+    Formula* P = Prop("P");
+    Formula* Q = Prop("Q");
+
+    FormulaList assumptions5 = {Forall("x", Forall("y", Forall("z", Or(Or(Pred("R", {Var("x"), Var("y")}), Pred("R", {Var("z"), Var("y")})), Pred("R", {Var("z"), Var("x")})))))};
+    Formula* goal5 = Exists("x", 
+        Exists("y", 
+            Forall("z", 
+                Or(
+                    Pred("R", {Var("z"), Var("x")}),
+                    Pred("R", {Var("z"), Var("y")})
+                )
+            )
+        )
+    );
+    Problem p5(assumptions5, goal5);
+    assert(vamp::solve(p5) == true);
+
+    // Variables for testing
+    Term* X = Var("X");
+    Term* Y = Var("Y");
+
+    // Testing single answer extraction for unary predicate
+    FormulaList assumptions6 = {Pred("happy", {Const("Brandon")}), Pred("happy", {Const("James")})};
+    Formula* goal6 = Pred("happy", {X});
+    Question q1(assumptions6, goal6, {X});
+    assert(
+        answerToString(vamp::extractAnswer(q1))
+        ==
+        "X, \"Brandon\"\n"
+    );
+
+    // Testing single answer extraction for binary predicate
+    FormulaList assumptions7 = {Pred("likes", {Const("Brandon"), Const("Clare")}), Pred("happy", {Const("James")})};
+    Formula* goal7 = Pred("likes", {X, Y});
+    Question q2(assumptions7, goal7, {X, Y});
+    assert(
+        answerToString(vamp::extractAnswer(q2))
+        ==
+        "X, \"Brandon\"\nY, \"Clare\"\n"
+    );
+
 }

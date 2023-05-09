@@ -1,6 +1,7 @@
 
 #include "VampireSubprocessProver.hpp"
 #include "../FormulaIO/writers.cpp"
+#include "../Question/Question.hpp"
 
 #include<filesystem>
 #include<numeric>
@@ -83,8 +84,17 @@ bool vamp::solve(const Problem& p){
     }
 }
 
-std::optional<vamp::answer> vamp::extractAnswer(
-    const Problem& p, const std::list<Term*>& vars, const vamp::answers& forbiddenAnswers) {
+
+/*
+    Helper function to keep track of prior answers.
+    This is vampire specific, some provers allow
+    for the entire answer list.
+*/
+std::optional<Question::answer> extractAnswer(
+    const Question& q, const Question::answers& forbiddenAnswers) {
+
+    // BEGIN COPY PASTE
+
     //Write the problem to the input file
     static fs::path problemFilePath = fs::temp_directory_path()/problemFileName;
     std::FILE* problemFile = std::fopen(problemFilePath.c_str(),"w");
@@ -92,46 +102,10 @@ std::optional<vamp::answer> vamp::extractAnswer(
         throw std::runtime_error("Failed to open proof temp file:\n" + problemFilePath.string());
     }
 
-    /*
-        Rewriting the problem.
-
-        Since there's no way to output ?[X, Y, Z] in
-        the Formula to TPTP class, I'm providing this hacky
-        overlay method.
-
-        If you recursively nest (?[X]: ?[Y]: ?[Z]: ...)
-        then Vampire will only give an answer to X.
-
-        [1]: We have no way currently of grabbing back the original predicate
-        names and the link from makeLegalTPTP.
-        [2]: Can't do makeLegalTPTP since that quotes things which we don't want here since
-        it's variables.
-    */
-    std::string varListString = std::accumulate(
-         vars.begin(), vars.end(), std::string{},
-         [](const std::string& acc, Term* t) -> std::string {
-             return acc.empty() ? t->name : acc + ", " + t->name;
-         }
-     );
-
-    std::string tptpContents = "";
-
-    FormulaList::const_iterator itr = p.assumptions.begin();
-    for(size_t i = 0; i < p.assumptions.size(); i++, itr++){
-        std::string name = "assumption" + std::to_string(i);
-        tptpContents += FormulaWriter::toFirstOrderTPTP(name, "axiom", *itr) + "\n\n";
-    }
-
-    tptpContents += boost::str(
-        boost::format("fof(goal, question, ?[%1%]: (%2%)).") %
-         varListString %
-         recursiveToTPTP(p.goal) // TODO: [1] [2]
-    );
+    std::string tptpContents = q.toFirstOrderTPTP(); // EDIT
 
     // TODO: Need to include way to not allow forbidden answers within problem file
 
-
-    // BEGIN COPY PASTE
     std::fwrite(tptpContents.c_str(), sizeof(char), tptpContents.length(), problemFile);
     std::fclose(problemFile);
 
@@ -216,16 +190,16 @@ std::optional<vamp::answer> vamp::extractAnswer(
         szsAnswer.push_back(Const(termStr));
     }
 
-    if (szsAnswer.size() != vars.size()) {
+    if (szsAnswer.size() != q.variablesToAnswer.size()) {
         // TODO: Throw error
         return {};
     }
 
     // Combine the answer and variable list to create a mapping
     auto szsAnswerIt = szsAnswer.begin();
-    auto varsIt = vars.begin();
-    vamp::answer answer;
-    while (szsAnswerIt != szsAnswer.end() && varsIt != vars.end()) {
+    auto varsIt = q.variablesToAnswer.begin();
+    Question::answer answer;
+    while (szsAnswerIt != szsAnswer.end() && varsIt != q.variablesToAnswer.end()) {
         answer.push_back(std::make_pair(*varsIt, *szsAnswerIt));
         ++szsAnswerIt;
         ++varsIt;
@@ -234,12 +208,16 @@ std::optional<vamp::answer> vamp::extractAnswer(
     return answer;
 }
 
-std::optional<vamp::answers> vamp::extractAnswers(const Problem& p, const std::list<Term*>& vars) {
-    vamp::answers priorAnswers;
+std::optional<Question::answer> vamp::extractAnswer(const Question& q) {
+    return extractAnswer(q, {});
+}
+
+std::optional<Question::answers> vamp::extractAnswers(const Question& q) {
+    Question::answers priorAnswers;
 
     bool answerFound = true;
     while (answerFound) {
-        std::optional<vamp::answer> ans = extractAnswer(p, vars, priorAnswers);
+        std::optional<Question::answer> ans = extractAnswer(q, priorAnswers);
         if (ans.has_value()) {
             priorAnswers.push_back(ans.value());
         } else {

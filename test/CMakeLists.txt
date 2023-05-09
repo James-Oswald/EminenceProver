@@ -4,5 +4,5 @@ target_link_libraries(FormulaTest Formula FormulaIO)
 add_test(NAME FormulaTest COMMAND FormulaTest)
 
 add_executable(VampireSubprocessProverTest VampireSubprocessProverTest.cpp)
-target_link_libraries(VampireSubprocessProverTest Eminence Problem Formula FormulaIO)
+target_link_libraries(VampireSubprocessProverTest Eminence Problem Question Formula FormulaIO)
 add_test(NAME VampireSubprocessProverTest COMMAND VampireSubprocessProverTest)
