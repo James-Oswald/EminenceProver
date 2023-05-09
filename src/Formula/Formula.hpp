@@ -38,6 +38,10 @@ struct Formula{
         IFF,        ///< BinaryConnective, biconditional
         FORALL,     ///< Quantifier, forall
         EXISTS,     ///< Quantifier, exists
+        NES,        ///< UnaryConnective, Modal nessecity
+        POS,        ///< UnaryConnective, Modal possiblity
+        BELIEF,     ///< UnaryTimeAgent, DCEC Belief
+        KNOWLEDGE,  ///< UnaryTimeAgent, DCEC Knowledge
     };
 
     /** @brief The underlying representation class of the current formula */
@@ -46,6 +50,7 @@ struct Formula{
         UNARY,      ///< A single formula operand 
         BINARY,     ///< left and right formulae operands
         QUANT,      ///< A named identifier (variable) and a bound formulae
+        UNARYTA,    ///< A unary operator associated with a time and an agent
     };
 
     /** @brief Predicate representation */
@@ -88,6 +93,13 @@ struct Formula{
         std::string var;  ///< The identifier (name of the variable) this quantifier binds to
         Formula* arg;     ///< The formula being quantified over
     };
+
+    /** @brief A unary operator with an associated time and agent term */
+    struct UnaryTimeAgent{
+        Term* time;
+        Term* agent;
+        Formula* arg;
+    }
     ///@}
     // Internal Representation =========================================================================================
     /** @name Internal Representation */
@@ -122,8 +134,7 @@ struct Formula{
 
     /** 
      * @brief Gets a list of pointers to immediate subformulae in left to right order.
-     * @example if the formula is `A /\ (B \/ C)` then `.subformulae()` returns a list of pointers
-     * to `A` and `(B \/ C)` respectively.
+     * @example if the formula is `A /\ (B \/ C)` then `.subformulae()` returns a list of pointers to `A` and `(B \/ C)` respectively.
      * @return A vector of Formula* containing immediate subformulae
     */
     FormulaList subformulae() const;
@@ -139,7 +150,7 @@ struct Formula{
 
     /**
      * @brief Gets all subformulae in the entire tree including the formulae itself. 
-     * The vector returned is guaranteed to have the values in breath first traversal order. 
+     * @details the vector returned is guaranteed to have the values in breath first traversal order. 
      * @example if the formula is `A /\ (B \/ ~C)` then `.allFormulae()` will return
      * pointers to `[A /\ (B \/ ~C), A, (B \/ ~C), B, ~C, C]` in that order.
      * @return A list of Formula* of all subformulae encountered in BFS traversal order of the formula tree. 
@@ -147,8 +158,7 @@ struct Formula{
     FormulaList allFormulae() const;
 
     /**
-     * @brief Gets a list of all predicates in the order they appear in the formula via an in-order traversal
-     * of the formula tree. 
+     * @brief Gets a list of all predicates in the order they appear in the formula via an in-order traversal of the formula tree. 
      * @example if the formula is `A /\ (B(a, d) \/ ~C(d))` then `.allPredicates()` returns a list of formula
      * pointers to `[A, B(a, d), C(d)]` in that order.
      * @return a list of Formula* to propositions in the formula in the order they appear 
@@ -157,8 +167,7 @@ struct Formula{
 
     /**
      * @brief Gets a list of pointers to all term level constants (including constant variables) in the formula
-     * @example if the formula is `A /\ (B(a, d) \/ ~C(d))` then `.allConstants()` returns a list of terms
-     * pointers to `[a, d, d]` in that order.
+     * @example if the formula is `A /\ (B(a, d) \/ ~C(d))` then `.allConstants()` returns a list of terms pointers to `[a, d, d]` in that order.
     */
     TermList allConstants() const;
 
@@ -177,8 +186,7 @@ struct Formula{
     /**
      * @brief gets the list of all propositional variables occurring inside the formula.
      * @details ordered in the order they appear in the formula via an in-order traversal of the formula tree. 
-     * @example `A /\ (B(a, d) \/ ~C)` returns a list of formula pointers to 
-     * `[A, C]` in that order.
+     * @example `A /\ (B(a, d) \/ ~C)` returns a list of formula pointers to `[A, C]` in that order.
     */
     FormulaList allPropositions() const;
 

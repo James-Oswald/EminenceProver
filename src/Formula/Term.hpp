@@ -47,7 +47,7 @@ struct Term{
     TermList subconstants() const;
 
     /**
-     * @return a list of all subconstants: constants and variables, including the top level term 
+     * @brief return a list of all subconstants: constants and variables, including the top level term 
      * @example if term is `f(z, g(x), h(x, y), y)` then `.subconstants()` returns a list of pointers 
      * [z, x in g(x), x in h(x, y), y in h(x, y), y]
      * @example `x` returns a pointer to itself
