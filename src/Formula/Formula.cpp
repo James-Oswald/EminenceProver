@@ -238,7 +238,7 @@ void inOrderQuantifierTraversal(Formula* base,
                     }
                 }
             }
-            break;
+            return;
         //Recursive case 1: The formula is a quantifier, push onto the quantifier stack to update binding order
         //and traverse the subformula
         case Formula::ConnectiveType::QUANT:
@@ -247,7 +247,7 @@ void inOrderQuantifierTraversal(Formula* base,
             inOrderQuantifierTraversal(base->quantifier->arg, quantifierStack, boundObjVars, baseCase, itemName);
             //Pop the quantifier since we've traversed all its inner vars
             quantifierStack.pop_front();
-            break;
+            return;
         //Recursive case 2: For any other formula type recurse on all subformulae
         default:
             for(Formula* subformula : base->subformulae()){
@@ -281,6 +281,34 @@ std::list<std::pair<Formula*, Formula*>> Formula::boundPredicateVariables() cons
     auto getPredicateName = [](Formula* p){return p->pred->name;};
     inOrderQuantifierTraversal<Formula*>((Formula*)this, quantifierStack, rv, getPredicates, getPredicateName);
     return rv;
+}
+
+
+void inOrderQunatifierTraversalDCEC(Formula* base, 
+                                    std::list<Formula*>& quantifierStack,
+                                    std::list<std::pair<Formula*, Formula*>>& boundVars,
+                                    std::string (*identifier)(const Formula*)){
+    switch(base->connectiveType)
+    {
+        case Formula::ConnectiveType::PRED:
+            return;
+        case Formula::ConnectiveType::QUANT:
+            //Push the current quantifier onto the list of bound vars we're looking for
+            quantifierStack.push_front(base);
+            inOrderQunatifierTraversalDCEC(base->quantifier->arg, quantifierStack, boundVars, identifier);
+            //Pop the quantifier since we've traversed all its inner vars
+            quantifierStack.pop_front();
+            return;
+        case Formula::ConnectiveType::
+        default:
+            for(Formula* subformula : base->subformulae()){
+                inOrderQunatifierTraversalDCEC(subformula, quantifierStack, boundVars, identifier);
+            }
+    }
+}
+
+std::list<std::pair<Formula*, Formula*>> Formula::boundAgentVariables() const{
+    std::list
 }
 
 std::unordered_set<std::string> Formula::identifiers() const{

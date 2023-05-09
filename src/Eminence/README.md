@@ -9,9 +9,9 @@ R4,
 SelfBelief,                 //Ignoring for version 0
 PerceptionToKnowledge,      //Implemented
 SaysToBelief,               //Implemented
-IntentionToPerception,      //"Its not real" -Brandon
-ModalConjunctions,
-ModalImplications,
+IntentionToPerception,      //Ignoring, "Its not real" -Brandon
+ModalConjunctions,          //Implemented
+ModalImplications,          //Ignoring for version 0
 DR1,
 DR2,
 DR3,

@@ -229,6 +229,18 @@ struct Formula{
     std::list<std::pair<Formula*, Formula*>> boundPredicateVariables() const;
 
     /**
+     * @brief Get a list of pairs of pointers to modal temporal operators with quantifed time operators and the 
+     *        quantifier formlae they are bound to. 
+    */
+    std::list<std::pair<Formula*, Formula*>> boundTimeVariables() const;
+
+    /**
+     * @brief Get a list of pairs of pointers to modal operators with quantifed agents and the 
+     *        quantifier formlae they are bound to. 
+    */
+    std::list<std::pair<Formula*, Formula*>> boundAgentVariables() const;
+
+    /**
      * @brief gets the set of all identifiers in the formula as strings.
      * @details Identifiers include:
      * 1) all bound quantifier variable names
@@ -308,4 +320,10 @@ Formula* If(Formula* left, Formula* right);
 Formula* Iff(Formula* left, Formula* right);
 Formula* Forall(std::string varName, Formula* arg);
 Formula* Exists(std::string varName, Formula* arg);
-
+Formula* Belives(std::string agent, std::string time, Formula* arg);
+Formula* Knows(std::string agent, std::string time, Formula* arg);
+Formula* Desires(std::string agent, std::string time, Formula* arg);
+Formula* Percives(std::string agent, std::string time, Formula* arg);
+Formula* Says(std::string agent, std::string time, Formula* arg);
+Formula* Intends(std::string agent, std::string time, Formula* arg);
+Formula* Common(std::string time, Formula* arg);
