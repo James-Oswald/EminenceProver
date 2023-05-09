@@ -9,7 +9,7 @@
 namespace vamp {
     /**
      * @param problem a first order problem
-     * @return true if the problem is satisfiable and a proof has been found
+     * @return true if the goal of the problem is provable with the given assumptions
     */
     bool solve(const Problem& problem);
 }

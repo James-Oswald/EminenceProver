@@ -42,6 +42,11 @@ struct Formula{
         POS,        ///< UnaryConnective, Modal possiblity
         BELIEF,     ///< UnaryTimeAgent, DCEC Belief
         KNOW,       ///< UnaryTimeAgent, DCEC Knowledge
+        PERCEP,     ///< UnaryTimeAgent, DCEC Perception
+        SAYS,       ///< UnaryTimeAgent, DCEC global communication
+        DESIRE,     ///< UnaryTimeAgent, DCEC desire
+        INTEND,     ///< UnaryTimeAgent, DCEC intention 
+        COMM,       ///< UnaryTime, DCEC common knowledge
     };
 
     /** @brief The underlying representation class of the current formula */
@@ -51,6 +56,7 @@ struct Formula{
         BINARY,     ///< left and right formulae operands
         QUANT,      ///< A named identifier (variable) and a bound formulae
         UNARYTA,    ///< A unary operator associated with a time and an agent
+        UNARYT,     ///< A unary operator associated with a time
     };
 
     /** @brief Predicate representation */
@@ -95,6 +101,12 @@ struct Formula{
     };
 
     /** @brief A unary operator with an associated time and agent term */
+    struct UnaryTime{
+        std::string time;  //Time identifier or quantified time varible
+        Formula* arg;
+    };
+
+    /** @brief A unary operator with an associated time and agent term */
     struct UnaryTimeAgent{
         std::string time;  //Time identifier or quantified time varible
         std::string agent; //Agent identifier or quantified agent variable 
@@ -112,7 +124,8 @@ struct Formula{
         UnaryConnective* unary;     ///< Valid iff type == NOT, NES, POS
         BinaryConnective* binary;   ///< Valid iff type == AND, OR, IF, IFF
         Quantifier* quantifier;     ///< Valid iff type == FORALL, EXISTS
-        UnaryTimeAgent* unaryTA;    ///< Valid iff type == KNOW, BELIEF
+        UnaryTimeAgent* unaryTA;    ///< Valid iff type == KNOW, BELIEF, SAYS, DESIRE, INTEND, PERCEP
+        UnaryTime* unaryT;           ///< Valid iff type == COM
     };
 
     ///@}

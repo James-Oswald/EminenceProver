@@ -2,7 +2,7 @@
 #include "Expanders.hpp"
 
 
-Formula* expanders::expand(const Formula* formula, Expander expander){
+FormulaList expanders::expand(const Formula* formula, Expander expander){
     return expander(formula);
 }
 
@@ -10,7 +10,8 @@ Formula* expanders::expand(const Formula* formula, Expander expander){
 FormulaList expanders::expand(Formula* formula, const ExpanderList& expanders){
     FormulaList rv;
     for(Expander expander : expanders){
-        rv.push_back(expander(formula));
+        FormulaList expanded = expander(formula);
+        rv.splice(rv.end(), expanded);
     }
     return rv;
 }
@@ -18,7 +19,8 @@ FormulaList expanders::expand(Formula* formula, const ExpanderList& expanders){
 FormulaList expanders::expand(FormulaList formulae, Expander expander){
     FormulaList rv;
     for(Formula* formula : formulae){
-        rv.push_back(expander(formula));
+        FormulaList expanded = expander(formula);
+        rv.splice(rv.end(), expanded);
     }
     return rv;
 }
@@ -27,7 +29,8 @@ FormulaList expanders::expand(const FormulaList& formulae, const ExpanderList& e
     FormulaList rv;
     for(Formula* formula : formulae){
         for(Expander expander : expanders){
-            rv.push_back(expander(formula));
+            FormulaList expanded = expander(formula);
+            rv.splice(rv.end(), expanded);
         }
     }
     return rv;

@@ -4,12 +4,12 @@
 #include<Formula/Formula.hpp>
 
 /** @brief an expander is a function that takes a formula and expands it acording to some rule,
- *  returning an expanded copy */
-using Expander = Formula* (*)(const Formula*);
+ *         returning a list of new formulae that have been expanded from it.
+*/
+using Expander = FormulaList (*)(const Formula*);
 
 /** @brief an expander list is a std::list of expanders */
 using ExpanderList = std::list<Expander>;
-
 
 /**
  * @brief namespace for formula expanders and expander helpers
@@ -27,7 +27,7 @@ namespace expanders{
     /** @brief apply a single expander to a formula 
      *  @return a newly allocated formula
     */
-    Formula* expand(const Formula* formula, Expander expander);
+    FormulaList expand(const Formula* formula, Expander expander);
 
     /** @brief apply a list of expanders to a formula to get a new formula list */
     FormulaList expand(Formula* formula, const ExpanderList& expanders);

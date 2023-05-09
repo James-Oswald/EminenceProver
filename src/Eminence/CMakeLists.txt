@@ -12,6 +12,7 @@ target_sources(Eminence PRIVATE
     EminenceProver.cpp
     Expanders.hpp
     Expanders.cpp
+    DCECExpanders.cpp
     VampireSubprocessProver.hpp
     VampireSubprocessProver.cpp
 )

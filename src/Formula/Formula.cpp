@@ -29,6 +29,10 @@ Formula::~Formula(){
             delete this->quantifier->arg;
             delete this->quantifier;
             break;
+        case ConnectiveType::UNARYTA:
+            delete this->unaryTA->arg;
+            delete this->unary;
+            break;
     }
 }
 
@@ -59,6 +63,15 @@ Formula* Formula::copy() const{
             rv->quantifier->var = this->quantifier->var;
             rv->quantifier->arg = this->quantifier->arg->copy();
             return rv;
+        case ConnectiveType::UNARYTA:
+            rv->unaryTA = new UnaryTimeAgent;
+            rv->unaryTA->time = this->unaryTA->time;
+            rv->unaryTA->agent = this->unaryTA->agent;
+            rv->unaryTA->arg = this->unaryTA->arg->copy();
+        case ConnectiveType::UNARYT:
+            rv->unaryT = new UnaryTime;
+            rv->unaryT->time = this->unaryT->time;
+            rv->unaryT->arg = this->unaryT->arg->copy();
     }
     throw std::runtime_error("Invalid connective type");
 }
@@ -73,6 +86,10 @@ FormulaList Formula::subformulae() const{
             return FormulaList{this->binary->left, this->binary->right};
         case ConnectiveType::QUANT:
             return FormulaList{this->quantifier->arg};
+        case ConnectiveType::UNARYTA:
+            return FormulaList{this->unaryTA->arg};
+        case ConnectiveType::UNARYT:
+            return FormulaList{this->unaryT->arg};
     }
     throw std::runtime_error("Invalid connective type");
 }
@@ -304,7 +321,7 @@ bool onlyConnectives(std::unordered_set<Formula::Type> connectives, const Formul
 const std::unordered_set<Formula::Type> PropositionalConnectives = 
 {Formula::Type::NOT, Formula::Type::AND, Formula::Type::OR, Formula::Type::IF, Formula::Type::IFF};
 
-const std::unordered_set<Formula::Type> BaseConnectives = 
+const std::unordered_set<Formula::Type> NthOrderConnectives = 
 {Formula::Type::NOT, Formula::Type::AND, Formula::Type::OR,
  Formula::Type::IF, Formula::Type::IFF, Formula::Type::EXISTS, Formula::Type::FORALL};
 
@@ -332,7 +349,7 @@ bool Formula::isZerothOrder() const{
 
 bool Formula::isFirstOrder() const{
     //Make sure we only use base connectives (Prop + quantifiers)
-    if(!onlyConnectives(BaseConnectives, this)){
+    if(!onlyConnectives(NthOrderConnectives, this)){
         return false;
     }
 
@@ -347,101 +364,10 @@ bool Formula::isFirstOrder() const{
 
 bool Formula::isSecondOrder() const{
     //Make sure we only use base connectives (Prop + quantifiers)
-    if(!onlyConnectives(BaseConnectives, this)){
+    if(!onlyConnectives(NthOrderConnectives, this)){
         return false;
     }
 
     return true;
 }
 
-//Construction Helpers =================================================================================================
-
-
-Formula* Prop(std::string name){
-    Formula* rv = new Formula;
-    rv->type = Formula::Type::PRED;
-    rv->connectiveType = Formula::ConnectiveType::PRED;
-    rv->pred = new Formula::Pred;
-    rv->pred->name = std::move(name);
-    rv->pred->args = TermList();
-    return rv;
-}
-
-Formula* Pred(std::string name, TermList args){
-    Formula* rv = new Formula;
-    rv->type = Formula::Type::PRED;
-    rv->connectiveType = Formula::ConnectiveType::PRED;
-    rv->pred = new Formula::Pred;
-    rv->pred->name = std::move(name);
-    rv->pred->args = std::move(args);
-    return rv;
-}
-
-Formula* Not(Formula* arg){
-    Formula* rv = new Formula;
-    rv->type = Formula::Type::NOT;
-    rv->connectiveType = Formula::ConnectiveType::UNARY;
-    rv->unary = new Formula::UnaryConnective;
-    rv->unary->arg = arg;
-    return rv;
-}
-
-Formula* And(Formula* left, Formula* right){
-    Formula* rv = new Formula;
-    rv->type = Formula::Type::AND;
-    rv->connectiveType = Formula::ConnectiveType::BINARY;
-    rv->binary = new Formula::BinaryConnective;
-    rv->binary->left = left;
-    rv->binary->right = right;
-    return rv;
-}
-
-Formula* Or(Formula* left, Formula* right){
-    Formula* rv = new Formula;
-    rv->type = Formula::Type::OR;
-    rv->connectiveType = Formula::ConnectiveType::BINARY;
-    rv->binary = new Formula::BinaryConnective;
-    rv->binary->left = left;
-    rv->binary->right = right;
-    return rv;
-}
-
-Formula* If(Formula* left, Formula* right){
-    Formula* rv = new Formula;
-    rv->type = Formula::Type::IF;
-    rv->connectiveType = Formula::ConnectiveType::BINARY;
-    rv->binary = new Formula::BinaryConnective;
-    rv->binary->left = left;
-    rv->binary->right = right;
-    return rv;
-}
-
-Formula* Iff(Formula* left, Formula* right){
-    Formula* rv = new Formula;
-    rv->type = Formula::Type::IFF;
-    rv->connectiveType = Formula::ConnectiveType::BINARY;
-    rv->binary = new Formula::BinaryConnective;
-    rv->binary->left = left;
-    rv->binary->right = right;
-    return rv;
-}
-
-Formula* Forall(std::string varName, Formula* arg){
-    Formula* rv = new Formula;
-    rv->type = Formula::Type::FORALL;
-    rv->connectiveType = Formula::ConnectiveType::QUANT;
-    rv->quantifier = new Formula::Quantifier;
-    rv->quantifier->var = std::move(varName);
-    rv->quantifier->arg = arg;
-    return rv;
-}
-
-Formula* Exists(std::string varName, Formula* arg){
-    Formula* rv = new Formula;
-    rv->type = Formula::Type::EXISTS;
-    rv->connectiveType = Formula::ConnectiveType::QUANT;
-    rv->quantifier = new Formula::Quantifier;
-    rv->quantifier->var = std::move(varName);
-    rv->quantifier->arg = arg;
-    return rv;
-}
