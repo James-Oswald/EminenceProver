@@ -103,7 +103,9 @@ std::optional<vamp::answer> vamp::extractAnswer(
         then Vampire will only give an answer to X.
 
         [1]: We have no way currently of grabbing back the original predicate
-        names and the link from makeLegalTPTP
+        names and the link from makeLegalTPTP.
+        [2]: Can't do makeLegalTPTP since that quotes things which we don't want here since
+        it's variables.
     */
     std::string varListString = std::accumulate(
          vars.begin(), vars.end(), std::string{},
@@ -112,10 +114,18 @@ std::optional<vamp::answer> vamp::extractAnswer(
          }
      );
 
-    std::string tptpContents = boost::str(
-        boost::format("fof(goal, conjecture, ?[%1%]: (%2%))") %
+    std::string tptpContents = "";
+
+    FormulaList::const_iterator itr = p.assumptions.begin();
+    for(size_t i = 0; i < p.assumptions.size(); i++, itr++){
+        std::string name = "assumption" + std::to_string(i);
+        tptpContents += FormulaWriter::toFirstOrderTPTP(name, "axiom", *itr) + "\n\n";
+    }
+
+    tptpContents += boost::str(
+        boost::format("fof(goal, question, ?[%1%]: (%2%)).") %
          varListString %
-         recursiveToTPTP(makeLegalTPTP(p.goal)) // TODO: [1]
+         recursiveToTPTP(p.goal) // TODO: [1] [2]
     );
 
     // TODO: Need to include way to not allow forbidden answers within problem file
@@ -127,6 +137,7 @@ std::optional<vamp::answer> vamp::extractAnswer(
 
 
     //run a vampire subprocess
+
     bp::ipstream vampireOutput;
     //We need to use search_path to force boost to look in the same directory as us
     static bfs::path eminenceProverDir = bdll::program_location().parent_path();
@@ -186,8 +197,8 @@ std::optional<vamp::answer> vamp::extractAnswer(
 
     // Example: % SZS answers Tuple [["two","one"]|_] for question_answer
     std::string szsAnswerString = "SZS answers Tuple [[";
-    size_t szsAnswerLocationStart = resultString.find(szsAnswerString) + szsStatusString.length() + 1;
-        if(szsStatusLocationStart == std::string::npos){
+    size_t szsAnswerLocationStart = resultString.find(szsAnswerString) + szsAnswerString.length();
+    if(szsStatusLocationStart == std::string::npos){
         ba::trim(resultString);
         throw std::runtime_error(
             "Vampire completed successfully with an unexpected result! Vampire output:\n" + resultString
@@ -215,7 +226,7 @@ std::optional<vamp::answer> vamp::extractAnswer(
     auto varsIt = vars.begin();
     vamp::answer answer;
     while (szsAnswerIt != szsAnswer.end() && varsIt != vars.end()) {
-        answer.push_back(std::make_pair(*szsAnswerIt, *varsIt));
+        answer.push_back(std::make_pair(*varsIt, *szsAnswerIt));
         ++szsAnswerIt;
         ++varsIt;
     }
