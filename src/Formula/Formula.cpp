@@ -283,11 +283,16 @@ std::list<std::pair<Formula*, Formula*>> Formula::boundPredicateVariables() cons
     return rv;
 }
 
-
+/**
+ * @param base the formula to identify variables in
+ * @param quantifierStack an interable stack of Quantifier formulae in the order they should be matched against
+ * @param boundVars the returned list of modal operators containing bound vars and the qantifiers they are bound to
+ * @param timeOrAgentFlag true if we're looking for times, false if we're looking for agents
+*/
 void inOrderQunatifierTraversalDCEC(Formula* base, 
                                     std::list<Formula*>& quantifierStack,
                                     std::list<std::pair<Formula*, Formula*>>& boundVars,
-                                    std::string (*identifier)(const Formula*)){
+                                    bool timeOrAgentFlag){
     switch(base->connectiveType)
     {
         case Formula::ConnectiveType::PRED:
@@ -295,14 +300,19 @@ void inOrderQunatifierTraversalDCEC(Formula* base,
         case Formula::ConnectiveType::QUANT:
             //Push the current quantifier onto the list of bound vars we're looking for
             quantifierStack.push_front(base);
-            inOrderQunatifierTraversalDCEC(base->quantifier->arg, quantifierStack, boundVars, identifier);
+            inOrderQunatifierTraversalDCEC(base->quantifier->arg, quantifierStack, boundVars, timeOrAgentFlag);
             //Pop the quantifier since we've traversed all its inner vars
             quantifierStack.pop_front();
             return;
-        case Formula::ConnectiveType::
+        case Formula::ConnectiveType::UNARYTA:
+            for(Formula* quantifier : quantifierStack){
+                timeOrAgentFlag ? base->unaryTA->time : base->unaryTA->agent;
+            }
+            inOrderQunatifierTraversalDCEC(base->quantifier->arg, quantifierStack, boundVars, timeOrAgentFlag);
+            return;
         default:
             for(Formula* subformula : base->subformulae()){
-                inOrderQunatifierTraversalDCEC(subformula, quantifierStack, boundVars, identifier);
+                inOrderQunatifierTraversalDCEC(subformula, quantifierStack, boundVars, timeOrAgentFlag);
             }
     }
 }
