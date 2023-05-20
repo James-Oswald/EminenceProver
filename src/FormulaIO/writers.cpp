@@ -30,7 +30,13 @@ const TypeStringMap typeStringMap = {
     {Formula::Type::IF, "If"},            
     {Formula::Type::IFF, "Iff"},           
     {Formula::Type::FORALL, "Forall"},        
-    {Formula::Type::EXISTS, "Exists"},        
+    {Formula::Type::EXISTS, "Exists"},
+    {Formula::Type::BELIEF, "If"},            
+    {Formula::Type::DESIRE, "Desires!"},           
+    {Formula::Type::PERCEP, "Perceives!"},        
+    {Formula::Type::KNOW, "Knows!"},
+    {Formula::Type::COMM, "Exists"},
+    {Formula::Type::INTEND, "Intends!"}
 };
 
 std::string FormulaWriter::toSExpression(Formula* formula){

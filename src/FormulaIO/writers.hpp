@@ -1,10 +1,15 @@
 
 #pragma once
 
-#include <Formula/Formula.hpp>
-
 #include<string>
 
+#include<Formula/Formula.hpp>
+
+
+
+/**
+ *  @brief Provides utilities for reading and writing Formulae
+*/
 namespace FormulaWriter{
     std::string toSExpression(Term* formula);
     std::string toSExpression(Formula* formula);
